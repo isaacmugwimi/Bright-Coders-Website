@@ -1,0 +1,58 @@
+.howItWorksCard-card-body {
+  /* border: 1px solid red; */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.step-card {
+  /* border:  1px solid red; */
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease;
+  height: 220px;
+}
+.step-card:hover {
+  transform: scale(0.9);
+}
+
+.step-card .steps-icon-section {
+  border: 2px solid silver;
+  width: 40%;
+  height: 45%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.steps-icon-section .steps-overlay {
+  background-color: darkcyan;
+  padding: 7%;
+  border-radius: 50%;
+  color: white;
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-weight: 800;
+  font-size: 14px;
+  /* left: 0; */
+}
+
+.steps-icon-section .step-icon {
+  width: 40%;
+  height: 40%;
+}
+
+.step-card h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}

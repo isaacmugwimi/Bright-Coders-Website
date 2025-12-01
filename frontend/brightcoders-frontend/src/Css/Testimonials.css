@@ -1,0 +1,33 @@
+.carousel {
+  background-color: rgba(240, 248, 255, 0.788);
+
+  width: 90%;
+  justify-self: center;
+  padding: 30px 20px;
+}
+
+.testimonials-wrapper {
+  position: relative;
+  padding-top: 100px;
+}
+
+.custom-shape-divider-top-1764543608 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-top-1764543608 svg {
+    position: relative;
+    display: block;
+    width: calc(170% + 1.3px);
+    height: 154px;
+    transform: rotateY(180deg);
+}
+
+.custom-shape-divider-top-1764543608 .shape-fill {
+    fill: #FDF7EE;
+}

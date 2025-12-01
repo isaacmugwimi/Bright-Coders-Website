@@ -1,0 +1,132 @@
+.custom-shape-divider-top-1764542905 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-top-1764542905 svg {
+  position: relative;
+  display: block;
+  width: calc(131% + 1.3px);
+  height: 154px;
+}
+
+.custom-shape-divider-top-1764542905 .shape-fill {
+  fill: white;
+}
+
+.footer {
+  position: relative;
+  background: #052748;
+  /* height: 200px; or whatever you want */
+  color: white;
+  padding-top: 100px;
+}
+
+.footer-section {
+  /* background-color: #08817917; */
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.section-m1 {
+  margin: 40px 0;
+  padding: 20px 30px;
+}
+
+.footer-section .footer1 {
+  /* background-color: blue; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 10px;
+}
+.footer-section .footer1 img {
+  cursor: pointer;
+  /* padding-bottom: 15px; */
+  margin-top: -40px;
+  margin-bottom: -20px;
+  margin-left: -20px;
+}
+
+.footer-section .footer1 h4 {
+  /* font-weight: 500; */
+  font-size: 18px;
+  padding: 0 0 5px 0;
+  /* justify-self: center  ; */
+}
+
+.footer-section .footer1 p {
+  margin-bottom: 3px;
+  font-size: 15px;
+}
+
+.footer-section .footer1 .follow-us {
+  font-size: 16px;
+  margin-top: 19px;
+  font-weight: 600;
+}
+
+.footer-section .footer2 {
+  /* background-color: rgba(255, 0, 0, 0.068); */
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-section .footer2 h3 {
+  /* padding-bottom: 5px; */
+  font-size: 17px;
+}
+
+.footer-section .footer2 ul {
+  list-style: none;
+  margin: 10px 0;
+}
+.footer-section .footer2 ul li {
+  margin: 10px 0;
+}
+
+.footer-section .footer2 ul li a {
+  text-decoration: none;
+  color: hwb(0 0% 100% / 0.74);
+  letter-spacing: 1.2px;
+}
+
+.footer-section .footer2 ul li a:hover {
+  text-decoration: underline;
+  color: darkcyan;
+  text-decoration-color: rgba(255, 0, 255, 0.637);
+}
+
+.footer-section .footer4 .apps img {
+  border: 1px solid rgba(0, 0, 0, 0.671);
+  border-radius: 10px;
+}
+
+.footer-section .footer4 .apps img:hover {
+  cursor: pointer;
+  border-color: darkcyan;
+  transform: scale(0.95);
+}
+
+.footer-section .copyright {
+  width: 100%;
+  text-align: center;
+}
+.footer-section .copyright P {
+  color: #000;
+  font-weight: 400;
+  font-size: 14px;
+}
+.footer-section .footer1 .social-media {
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
+  text-decoration: none;
+  cursor: pointer;
+}

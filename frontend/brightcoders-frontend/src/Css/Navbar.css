@@ -1,0 +1,87 @@
+.navbar-main-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+
+  background-color: darkgreen;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding: 10px 25px;
+  color: #ffffffc5;
+  font-size: 18px;
+}
+
+.nav-links ul {
+  width: 120%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-links ul li > :first-child,
+.nav-links-2 ul li > :first-child {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 10px;
+}
+
+.active,
+.nav-links ul li > :first-child:hover,
+.nav-links-2 ul li > :first-child:hover {
+  background-color: #2bab0d;
+  border-radius: 10px;
+}
+
+/* container */
+.dropdown {
+  position: relative;
+}
+
+/* style the dropdown header */
+.dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 10px;
+  cursor: pointer;
+}
+
+/* hide submenu by default */
+.sub-menu {
+  display: none;
+  position: absolute;
+  background-color: darkgreen;
+  padding: 10px 0;
+  top: 40px; /* below the More button */
+  width: 200px;
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+/* show submenu on hover */
+.dropdown:hover .sub-menu {
+  display: block;
+}
+
+/* submenu items */
+.sub-menu ul {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sub-menu ul li {
+  padding: 10px 15px;
+}
+
+.sub-menu ul li:hover {
+  background-color: #2bab0d;
+  border-radius: 10px;
+  width: 200px;
+}

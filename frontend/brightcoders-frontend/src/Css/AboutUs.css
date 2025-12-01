@@ -1,0 +1,260 @@
+/* ==========================
+   GLOBAL PAGE WRAPPER
+========================== */
+.about-page {
+  width: 100%;
+  padding: 0 5%;
+  background: #fdfbf7;
+  font-family: "Poppins", sans-serif;
+  color: #1b1b1b;
+}
+
+/* ==========================
+   HERO SECTION
+========================== */
+.about-hero {
+  text-align: center;
+  padding: 70px 20px 40px;
+}
+
+.about-hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  background: linear-gradient(to right, #008000, #00cc449c);
+   -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.about-hero p {
+  margin-top: 10px;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+/* ==========================
+   WHO WE ARE
+========================== */
+.who-we-are {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 60px 0;
+  align-items: center;
+}
+
+.who-text h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #008000;
+}
+
+.who-text p {
+  font-size: 1.05rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+.who-image img {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 128, 0, 0.1);
+}
+
+/* ==========================
+   MISSION & VISION
+========================== */
+.mission-vision {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 60px 0;
+}
+
+.mv-card {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  transition: 0.3s ease;
+  border: 1px solid #e8e8e8;
+}
+
+.mv-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 128, 0, 0.15);
+}
+
+.mv-icon {
+  font-size: 2.5rem;
+  color: #008000;
+  margin-bottom: 15px;
+}
+
+.mv-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+/* ==========================
+   VALUES SECTION
+========================== */
+.values-section {
+  text-align: center;
+  padding: 60px 0;
+}
+
+.values-section h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #008000;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+}
+
+.value-card {
+  background: #ffffff;
+  padding: 30px 20px;
+  border-radius: 20px;
+  text-align: center;
+  border: 1px solid #eee;
+  transition: 0.3s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 128, 0, 0.12);
+}
+
+.value-icon {
+  font-size: 2.2rem;
+  color: #ffbf00;
+  margin-bottom: 12px;
+}
+
+/* ==========================
+   OUR STORY
+========================== */
+.our-story {
+  padding: 70px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.story-text h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #008000;
+}
+
+.story-text p {
+  font-size: 1.05rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+.story-image img {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 128, 0, 0.1);
+}
+
+/* ==========================
+   FOUNDER PREVIEW
+========================== */
+.founder-preview {
+  margin-top: 60px;
+  padding: 50px 40px;
+  display: flex;
+  gap: 40px;
+  background: white;
+  border-radius: 20px;
+  align-items: center;
+  border: 1px solid #eee;
+}
+
+.founder-img {
+  width: 150px;
+  height: 180px;
+  /* object-fit: cover; */
+  border-radius: 50%;
+  border: 4px solid #008000;
+}
+
+.founder-info h2 {
+  font-size: 1.7rem;
+  margin-bottom: 10px;
+}
+
+.btn-read-more {
+  background: #008000;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.3s ease;
+}
+
+.btn-read-more:hover {
+  background: #006600;
+}
+
+/* ==========================
+   CALL TO ACTION BUTTON
+========================== */
+.cta-section {
+  text-align: center;
+  padding: 70px 20px;
+  margin-top: 60px;
+  margin-bottom: 40px;
+  background: #008000;
+  color: white;
+  border-radius: 25px;
+}
+
+.cta-section .cta-btn {
+  margin-top: 20px;
+  background: white;
+  color: #008000;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.cta-section .cta-btn:hover {
+  background: #f1f1f1;
+}
+
+.bottom-margin{
+   height: 20px;
+}
+
+/* ==========================
+   RESPONSIVENESS
+========================== */
+@media (max-width: 900px) {
+  .who-we-are,
+  .our-story,
+  .founder-preview {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .founder-preview {
+    flex-direction: column;
+  }
+
+  .founder-img {
+    margin-bottom: 20px;
+  }
+}

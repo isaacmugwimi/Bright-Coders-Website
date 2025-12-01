@@ -1,0 +1,68 @@
+
+
+.custom-shape-divider-bottom-1764543154 .shape-fill {
+    fill: #FDF7EE;
+}
+.about-section {
+  background-color: rgba(224, 147, 30, 0.075);
+  padding: 40px 20px;
+
+  /* padding-top: 100px; */
+  /* padding-top: 40px; */
+}
+.aboutHomepage {
+  width: 90%;
+  padding: 20px 20px;
+  display: grid;
+  border: 1px solid goldenrod;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  justify-self: center;
+  border-radius: 20px;
+  align-items: center;
+  background-color: white;
+}
+
+.aboutLeft img {
+  border-radius: 10px;
+}
+
+.aboutRight {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.read-more-btn {
+  width: 23%;
+  justify-self: center;
+  /* justify-self: center; */
+  padding: 13px 8px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  border-radius: 10px;
+  outline: none;
+  background-color: #3a83f5;
+  border: 2px solid #3a83f5;
+  color: #ffffff;
+  font-weight: 700;
+  margin-top: 5%;
+  cursor: pointer;
+  width: 50%;
+  
+}
+
+
+.read-more-btn:hover {
+  background-color: darkcyan;
+  border: 2px solid darkcyan;
+}
+
+.aboutRight p{
+    font-size: 17px;
+}

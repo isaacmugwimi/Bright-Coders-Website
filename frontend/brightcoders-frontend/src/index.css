@@ -1,0 +1,41 @@
+/* Reset margins, paddings, and set box-sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Optional: remove list styles from ul/ol */
+ul,
+ol {
+  list-style: none;
+}
+
+/* Optional: remove underline from links by default */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Optional: images responsive by default */
+img {
+  max-width: 100%;
+}
+
+html,
+body,
+#root {
+  width: 100%; /* full width of viewport or set a fixed width */
+  height: 100vh;
+  max-width: 1400px;
+  /* background-color: red; */
+  /* padding:0 10px; */
+}
+
+
+@font-face {
+  font-family: 'Agraham';
+  src: url("../src/assets/fonts/AspireDemibold-YaaO.ttf") format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
