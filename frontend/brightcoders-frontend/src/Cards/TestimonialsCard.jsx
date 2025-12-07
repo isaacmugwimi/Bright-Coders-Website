@@ -10,7 +10,7 @@ import {
   FaStar,
   FaRegStar,
 } from "react-icons/fa";
-import { RiDoubleQuotesL, RiDoubleQuotesR } from "react-icons/ri";
+import { RiDoubleQuotesR } from "react-icons/ri";
 const TestimonialsCard = () => {
   const NextArrow = ({ onClick }) => {
     return (
@@ -39,6 +39,10 @@ const TestimonialsCard = () => {
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
+    autoplaySpeed: 3000,
+    autoplay: true,
+    pauseOnHover: true,
+    swipeToSlide: true,
   };
 
   return (

@@ -1,0 +1,202 @@
+.contact-section {
+  /* background: linear-gradient(135deg, #e3f2fd, #ffffff);
+    /* width: 100%; */
+  /* display: grid; */
+  /* margin-top: 80px;  */
+}
+.contact-banner {
+  width: 100%;
+  min-height: 20vh;
+  background-image: linear-gradient(rgba(8, 0, 58, 0.7), rgba(8, 0, 58, 0.7)),
+    url("../assets/pexels1.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+}
+.contact-banner h1 {
+  text-transform: uppercase;
+  font-size: 35px;
+  /* margin-top: 40px; */
+}
+
+.contact-banner h1 span {
+  color: #63a979;
+  font-weight: 800;
+}
+
+.contact-banner p {
+  font-size: 20px;
+  color: silver;
+}
+
+.contact-body {
+  /* background-color: darkcyan; */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+  margin: 0 50px;
+  margin-bottom: 2%;
+  margin-top: 2%;
+  padding: 60px 100px;
+  align-items: center;
+}
+
+.contact-body .left-contact {
+  background-color: #f3f2ff;
+  border: 1px solid silver;
+  padding: 20px 30px 50px;
+  border-radius: 20px;
+  height: fit-content;
+}
+.contact-body .left-contact h1 {
+  color: #1c1a1a;
+  text-transform: uppercase;
+  font-weight: 900;
+}
+
+.contact-body .left-contact .left-contact-p1 {
+  color: darkgrey;
+  padding: 15px 0 30px 0;
+  font-size: 17px;
+}
+
+.contact-body .contact-data {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+.contact-data .email,
+.contact-data .phone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding: 15px 0;
+  background: darkgreen;
+  border-radius: 20px;
+  cursor: pointer;
+  position: relative;
+  color: white;
+  transition: 0.3s ease;
+  border: 2px solid transparent;
+  font-size: 17px;
+}
+
+.contact-data .email:hover,
+.contact-data .phone:hover {
+  background: #3ea76d;
+  transform: translateY(-3px);
+}
+
+/* Active class */
+.contact-data .email.active,
+.contact-data .phone.active {
+  background: rgba(255, 255, 255, 0.788);
+  color: #2f855a;
+  font-weight: 700;
+  border: 2px solid #2f855a;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.email-Phone-details {
+  /* background-color: red; */
+  width: 100%;
+  grid-column: span 2;
+  text-align: center;
+  font-size: 19px;
+  font-family: "Courier New", Courier, monospace;
+  color: #041e43;
+  font-weight: 500;
+  height: 10px;
+}
+
+.contact-body .right-contact {
+  display: grid;
+  /* width: 350px; */
+}
+
+.contact-body .right-contact form {
+  display: grid;
+}
+
+.contact-body .right-contact form p {
+  color: darkcyan;
+  font-weight: 700;
+  padding-bottom: 5px;
+}
+
+.input-section input {
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  background-color: rgba(128, 128, 128, 0.164);
+  letter-spacing: 1.5px;
+  font-size: 14px;
+}
+
+.contact-body .right-contact form textarea {
+  width: 100%;
+  height: 100px;
+  padding: 7px;
+  border-radius: 5px;
+  outline: none;
+  letter-spacing: 1.1px;
+  background-color: rgba(128, 128, 128, 0.164);
+  resize: none;
+}
+.btn-div {
+  position: relative;
+}
+
+.contact-body .right-contact form button {
+  padding: 15px 0;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid darkcyan;
+  background-color: darkcyan;
+  color: white;
+  cursor: pointer;
+  /* background-color: blue; */
+  width: 100%;
+  /* scale: 0.9; */
+  z-index: 1;
+  overflow: hidden;
+  position: absolute;
+}
+
+.contact-body .right-contact form button:hover {
+  color: black;
+}
+.contact-body .right-contact form button:after {
+  content: "";
+  background: white;
+  z-index: -1;
+  left: -20%;
+  right: -20%;
+  top: 0;
+  bottom: 0;
+  transform: skewX(-45deg) scale(0, 1);
+  transform: all 0.9s;
+  position: absolute;
+}
+
+.contact-body .right-contact form button:hover:after {
+  transform: skewX(-45deg) scale(1, 1);
+  -webkit-transition: all 0.9s;
+  transition: all 0.9s;
+}
+
+.toast-message {
+  height: 30px;
+  width: 100%;
+  margin-top: 20%;
+}

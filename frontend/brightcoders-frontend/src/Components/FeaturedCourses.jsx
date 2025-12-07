@@ -4,6 +4,7 @@ import FeaturedCourseCard from "../Cards/FeaturedCourseCard";
 import featuredCourseData from "../Utils/featuredCourseData.js";
 import { MdReadMore } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 const FeaturedCourses = () => {
   const navigate = useNavigate();
   const handleViewMoreBtn = (e) => {
@@ -11,13 +12,19 @@ const FeaturedCourses = () => {
     navigate("/programs");
   };
   return (
-    <div className="featured">
+    <motion.div
+      className="featured"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.4 }}
+      exit={{ opacity: 0, y: -30 }}
+      transition={{ duration: 0.3 }}
+    >
       <h1 className="header">Featured Courses</h1>
       <div className="horizontal-line">
         <div className="actual-line"></div>
       </div>
       <p className="header-paragraph">
-       
         Explore our most popular courses this month.
       </p>
       <div className="featured-cards-container">
@@ -38,7 +45,7 @@ const FeaturedCourses = () => {
         View More Courses
         <MdReadMore className="arrow-right" />
       </button>
-    </div>
+    </motion.div>
   );
 };
 

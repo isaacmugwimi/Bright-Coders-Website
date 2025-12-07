@@ -12,15 +12,18 @@ import "../Css/Home.css";
 const Home = () => {
   const navigate = useNavigate();
   const [word, setWord] = useState("Code");
-
+  const [isVisible, setIsVisible] = useState(false);
   useEffect(() => {
-    const words = [ "Imagine", "Solve Problems", "Code","Play", "Explore Tech"];
+    const words = ["Imagine", "Solve Problems", "Code", "Play", "Explore Tech"];
     let index = 0;
 
     const interval = setInterval(() => {
       setWord(words[index]);
       index = (index + 1) % words.length;
     }, 4000);
+
+    setIsVisible(true);
+
     return () => clearInterval(interval);
   }, []);
 
@@ -31,8 +34,19 @@ const Home = () => {
   };
 
   return (
-    <div className="home-section">
-      <div className="hero-left">
+    <motion.div
+      className="home-section"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+    >
+      <motion.div
+        className="hero-left"
+        initial={{ opacity: 0, x: -50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
         <div className="hero-headline">
           <div className="wavy-text">
             <h1>Bright Coders</h1>
@@ -54,8 +68,14 @@ const Home = () => {
         <button className="enroll-button" onClick={handle_enroll_btn}>
           Enroll Now <FaArrowRight className="arrow-icon" />
         </button>
-      </div>
-      <div className="hero-right">
+      </motion.div>
+      <motion.div
+        className="hero-right"
+        initial={{ opacity: 0, x: 50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+        viewport={{ once: true }}
+      >
         <img className="hero-shape" src={hero_shape_2} alt="" />
         <div className="">
           <img
@@ -67,12 +87,11 @@ const Home = () => {
           <img
             src={hero_banner2}
             alt="Hero Banner"
-            className="image-holder two"
+            className={isVisible ? "fade-in image-holder two" : "fade-out"}
           />
         </div>
-      </div>
-    
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

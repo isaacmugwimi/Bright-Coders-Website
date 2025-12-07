@@ -3,6 +3,7 @@ import "../Css/AboutHomepage.css";
 import { useNavigate } from "react-router-dom";
 import { MdArrowForward } from "react-icons/md"; // Material Designimport { useNavigate } from "react-router-dom";
 import about_img from "../assets/about-image.webp";
+import AboutSection from "./AboutSection";
 const AboutHomepage = () => {
   const navigate = useNavigate();
   const handleReadMoreBtn = (e) => {
@@ -24,15 +25,17 @@ const AboutHomepage = () => {
           <img src={about_img} alt="" />
         </div>
         <div className="aboutRight">
-          <p>
+          {/* <p>
             We help kids build real coding skills through fun, interactive,
             hands-on learning. Our mission is to make tech education accessible
             for every child.
-          </p>
-          <button className="read-more-btn" onClick={handleReadMoreBtn}>
+          </p> */}
+         <AboutSection/>
+         <button className="read-more-btn" onClick={handleReadMoreBtn}>
             Read More... <MdArrowForward style= {{fontSize:"20px"}} />
           </button>
         </div>
+         
       </section>
       
     </div>

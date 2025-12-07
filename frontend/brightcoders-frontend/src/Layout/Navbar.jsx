@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import logo from "../assets/logo2.png";
 
 // FontAwesome icons
@@ -30,24 +30,24 @@ const Navbar = () => {
 
       <div className="nav-links">
         <ul>
-          <li className="active">
-            <Link to="/home">
+          <li >
+            <NavLink  to="/home"  >
               <FaHome className="nav-icon" /> <span>Home</span>
-            </Link>
+            </NavLink >
           </li>
 
           <li>
-            <Link to="/programs">
+            <NavLink  to="/programs">
               <FaUsers className="nav-icon" />
               <span>Programs</span>
-            </Link>
+            </NavLink >
           </li>
 
           <li>
-            <Link to="/about">
+            <NavLink  to="/about">
               <FaInfoCircle className="nav-icon" />
               <span>About Us</span>
-            </Link>
+            </NavLink >
           </li>
 
           {/* DROPDOWN */}
@@ -60,55 +60,55 @@ const Navbar = () => {
             <div className="sub-menu">
               <ul>
                 <li>
-                  <Link to="/founder">
+                  <NavLink  to="/founder">
                     <FaUserTie className="nav-icon" />
                     <span>Founder</span>
-                  </Link>
+                  </NavLink >
                 </li>
 
                 <li>
-                  <Link to="/testimonials">
+                  <NavLink  to="/testimonials">
                     <FaComments className="nav-icon" />
                     <span>Testimonials</span>
-                  </Link>
+                  </NavLink >
                 </li>
 
                 <li>
-                  <Link>
+                  <NavLink >
                     <FaBlog className="nav-icon" />
                     <span>Blogs</span>
-                  </Link>
+                  </NavLink >
                 </li>
 
                 <li>
-                  <Link to="/faqs">
+                  <NavLink  to="/faqs">
                     <FaQuestionCircle className="nav-icon" />
                     <span>FAQs</span>
-                  </Link>
+                  </NavLink >
                 </li>
 
                 <li>
-                  <Link to="/gallery">
+                  <NavLink  to="/gallery">
                     <FaImages className="nav-icon" />
                     <span>Gallery</span>
-                  </Link>
+                  </NavLink >
                 </li>
 
                 <li>
-                  <Link to="/why-us">
+                  <NavLink  to="/why-us">
                     <FaStarHalfAlt className="nav-icon" />
                     <span>Why Choose Us</span>
-                  </Link>
+                  </NavLink >
                 </li>
               </ul>
             </div>
           </li>
 
           <li>
-            <Link to="/contact">
+            <NavLink  to="/contact">
               <FaEnvelope className="nav-icon" />
               <span>Contact</span>
-            </Link>
+            </NavLink >
           </li>
         </ul>
       </div>
@@ -116,10 +116,10 @@ const Navbar = () => {
       <div className="nav-links-2">
         <ul>
           <li>
-            <Link to="/register">
+            <NavLink  to="/register">
               <FaUserPlus className="nav-icon" />
               <span>Register</span>
-            </Link>
+            </NavLink >
           </li>
         </ul>
       </div>

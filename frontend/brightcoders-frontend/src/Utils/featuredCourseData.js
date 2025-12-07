@@ -6,7 +6,7 @@ import pythonIcon from "../assets/python.webp";
 
 const featuredCourseData = [
   {
-    title: "Introduction to Scratch Coding",
+    title: "Scratch Coding Introduction",
     header1: "Beginner",
     image: scratchImage,
     focus: "Animations, games, logic building.",
@@ -32,15 +32,15 @@ const featuredCourseData = [
     DurationIcon: FiClock,
     fee: "KSh. 3,000",
   },
-  // {
-  //   title: "Python for Kids",
-  //   header1: "Beginner",
-  //   image: pythonIcon,
-  //   focus: "Games, basic algorithms, problem solving.",
-  //   duration: "3 weeks",
-  //   DurationIcon: FiClock,
-  //   fee: "KSh. 3,000",
-  // },
+  {
+    title: "Python for Kids",
+    header1: "Beginner",
+    image: pythonIcon,
+    focus: "Games, basic algorithms, problem solving.",
+    duration: "3 weeks",
+    DurationIcon: FiClock,
+    fee: "KSh. 3,000",
+  },
   // {
   //   title: "Python for Kids",
   //   header1: "Beginner",

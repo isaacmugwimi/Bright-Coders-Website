@@ -1,34 +1,49 @@
 /* ==========================
    GLOBAL PAGE WRAPPER
 ========================== */
-.about-page {
+/* .about-page {
+  margin-top: 40px;
   width: 100%;
   padding: 0 5%;
   background: #fdfbf7;
   font-family: "Poppins", sans-serif;
   color: #1b1b1b;
-}
+  
+} */
 
 /* ==========================
    HERO SECTION
 ========================== */
 .about-hero {
-  text-align: center;
-  padding: 70px 20px 40px;
+  /* text-align: center;
+  padding: 70px 20px 40px; */
+  width: 100%;
+  min-height: 20vh;
+  background-image: linear-gradient(rgba(8, 0, 58, 0.7), rgba(8, 0, 58, 0.7)),
+    url("https://images.pexels.com/photos/421129/pexels-photo-421129.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
 }
 
 .about-hero h1 {
   font-size: 3rem;
   font-weight: 700;
-  background: linear-gradient(to right, #008000, #00cc449c);
-   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: white;
 }
 
 .about-hero p {
   margin-top: 10px;
   font-size: 1.1rem;
-  color: #555;
+  color: rgba(255, 255, 255, 0.87);
+  /* background-color: darkcyan; */
+  letter-spacing: 1.6px;
 }
 
 /* ==========================
@@ -45,7 +60,7 @@
 .who-text h2 {
   font-size: 2rem;
   margin-bottom: 15px;
-  color: #008000;
+  color: #084b83;
 }
 
 .who-text p {
@@ -77,6 +92,7 @@
   text-align: center;
   transition: 0.3s ease;
   border: 1px solid #e8e8e8;
+  border-bottom: 2px solid darkcyan;
 }
 
 .mv-card:hover {
@@ -86,7 +102,7 @@
 
 .mv-icon {
   font-size: 2.5rem;
-  color: #008000;
+  color: #084b83;
   margin-bottom: 15px;
 }
 
@@ -106,7 +122,7 @@
 .values-section h2 {
   font-size: 2rem;
   margin-bottom: 40px;
-  color: #008000;
+  color: #084b83;
 }
 
 .values-grid {
@@ -121,6 +137,7 @@
   border-radius: 20px;
   text-align: center;
   border: 1px solid #eee;
+  border-bottom: 2px solid darkcyan;
   transition: 0.3s ease;
 }
 
@@ -149,7 +166,7 @@
 .story-text h2 {
   font-size: 2rem;
   margin-bottom: 15px;
-  color: #008000;
+  color: #084b83;
 }
 
 .story-text p {
@@ -222,7 +239,7 @@
 .cta-section .cta-btn {
   margin-top: 20px;
   background: white;
-  color: #008000;
+  color: #084b83;
   border: none;
   padding: 12px 25px;
   font-size: 1rem;
@@ -235,8 +252,8 @@
   background: #f1f1f1;
 }
 
-.bottom-margin{
-   height: 20px;
+.bottom-margin {
+  height: 20px;
 }
 
 /* ==========================
