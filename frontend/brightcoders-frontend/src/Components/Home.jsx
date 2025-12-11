@@ -10,6 +10,7 @@ import { FaArrowRight } from "react-icons/fa";
 
 import "../Css/Home.css";
 const Home = () => {
+  const transition = { type: "easeIn", duration: 3 };
   const navigate = useNavigate();
   const [word, setWord] = useState("Code");
   const [isVisible, setIsVisible] = useState(false);
@@ -65,29 +66,53 @@ const Home = () => {
             experience required.
           </p>
         </div>
-        <button className="enroll-button" onClick={handle_enroll_btn}>
-          Enroll Now <FaArrowRight className="arrow-icon" />
-        </button>
+        <motion.button
+          // initial={{ opacity: 0, x: 350 }}
+          // animate={{ opacity: 1, x: 0 }}
+          // transition={{ duration: 1, ease: "circIn" }}
+          className="enroll-button"
+          onClick={handle_enroll_btn}
+        >
+          <span>Enroll Now</span> <FaArrowRight className="arrow-icon" />{" "}
+          <motion.div
+            initial={{ opacity: 1, x: 100 }}
+            // animate={{ opacity: 1, x: 0 }}
+            whileInView={{ opacity: 0, x: -115 }}
+            // transition={{ duration: 3, ease: "easeInOut" }}
+            transition={{ ...transition, type: "tween" }}
+            className="cta-btn-bg"
+          ></motion.div>
+           <motion.div
+            initial={{ opacity: 1, x: -115 }}
+            // animate={{ opacity: 1, x: 0 }}
+            whileInView={{ opacity: 0, x: 100 }}
+            // transition={{ duration: 3, ease: "easeInOut" }}
+            transition={{ ...transition, type: "tween" }}
+            className="cta-btn-bg"
+          ></motion.div>
+        </motion.button>
       </motion.div>
-      <motion.div
-        className="hero-right"
-        initial={{ opacity: 0, x: 50 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-        viewport={{ once: true }}
-      >
+      <motion.div className="hero-right">
         <img className="hero-shape" src={hero_shape_2} alt="" />
-        <div className="">
-          <img
+
+        <div className="img-container">
+          <motion.img
             src={hero_banner1}
             alt="Hero Banner"
             className="image-holder one"
+            initial={{ opacity: 0, x: 300 }}
+            whileInView={{ opacity: 1, x: -20 }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            // transition={{ ...transition, type: "tween" }}
           />
 
-          <img
+          <motion.img
             src={hero_banner2}
             alt="Hero Banner"
-            className={isVisible ? "fade-in image-holder two" : "fade-out"}
+            className="image-holder two"
+            initial={{ opacity: 0, x: -300 }}
+            whileInView={{ opacity: 1, x: 15 }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
           />
         </div>
       </motion.div>

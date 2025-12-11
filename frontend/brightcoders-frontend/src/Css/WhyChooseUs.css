@@ -2,6 +2,7 @@
   padding: 60px 20px;
   background-color: #ecfeffb7; /* light gray background */
   text-align: center;
+  scroll-margin-top: 100px; /*height of the navbar*/
 }
 
 .horizontal-line {
@@ -44,12 +45,28 @@
   transition: transform 0.3s, box-shadow 0.3s;
   width: 100%;
   max-width: 280px;
+  border: 1px solid #e5e7eb;
+  position: relative;
+}
+
+.feature-card::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background-color: #10b981; /* green accent */
+  border-radius: 2px;
 }
 
 .feature-card:hover {
   transform: translateY(-10px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
+
+
 
 .feature-icon {
   font-size: 2.5rem;

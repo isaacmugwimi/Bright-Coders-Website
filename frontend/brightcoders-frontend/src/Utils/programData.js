@@ -26,13 +26,16 @@ const programData = [
           image: scratchImage,
         },
          {
-          title: "Scratch Game Development",
+          title: "Scratch Game Development 2",
           duration: "4 weeks",
           price: "KSh 3,500",
           focus: ["Game logic", "Sprites", "Storytelling"],
-          level: "Beginner",
+          level: "intermediate",
           image: scratchImage,
         },
+        
+ 
+     
       ],
     },
     {
@@ -54,22 +57,7 @@ const programData = [
           level: "Advanced",
           image: jsIcon,
         },
-         {
-          title: "Junior JavaScript",
-          duration: "3 weeks",
-          price: "KSh 3,000",
-          focus: ["Variables", "Websites", "Logic"],
-          level: "Advanced",
-          image: jsIcon,
-        },
-         {
-          title: "Junior JavaScript",
-          duration: "3 weeks",
-          price: "KSh 3,000",
-          focus: ["Variables", "Websites", "Logic"],
-          level: "Advanced",
-          image: jsIcon,
-        },
+        
       ],
     },
     {
@@ -90,6 +78,14 @@ const programData = [
           focus: ["Games", "Basics", "Problem Solving"],
           level: "Beginner",
           image: ml,
+        },
+             {
+          title: "Python for Kids",
+          duration: "3 weeks",
+          price: "KSh 3,000",
+          focus: ["Games", "Basics", "Problem Solving"],
+          level: "Beginner",
+          image: pythonIcon,
         },
       ],
     },

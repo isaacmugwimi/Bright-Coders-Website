@@ -34,8 +34,18 @@
 .active,
 .nav-links ul li > :first-child:hover,
 .nav-links-2 ul li > :first-child:hover {
-  background-color: #b2f0ff;
+  background-color: darkcyan;
+  color: white;
   border-radius: 10px;
+}
+.active .nav-icon,
+.nav-links ul li > :first-child:hover .nav-icon,
+.nav-links-2 ul li > :first-child:hover .nav-icon {
+  color: white;
+}
+
+.nav-icon {
+  color: #006666;
 }
 
 /* container */
@@ -56,7 +66,8 @@
 .sub-menu {
   display: none;
   position: absolute;
-   background: #e3e6f3;
+  background: #e3e6f3;
+  border: 1px solid darkcyan;
   box-shadow: 0 15px 30px rgb(0, 0, 0, 0.26);
   padding: 10px 0;
   top: 40px; /* below the More button */
@@ -81,6 +92,8 @@
 
 .sub-menu ul li {
   padding: 10px 15px;
+  /* background-color: red; */
+  width: 200px;
 }
 
 .sub-menu ul li:hover {
@@ -89,4 +102,66 @@
   width: 200px;
 }
 
+.hamburger-menu {
+  display: none !important;
+}
+/* Hide nav-links on small screens by default */
 
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 70%;
+    background: #e3e6f3;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1rem;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+    z-index: 999;
+  }
+
+  /* Show menu when active */
+  .nav-links.mobile-active {
+    display: flex;
+  }
+  .nav-links-2 ul{
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .hamburger-menu {
+    display: block !important;
+    cursor: pointer;
+    z-index: 1000;
+    color: #006666;
+  }
+
+  .nav-links ul {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .nav-links ul li {
+    width: 100%;
+    
+  }
+
+  /* Dropdown submenu on mobile */
+  .dropdown .sub-menu {
+    position: relative;
+    top: 0;
+    border: none;
+    box-shadow: none;
+    width: 100%;
+    display: none;
+  }
+
+  .dropdown.mobile-open .sub-menu {
+    display: flex;
+    flex-direction: column;
+  }
+}

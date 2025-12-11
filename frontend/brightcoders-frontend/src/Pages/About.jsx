@@ -30,7 +30,7 @@ const AboutUs = () => {
       transition={{ duration: 0.5 }}
     >
       {/* HERO SECTION */}
-      <section className="about-hero">
+      <section className="about-hero ">
         <h1>About Bright Coders</h1>
         <p>Empowering young minds through creative and fun coding education.</p>
       </section>
@@ -143,7 +143,9 @@ const AboutUs = () => {
             unlocking their creativity through technology.
           </p>
 
-          <button className="btn-read-more">Read Full Story</button>
+          <button className="btn-read-more" onClick={()=>{
+            navigate("/founder")
+          }}>Read Full Story</button>
         </div>
       </section>
 

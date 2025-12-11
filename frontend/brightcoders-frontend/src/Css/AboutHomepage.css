@@ -66,3 +66,134 @@
 .aboutRight p{
     font-size: 17px;
 }
+
+/*=============================================
+ Extra small devices (phones, <400px)
+==============================================*/
+@media (max-width: 399px) {
+  .aboutHomepage {
+    width: 100%;
+    gap: 20px;
+    padding: 15px;
+  }
+
+  .aboutRight p {
+    font-size: 15px;
+    padding: 5px;
+  }
+
+  .read-more-btn {
+    width: 85%;
+    font-size: 15px;
+    padding: 12px;
+  }
+}
+
+/*=============================================
+ Small devices (400px–599px)
+==============================================*/
+@media (min-width: 400px) and (max-width: 599px) {
+  .aboutHomepage {
+    width: 100%;
+    gap: 25px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .aboutRight p {
+    font-size: 16px;
+  }
+
+  .read-more-btn {
+    width: 85%;
+    font-size: 16px;
+  }
+}
+
+/*=============================================
+ Medium devices (600px–767px)
+==============================================*/
+@media (min-width: 600px) and (max-width: 767px) {
+   .aboutHomepage {
+    width: 100%;
+    gap: 25px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .aboutRight p {
+    font-size: 16px;
+  }
+
+  .read-more-btn {
+    width: 80%;
+  }
+}
+
+/*=============================================
+ Large tablets (768px–1023px)
+==============================================*/
+@media (min-width: 768px) and (max-width: 1023px) {
+  .aboutHomepage {
+    width: 85%;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .read-more-btn {
+    width: 50%;
+  }
+}
+
+/*=============================================
+ Laptops / small desktops (1024px–1279px)
+==============================================*/
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .aboutHomepage {
+    width: 80%;
+  }
+
+  .read-more-btn {
+    width: 60%;
+  }
+}
+
+/*=============================================
+ Standard desktops (1280px–1599px)
+==============================================*/
+@media (min-width: 1280px) and (max-width: 1599px) {
+  .aboutHomepage {
+    width: 75%;
+  }
+
+  .read-more-btn {
+    width: 50%;
+  }
+}
+
+/*=============================================
+ Large desktops (1600px–1919px)
+==============================================*/
+@media (min-width: 1600px) and (max-width: 1919px) {
+  .aboutHomepage {
+    width: 65%;
+  }
+
+  .read-more-btn {
+    width: 50%;
+  }
+}
+
+/*=============================================
+ Ultra wide / 4K (≥1920px)
+==============================================*/
+@media (min-width: 1920px) {
+  .aboutHomepage {
+    width: 60%;
+  }
+
+  .read-more-btn {
+    width: 50%;
+  }
+}

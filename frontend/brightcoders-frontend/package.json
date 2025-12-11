@@ -14,7 +14,9 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-icons": "^5.5.0",
+    "react-phone-input-2": "^2.15.1",
     "react-router-dom": "^7.9.6",
+    "react-router-hash-link": "^2.4.3",
     "react-slick": "^0.31.0",
     "slick-carousel": "^1.8.1",
     "swiper": "^12.0.3"

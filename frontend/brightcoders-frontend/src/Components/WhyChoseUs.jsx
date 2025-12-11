@@ -1,5 +1,4 @@
 
-import React from "react";
 import "../Css/WhyChooseUs.css";
 import whyChooseUsData from "../Utils/whyChoseUsData.js";
 import { motion } from "framer-motion";
@@ -7,6 +6,7 @@ import { motion } from "framer-motion";
 const WhyChooseUs = () => {
   return (
     <motion.div
+    id="why-choose-us"
       className="why-choose-us"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}

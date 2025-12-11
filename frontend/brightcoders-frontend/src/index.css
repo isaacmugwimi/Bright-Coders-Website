@@ -27,10 +27,15 @@ body,
 #root {
   width: 100%; /* full width of viewport or set a fixed width */
   height: 100vh;
-  max-width: 1400px;
+  /* max-width: 1400px; */
   /* background-color: red; */
   /* padding:0 10px; */
 }
+
+html, body {
+  overflow-x: hidden;
+}
+
 
 
 @font-face {

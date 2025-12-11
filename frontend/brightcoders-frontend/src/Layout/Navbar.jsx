@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo2.png";
+import { HashLink } from "react-router-hash-link";
 
 // FontAwesome icons
 import {
@@ -15,6 +16,8 @@ import {
   FaQuestionCircle, // FAQs
   FaImages, // Gallery
   FaStarHalfAlt, // Why Us
+  FaBars,
+  FaTimes,
 } from "react-icons/fa";
 
 import { IoMdArrowDropdown } from "react-icons/io";
@@ -22,32 +25,40 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import "../Css/Navbar.css";
 
 const Navbar = () => {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
   return (
     <div className="navbar-main-section">
       <div className="nav-logo">
         <img src={logo} alt="Website Logo" width={"125px"} height={"125px"} />
       </div>
 
-      <div className="nav-links">
+      <div className={`nav-links ${mobileMenuOpen ? "mobile-active" : ""}`}>
+        {" "}
+        <div className="close-menu" onClick={toggleMobileMenu}>
+          <FaTimes size={24} />
+        </div>
         <ul>
-          <li >
-            <NavLink  to="/home"  >
+          <li>
+            <NavLink to="/home">
               <FaHome className="nav-icon" /> <span>Home</span>
-            </NavLink >
+            </NavLink>
           </li>
 
           <li>
-            <NavLink  to="/programs">
+            <NavLink to="/programs">
               <FaUsers className="nav-icon" />
               <span>Programs</span>
-            </NavLink >
+            </NavLink>
           </li>
 
           <li>
-            <NavLink  to="/about">
+            <NavLink to="/about">
               <FaInfoCircle className="nav-icon" />
               <span>About Us</span>
-            </NavLink >
+            </NavLink>
           </li>
 
           {/* DROPDOWN */}
@@ -60,55 +71,51 @@ const Navbar = () => {
             <div className="sub-menu">
               <ul>
                 <li>
-                  <NavLink  to="/founder">
+                  <NavLink to="/founder">
                     <FaUserTie className="nav-icon" />
                     <span>Founder</span>
-                  </NavLink >
+                  </NavLink>
                 </li>
 
                 <li>
-                  <NavLink  to="/testimonials">
+                  <HashLink smooth to={"/home#testimonials-wrapper"}>
                     <FaComments className="nav-icon" />
-                    <span>Testimonials</span>
-                  </NavLink >
+                    <span>Testimonials</span>{" "}
+                  </HashLink>
                 </li>
 
                 <li>
-                  <NavLink >
+                  <NavLink to={"/blogs"}>
                     <FaBlog className="nav-icon" />
                     <span>Blogs</span>
-                  </NavLink >
+                  </NavLink>
                 </li>
 
                 <li>
-                  <NavLink  to="/faqs">
+                  <NavLink to={"/faqs"}>
                     <FaQuestionCircle className="nav-icon" />
                     <span>FAQs</span>
-                  </NavLink >
+                  </NavLink>
                 </li>
 
                 <li>
-                  <NavLink  to="/gallery">
-                    <FaImages className="nav-icon" />
-                    <span>Gallery</span>
-                  </NavLink >
-                </li>
-
-                <li>
-                  <NavLink  to="/why-us">
+                  {/* <NavLink  to="/why-us">
+                   */}
+                  <HashLink smooth to="/home#why-choose-us">
                     <FaStarHalfAlt className="nav-icon" />
                     <span>Why Choose Us</span>
-                  </NavLink >
+                  </HashLink>
+                  {/* </NavLink > */}
                 </li>
               </ul>
             </div>
           </li>
 
           <li>
-            <NavLink  to="/contact">
+            <NavLink to="/contact">
               <FaEnvelope className="nav-icon" />
               <span>Contact</span>
-            </NavLink >
+            </NavLink>
           </li>
         </ul>
       </div>
@@ -116,10 +123,16 @@ const Navbar = () => {
       <div className="nav-links-2">
         <ul>
           <li>
-            <NavLink  to="/register">
+            <NavLink to="/register">
               <FaUserPlus className="nav-icon" />
               <span>Register</span>
-            </NavLink >
+            </NavLink>
+          </li>
+
+          <li>
+            <div className="hamburger-menu" onClick={toggleMobileMenu}>
+              <FaBars size={24} />{" "}
+            </div>
           </li>
         </ul>
       </div>

@@ -25,11 +25,7 @@ const AboutHomepage = () => {
           <img src={about_img} alt="" />
         </div>
         <div className="aboutRight">
-          {/* <p>
-            We help kids build real coding skills through fun, interactive,
-            hands-on learning. Our mission is to make tech education accessible
-            for every child.
-          </p> */}
+         
          <AboutSection/>
          <button className="read-more-btn" onClick={handleReadMoreBtn}>
             Read More... <MdArrowForward style= {{fontSize:"20px"}} />
