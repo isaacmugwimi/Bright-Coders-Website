@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import hero_banner1 from "../assets/banner2.avif";
 import hero_banner2 from "../assets/hero-banner-2.jpg";
 import hero_shape_2 from "../assets/hero-shape-2.png";
+import mobile_img from "../assets/web-img.webp";
 // import hero_shape_2 from "../assets/banner2.avif";
 
 import { FaArrowRight } from "react-icons/fa";
@@ -82,7 +83,7 @@ const Home = () => {
             transition={{ ...transition, type: "tween" }}
             className="cta-btn-bg"
           ></motion.div>
-           <motion.div
+          <motion.div
             initial={{ opacity: 1, x: -115 }}
             // animate={{ opacity: 1, x: 0 }}
             whileInView={{ opacity: 0, x: 100 }}
@@ -91,10 +92,10 @@ const Home = () => {
             className="cta-btn-bg"
           ></motion.div>
         </motion.button>
+        <img src={mobile_img} alt="" className="mobile-img" />
       </motion.div>
       <motion.div className="hero-right">
         <img className="hero-shape" src={hero_shape_2} alt="" />
-
         <div className="img-container">
           <motion.img
             src={hero_banner1}
