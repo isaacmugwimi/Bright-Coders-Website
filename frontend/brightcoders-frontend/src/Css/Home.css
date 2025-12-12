@@ -210,8 +210,8 @@
     flex-direction: column;
     padding: 20px 30px;
     height: auto; /* allow content to expand */
-    margin-top: 60px;
-    background-color: bisque;
+    margin-top: 80px;
+    height: 90vh;
   }
 
   .hero-left {
@@ -230,10 +230,10 @@
   }
 
   .hero-paragraph-2 {
-    margin: 0 20px;
+    margin: 0 40px;
   }
   .text {
-    font-size: 22px;
+    font-size: 21px;
     font-weight: 700;
   }
 
@@ -249,11 +249,11 @@
 
   .enroll-button {
     width: 80%;
-    font-size: 16px;
-    height: 60px;
+    font-size: 15px;
+    height: 50px;
     gap: 15px;
     align-self: center;
-    margin-top: 20px;
+    margin-top: 40%;
     margin-bottom: 0px;
   }
 
@@ -295,9 +295,8 @@
   .home-section {
     flex-direction: column;
     padding: 20px 15px 0px;
-    height: auto;
-    margin-top: 60px;
-    background-color: darkgreen;
+    height: 95vh;
+    margin-top: 80px;
   }
 
   .hero-left {
@@ -310,13 +309,13 @@
   }
 
   .wavy-text h1 {
-    font-size: 48px; /* slightly bigger than tiny phones */
+    font-size: 54px; /* slightly bigger than tiny phones */
     line-height: 1.2;
     text-align: center;
   }
 
   .hero-paragraph-2 {
-    margin: 0 20px;
+    margin: 15px 35px;
   }
   .text {
     font-size: 26px;
@@ -328,17 +327,18 @@
   }
 
   .hero-headline2 p {
-    font-size: 18px;
+    font-size: 22px;
     line-height: 1.4;
     text-align: center;
   }
 
   .enroll-button {
     width: 85%;
-    font-size: 18px;
-    height: 65px;
+    font-size: 16px;
+    height: 50px;
     gap: 18px;
     align-self: center;
+    margin-top: 40%;
   }
 
   .cta-btn-bg {
