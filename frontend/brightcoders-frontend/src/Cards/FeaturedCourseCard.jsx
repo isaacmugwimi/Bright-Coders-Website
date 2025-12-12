@@ -21,7 +21,6 @@ const FeaturedCourseCard = ({
     <div className="featured-card" onClick={handleClick}>
       <div className="">
         <div className="image-section">
-          {" "}
           <img src={image} alt="Scratch coding Image" />
           <p className="time-box">
             <DurationIcon />

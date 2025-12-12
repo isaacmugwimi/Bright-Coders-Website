@@ -136,3 +136,11 @@ font-size: 25px;
   opacity: 1;
   padding-top: 0;
 }
+
+
+@media (min-width: 400px) and (max-width: 599px){
+  .featured-card{
+    max-width: none;
+    width: 100% !important;
+  }
+}

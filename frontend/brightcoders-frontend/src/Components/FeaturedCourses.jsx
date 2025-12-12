@@ -35,7 +35,7 @@ const FeaturedCourses = () => {
         whileInView="visible" // animate when container is in view
       >
         {featuredCourseData.map((course, index) => (
-          <motion.div>
+          <motion.div className="features-card">
             <FeaturedCourseCard
               key={index}
               image={course.image}
