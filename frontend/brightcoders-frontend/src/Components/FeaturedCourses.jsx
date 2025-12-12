@@ -13,14 +13,7 @@ const FeaturedCourses = () => {
     navigate("/programs");
   };
   return (
-    <motion.div
-      className="featured"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.4 }}
-      exit={{ opacity: 0, y: -30 }}
-      transition={{ duration: 0.3 }}
-    >
+    <div className="featured">
       <h1 className="header">Featured Courses</h1>
       <div className="horizontal-line">
         <div className="actual-line"></div>
@@ -35,7 +28,7 @@ const FeaturedCourses = () => {
         whileInView="visible" // animate when container is in view
       >
         {featuredCourseData.map((course, index) => (
-          <motion.div className="features-card">
+          <div className="features-card">
             <FeaturedCourseCard
               key={index}
               image={course.image}
@@ -46,14 +39,14 @@ const FeaturedCourses = () => {
               fee={course.fee}
               DurationIcon={course.DurationIcon}
             />
-          </motion.div>
+          </div>
         ))}
       </motion.div>
       <button className="view-more-btn" onClick={handleViewMoreBtn}>
         View More Courses
         <MdReadMore className="arrow-right" />
       </button>
-    </motion.div>
+    </div>
   );
 };
 

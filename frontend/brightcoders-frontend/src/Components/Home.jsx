@@ -1,37 +1,49 @@
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import hero_banner1 from "../assets/banner2.avif";
 import hero_banner2 from "../assets/hero-banner-2.jpg";
 import hero_shape_2 from "../assets/hero-shape-2.png";
-import mobile_img from "../assets/web-img.webp";
-// import hero_shape_2 from "../assets/banner2.avif";
-
 import { FaArrowRight } from "react-icons/fa";
 
 import "../Css/Home.css";
+
+const mobileImages = [
+  "https://imgs.search.brave.com/oWvu_zBGZluKc_2Xbm3q-fDUgnFG_OXq5_rHTogIZk8/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wNDkv/NzUxLzI4My9zbWFs/bC9jb2Rpbmctc2Ny/aXB0LXRleHQtb24t/c2NyZWVuLWNvZGUt/aW4tYnJhY2tldC1z/b2Z0d2FyZS1waG90/by5qcGc",
+  "https://imgs.search.brave.com/UiWu-MK7_fZpT-OeS1mNfeQcxiYhgK5ehe_l6Q8yQgQ/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvMjE3/MTE3MTg2NC9waG90/by9oaXNwYW5pYy1s/YXRpbi1hbWVyaWNh/bi1zb2Z0d2FyZS1l/bmdpbmVlci1kZXZl/bG9wZXItdXNlLWxh/cHRvcC1jb21wdXRl/ci1wcm9ncmFtLWNv/ZGluZy5qcGc_cz02/MTJ4NjEyJnc9MCZr/PTIwJmM9X0U4Mk5N/Y3YzbkE4WHhsdjY4/Tjg1MzRQcU9xZVNK/bUpJTkYtYnlQWUd5/OD0",
+  "https://imgs.search.brave.com/qir1eJcX1fjReCQvKlabItHQBq6ZtoWIgb4rNY5_4wk/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wNjYv/ODcyLzY5My9zbWFs/bC9sYXB0b3AtaW4t/ZnJvbnQtb2YtZGF0/YS1jZW50ZXItZW5n/aW5lZXJzLWRlcGxv/eWluZy1hcnRpZmlj/aWFsLWludGVsbGln/ZW5jZS10b29scy1h/aS1jb2Rpbmctb24t/bm90ZWJvb2stc2Ny/ZWVuLW5leHQtdG8t/dGVjaG5pY2lhbnMt/aW5zcGVjdGluZy1z/ZXJ2ZXItY2x1c3Rl/cnMtY2FtZXJhLWEt/Y2xvc2UtdXAtcGhv/dG8uanBn",
+  "https://imgs.search.brave.com/4TTj2dchR4EQjvd_DT24OEBx-yhygW2BiYofqb9xAEo/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wNDkv/NzUxLzI4NS9zbWFs/bC9jb2Rpbmctc2Ny/aXB0LXRleHQtb24t/c2NyZWVuLWNvZGUt/aW4tYnJhY2tldC1z/b2Z0d2FyZS1waG90/by5qcGc",
+  "https://imgs.search.brave.com/cyMDpDugCNy9FEl7I_xyUEg51Az41Q0NGpbQF3hhU-o/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9tZWRp/YS5nZXR0eWltYWdl/cy5jb20vaWQvNjU0/Nzk4Njc2L3Bob3Rv/L2tpZHMtY29kaW5n/LmpwZz9zPTYxMng2/MTImdz0wJms9MjAm/Yz1ULUtKbDBtN3c3/Ymd6S1U3dnRXb3JQ/UWxCS1p0WTBFYzF5/dmprWTl6ZWdrPQ",
+];
+
 const Home = () => {
-  const transition = { type: "easeIn", duration: 3 };
   const navigate = useNavigate();
   const [word, setWord] = useState("Code");
-  const [isVisible, setIsVisible] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const transition = { type: "easeIn", duration: 3 };
+
   useEffect(() => {
     const words = ["Imagine", "Solve Problems", "Code", "Play", "Explore Tech"];
     let index = 0;
 
-    const interval = setInterval(() => {
+    const wordInterval = setInterval(() => {
       setWord(words[index]);
       index = (index + 1) % words.length;
     }, 4000);
 
-    setIsVisible(true);
+    const sliderInterval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % mobileImages.length);
+    }, 4000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(wordInterval);
+      clearInterval(sliderInterval);
+    };
   }, []);
 
-  // function to handle enroll button
   const handle_enroll_btn = (e) => {
-    e.target.preventDefault;
+    e.preventDefault();
     navigate("/register");
   };
 
@@ -67,33 +79,38 @@ const Home = () => {
             experience required.
           </p>
         </div>
-        <motion.button
-          // initial={{ opacity: 0, x: 350 }}
-          // animate={{ opacity: 1, x: 0 }}
-          // transition={{ duration: 1, ease: "circIn" }}
-          className="enroll-button"
-          onClick={handle_enroll_btn}
-        >
-          <span>Enroll Now</span> <FaArrowRight className="arrow-icon" />{" "}
+        <motion.button className="enroll-button" onClick={handle_enroll_btn}>
+          <span>Enroll Now</span> <FaArrowRight className="arrow-icon" />
           <motion.div
             initial={{ opacity: 1, x: 100 }}
-            // animate={{ opacity: 1, x: 0 }}
             whileInView={{ opacity: 0, x: -115 }}
-            // transition={{ duration: 3, ease: "easeInOut" }}
             transition={{ ...transition, type: "tween" }}
             className="cta-btn-bg"
           ></motion.div>
           <motion.div
             initial={{ opacity: 1, x: -115 }}
-            // animate={{ opacity: 1, x: 0 }}
             whileInView={{ opacity: 0, x: 100 }}
-            // transition={{ duration: 3, ease: "easeInOut" }}
             transition={{ ...transition, type: "tween" }}
             className="cta-btn-bg"
           ></motion.div>
         </motion.button>
-        <img src={mobile_img} alt="" className="mobile-img" />
+
+        {/* Mobile Slider */}
+        <div className="mobile-img-carousel">
+          <AnimatePresence>
+            <motion.img
+              key={currentIndex}
+              src={mobileImages[currentIndex]}
+              alt="Mobile Banner"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -50 }}
+              transition={{ duration: 1 }}
+            />
+          </AnimatePresence>
+        </div>
       </motion.div>
+
       <motion.div className="hero-right">
         <img className="hero-shape" src={hero_shape_2} alt="" />
         <div className="img-container">
@@ -104,9 +121,7 @@ const Home = () => {
             initial={{ opacity: 0, x: 300 }}
             whileInView={{ opacity: 1, x: -20 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
-            // transition={{ ...transition, type: "tween" }}
           />
-
           <motion.img
             src={hero_banner2}
             alt="Hero Banner"

@@ -1,3 +1,6 @@
+/* =======================
+   General Home Section
+======================= */
 .home-section {
   display: flex;
   width: 100%;
@@ -6,19 +9,12 @@
   justify-content: space-between;
   padding: 30px 40px;
   margin-top: 80px;
-}
-.mobile-img {
-  display: none;
+  position: relative;
 }
 
-.hero-right {
-  width: 49%;
-  display: flex;
-  position: relative;
-  border: 1px solid #4171ec;
-  border-radius: 10px;
-  padding: 5px;
-}
+/* =======================
+   Hero Left Section
+======================= */
 .hero-left {
   width: 49%;
   display: flex;
@@ -26,30 +22,26 @@
   padding-top: 50px;
 }
 
-.hero-shape {
-  display: block;
+.hero-headline {
+  margin-bottom: 20px;
 }
 
-.one {
-  position: absolute;
-  top: 10%;
-  right: 45%;
-  border-radius: 0 25% 0 40%;
-  width: 50%;
-  height: 40%;
+.hero-headline2 {
+  margin-top: 55px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #2f4f4f8f;
 }
 
-.two {
-  position: absolute;
-  top: 47%;
-  right: 4%;
-  border-radius: 25% 0 40% 0;
-}
-
+/* =======================
+   Animated Wavy Text
+======================= */
 .wavy-text {
   margin-top: 50px;
   padding-bottom: 25px;
 }
+
 .wavy-text h1 {
   color: white;
   font-weight: 900;
@@ -74,35 +66,17 @@
 }
 
 @keyframes slide {
-  100% {
-    background-position-x: 400vw;
-  }
   0% {
     background-position-x: 0%;
   }
+  100% {
+    background-position-x: 400vw;
+  }
 }
 
-/* .hero-paragraph-2 {
-  display: flex;
-  flex-direction: column;
-  color: #1b1711;
-  font-weight: 700;
-} */
-/* .hero-paragraph-2 span {
-  font-size: 50px;
-} */
-
-.hero-headline2 {
-  margin-top: 55px;
-  margin-bottom: 20px;
-  font-size: 20px;
-  font-weight: 500;
-  color: #2f4f4f8f;
-}
-
-/* .animated-words-container{
-
-} */
+/* =======================
+   Animated Words
+======================= */
 .text {
   color: #1b1711;
   font-size: 45px;
@@ -112,9 +86,11 @@
 .animated {
   position: relative;
 }
+
 .animated.second-word {
   color: #4171ec;
 }
+
 .animated.second-word:before {
   content: "";
   position: absolute;
@@ -137,6 +113,9 @@
   }
 }
 
+/* =======================
+   Enroll Button
+======================= */
 .enroll-button {
   position: relative;
   display: flex;
@@ -150,47 +129,17 @@
   outline: none;
   cursor: pointer;
   margin-top: 100px;
-  /* align-self: center; */
   background-color: #3a83f5;
   color: white;
-}
-
-.arrow-icon {
-  font-size: 16px;
+  overflow: hidden;
 }
 
 .enroll-button:hover {
   animation: animate-btn 0.9s both;
 }
 
-@keyframes animate-btn {
-  0% {
-    transform: scale3d(1, 1, 1);
-  }
-
-  30% {
-    transform: scale3d(1.25, 0.75, 1);
-  }
-
-  40% {
-    transform: scale3d(0.75, 1.25, 1);
-  }
-
-  50% {
-    transform: scale3d(1.15, 0.85, 1);
-  }
-
-  65% {
-    transform: scale3d(0.95, 1.05, 1);
-  }
-
-  75% {
-    transform: scale3d(1.05, 0.95, 1);
-  }
-
-  100% {
-    transform: scale3d(1, 1, 1);
-  }
+.arrow-icon {
+  font-size: 16px;
 }
 
 .cta-btn-bg {
@@ -199,240 +148,231 @@
   height: 70%;
   background-color: rgb(255, 255, 255);
   border-radius: 3.5rem;
-
-  /* top: 0; */
-  /* left: 0; */
-  /* z-index: -1; */
   opacity: 0.5;
 }
 
-/* Extra small devices (phones, less than 400px) */
+@keyframes animate-btn {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* =======================
+   Hero Right Section
+======================= */
+.hero-right {
+  width: 49%;
+  display: flex;
+  position: relative;
+  border: 1px solid #4171ec;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.hero-shape {
+  display: block;
+}
+
+.img-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.image-holder {
+  position: absolute;
+}
+
+.one {
+  top: 10%;
+  right: 45%;
+  border-radius: 0 25% 0 40%;
+  width: 50%;
+  height: 40%;
+}
+
+.two {
+  top: 47%;
+  right: 4%;
+  border-radius: 25% 0 40% 0;
+}
+
+/* =======================
+   Mobile Slider
+======================= */
+.mobile-img-carousel {
+  position: absolute;
+  right: 0;
+  top: 68%;
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+}
+
+.mobile-img-carousel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 15px;
+  position: absolute;
+}
+
+/* =======================
+   Responsive Breakpoints
+======================= */
+
+/* Extra small devices (phones <400px) */
 @media (max-width: 399px) {
-  /* Styles for tiny phones */
   .home-section {
     flex-direction: column;
     padding: 20px 30px;
-    height: auto; /* allow content to expand */
-    margin-top: 80px;
-    height: 90vh;
-  }
-
-  .hero-left {
-    width: 100%;
-    padding: 10px 0;
-  }
-
-  .hero-left {
-    padding-top: 0px;
-  }
-
-  .wavy-text h1 {
-    font-size: 36px; /* smaller headline */
-    line-height: 1.2;
-    text-align: center;
-  }
-
-  .hero-paragraph-2 {
-    margin: 0 40px;
-  }
-  .text {
-    font-size: 21px;
-    font-weight: 700;
-  }
-
-  .animated.second-word {
-    font-size: 22px;
-  }
-
-  .hero-headline2 p {
-    font-size: 16px;
-    line-height: 1.4;
-    text-align: center;
-  }
-
-  .enroll-button {
-    width: 80%;
-    font-size: 15px;
-    height: 50px;
-    gap: 15px;
-    align-self: center;
-    margin-top: 40%;
-    margin-bottom: 0px;
-  }
-
-  .cta-btn-bg {
-    width: 60px;
-    height: 60%;
-    border-radius: 3rem;
-  }
-
-  .hero-right {
-    /* margin-top: 20px;
-    width: 110%;
-    height: 40vh;
-
-    align-self: center; */
-    display: none;
-  }
-
-  /* .hero-shape {
-  }
-  .one {
-    top: 2%;
-    left: 9%;
-    width: 60%;
-    border-radius: 30px 0 50px 0;
-  }
-  .two {
-    width: 60%;
-    height: 50%;
-    bottom: 1%;
-    right: 9%;
-    border-radius: 0 30px 0 50px;
-  } */
-}
-
-/* Small devices (phones, 400px – 599px) */
-@media (min-width: 400px) and (max-width: 599px) {
-  /* Styles for most phones */
-  .home-section {
-    flex-direction: column;
-    padding: 20px 15px 0px;
-    height: 95vh;
-    margin-top: 80px;
-    position: relative;
-  
-  }
- .mobile-img {
-    display: initial;
-    position: absolute;
-    right: 0;
-    top: 68%;
-    width: 100%;
-    height: 350px;
-  } 
-
-  .hero-left {
-    width: 100%;
-    padding: 10px 0;
-  }
-
-  .hero-left {
-    padding-top: 0px;
-  }
-
-  .wavy-text h1 {
-    font-size: 50px; /* slightly bigger than tiny phones */
-    line-height: 1.2;
-    text-align: center;
-  }
-
-  .hero-paragraph-2 {
-    margin: 15px 35px;
-  }
-  .text {
-    font-size: 26px;
-    font-weight: 700;
-  }
-
-  .animated.second-word {
-    font-size: 26px;
-  }
-
-  .hero-headline2 p {
-    font-size: 22px;
-    line-height: 1.4;
-    text-align: center;
-  }
-
-  .enroll-button {
-    width: 85%;
-    font-size: 16px;
-    height: 60px;
-    gap: 18px;
-    align-self: center;
-    margin-top: 3%;
-  }
-
-  .cta-btn-bg {
-    width: 65px;
-    height: 60%;
-    border-radius: 3rem;
-  }
-
-  .hero-right {
-    display: none;
-  }
-}
-
-/* Medium devices (tablets, portrait) */
-@media (min-width: 600px) and (max-width: 767px) {
-  /* Styles for small tablets */
-  .home-section {
-    flex-direction: column;
-    padding: 30px 20px;
-    margin-top: 80px;
     height: auto;
+    margin-top: 80px;
   }
+
   .hero-left,
   .hero-right {
     width: 100%;
     padding: 10px 0;
   }
+  .hero-right {
+    display: none;
+  }
 
+  .wavy-text h1 {
+    font-size: 36px;
+    text-align: center;
+  }
+  .text {
+    font-size: 21px;
+  }
+  .animated.second-word {
+    font-size: 22px;
+  }
+  .hero-headline2 p {
+    font-size: 16px;
+    text-align: center;
+  }
+  .enroll-button {
+    width: 80%;
+    font-size: 15px;
+    height: 50px;
+    margin-top: 40%;
+    gap: 15px;
+  }
+  .cta-btn-bg {
+    width: 60px;
+    height: 60%;
+  }
+}
+
+/* Small devices (400px – 599px) */
+@media (min-width: 400px) and (max-width: 599px) {
+  .home-section {
+    flex-direction: column;
+    padding: 20px 15px 0;
+    height: 99vh;
+    margin-top: 80px;
+    position: relative;
+  }
+  .hero-left,
+  .hero-right {
+    width: 100%;
+  }
+  .hero-right {
+    display: none;
+  }
+
+  .wavy-text h1 {
+    font-size: 50px;
+  }
+  .text,
+  .animated.second-word {
+    font-size: 26px;
+  }
+  .hero-headline2 p {
+    font-size: 22px;
+  }
+  .enroll-button {
+    width: 85%;
+    font-size: 16px;
+    height: 60px;
+    margin-top: 3%;
+  }
+  .cta-btn-bg {
+    width: 65px;
+    height: 60%;
+  }
+  .mobile-img-carousel {
+    top: 65%;
+    height: 250px;
+    padding: 0 20px;
+  }
+}
+
+/* Medium devices (600px – 767px) */
+@media (min-width: 600px) and (max-width: 767px) {
+  .home-section {
+    flex-direction: column;
+    padding: 30px 20px;
+    height: auto;
+  }
+  .hero-left,
+  .hero-right {
+    width: 100%;
+  }
   .wavy-text h1 {
     font-size: 55px;
   }
-
   .text,
   .animated.second-word {
     font-size: 30px;
   }
-
   .hero-headline2 p {
     font-size: 20px;
   }
-
   .enroll-button {
     width: 65%;
     font-size: 20px;
     height: 70px;
-    align-self: center;
   }
   .hero-right {
     margin-top: 20px;
-  }
-
-  .hero-shape {
-    height: 100%;
   }
   .one,
   .two {
     width: 50%;
     height: auto;
   }
-  .one {
-    top: 3%;
-    /* left: 3%; */
-    height: 44%;
-  }
-  .two {
-    /* width: 60%; */
-    height: 54%;
-    right: 5%;
-    top: 44%;
-  }
 }
 
-/* Large tablets (landscape) */
+/* Large tablets (768px – 1023px) */
 @media (min-width: 768px) and (max-width: 1023px) {
-  /* Styles for standard tablets */
   .home-section {
     flex-direction: row;
     padding: 40px 20px;
     height: 90vh;
   }
-
   .hero-left {
     width: 48%;
   }
@@ -444,56 +384,27 @@
   .wavy-text h1 {
     font-size: 65px;
   }
-
   .text,
   .animated.second-word {
     font-size: 35px;
   }
-
   .hero-headline2 p {
     font-size: 22px;
   }
-
-  .enroll-button {
-    width: 350px;
-    font-size: 20px;
-    height: 75px;
-  }
-
-  .hero-shape {
-    height: auto;
-  }
-  .one {
-    top: 10%;
-    right: 39%;
-    border-radius: 0 25% 0 40%;
-    width: 55%;
-    height: 35%;
-  }
-
-  .two {
-    top: 47%;
-    right: 5%;
-    border-radius: 25% 0 40% 0;
-  }
 }
 
-/* Laptops / small desktops */
+/* Laptops / small desktops (1024px – 1279px) */
 @media (min-width: 1024px) and (max-width: 1279px) {
-  /* Styles for small laptops */
   .home-section {
     padding: 50px 40px;
   }
-
   .wavy-text h1 {
     font-size: 70px;
   }
-
   .text,
   .animated.second-word {
     font-size: 40px;
   }
-
   .hero-headline2 p {
     font-size: 24px;
   }
@@ -502,84 +413,52 @@
     height: 70vh;
     padding: 15px;
   }
-
   .enroll-button {
     width: 380px;
     font-size: 22px;
     height: 80px;
   }
-  .hero-shape {
-    height: auto;
-  }
-  .one {
-    top: 5%;
-    right: 19%;
-    border-radius: 0 25% 0 40%;
-    width: 75%;
-    height: 40%;
-  }
-
-  .two {
-    top: 47%;
-    right: 5%;
-    border-radius: 25% 0 40% 0;
-  }
 }
 
-/* Desktops / large screens */
+/* Desktops / large screens (1280px – 1599px) */
 @media (min-width: 1280px) and (max-width: 1599px) {
-  /* Styles for standard desktops */
   .wavy-text h1 {
     font-size: 75px;
   }
-
   .text,
   .animated.second-word {
     font-size: 45px;
   }
-
   .hero-headline2 p {
     font-size: 20px;
   }
-
   .enroll-button {
     width: 300px;
     font-size: 20px;
     height: 65px;
     margin-top: 170px;
   }
-  .hero-shape {
-    height: auto;
-  }
   .hero-right {
     width: 53%;
     height: 78vh;
   }
-
   .hero-shape {
     height: 70vh;
   }
-  .wavy-text {
-    margin-bottom: 20px;
-  }
 }
 
-/* Extra large screens */
+/* Extra large screens (1600px – 1919px) */
 @media (min-width: 1600px) and (max-width: 1919px) {
-  /* Styles for large desktops */
   .wavy-text h1 {
     font-size: 85px;
   }
-
   .text,
   .animated.second-word {
     font-size: 50px;
   }
-
   .hero-headline2 p {
     font-size: 28px;
   }
-
   .enroll-button {
     width: 450px;
     font-size: 26px;
@@ -592,38 +471,20 @@
   .hero-shape {
     height: 60vh;
   }
-  .one {
-    top: 5%;
-    left: 5%;
-    /* border-radius: 0 25% 0 40%; */
-    width: 45%;
-    /* height: 40%; */
-  }
-
-  .two {
-    top: 45%;
-    right: 5%;
-    /* border-radius: 25% 0 40% 0; */
-  }
 }
 
-/* Ultra wide / 4K screens */
+/* Ultra wide / 4K screens (1920px+) */
 @media (min-width: 1920px) {
-  /* Styles for ultra-wide monitors */
-
   .wavy-text h1 {
     font-size: 95px;
   }
-
   .text,
   .animated.second-word {
     font-size: 55px;
   }
-
   .hero-headline2 p {
     font-size: 30px;
   }
-
   .enroll-button {
     width: 500px;
     font-size: 28px;
