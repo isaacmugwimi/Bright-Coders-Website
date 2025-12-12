@@ -36,7 +36,7 @@ const Navbar = () => {
       </div>
 
       <div className={`nav-links ${mobileMenuOpen ? "mobile-active" : ""}`}>
-        {" "}
+        
         <div className="close-menu" onClick={toggleMobileMenu}>
           <FaTimes size={24} />
         </div>

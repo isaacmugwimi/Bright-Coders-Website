@@ -105,6 +105,9 @@
 .hamburger-menu {
   display: none !important;
 }
+.close-menu{
+  display: none;
+}
 /* Hide nav-links on small screens by default */
 
 @media (max-width: 768px) {
@@ -138,6 +141,10 @@
     cursor: pointer;
     z-index: 1000;
     color: #006666;
+  }
+  .close-menu{
+    display: block;
+    
   }
 
   .nav-links ul {
