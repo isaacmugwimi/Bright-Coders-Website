@@ -219,30 +219,28 @@
 }
 
 /* =======================
-   Mobile Slider
+   Mobile Slider (Fix)
 ======================= */
 .mobile-img-carousel {
   display: none;
-  position: absolute;
-  /* right: 0;
-    top: 68%;
-    width: 100%; */
-  height: 250px;
+  width: 100%;
+  height: 230px;
   overflow: hidden;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
+  border-radius: 18px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+  position: relative;
+  margin-top: -55%;   /* 🔥 pulls carousel upward 50–60px for “half visible effect” */
 }
 
+/* Carousel images */
 .mobile-img-carousel img {
-  display: none;
-  width: 90%;
+  width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 15px;
   position: absolute;
+  border-radius: 18px;
 }
+
 
 /* =======================
    Responsive Breakpoints
@@ -257,6 +255,7 @@
     height: 104vh;
     background-size: 100% 60%;
     margin-top: 30px;
+    margin-bottom: 45px;
     position: relative;
     background-image: url(../assets/hero-shape-2.png);
     background-repeat: no-repeat;
@@ -285,7 +284,7 @@
     width: 75%;
     font-size: 16px;
     height: 50px;
-    margin-top: 30%;
+    margin-top: 20%;
     margin-left: 15%;
     justify-self: center;
   }
@@ -294,8 +293,12 @@
     height: 60%;
   }
   .mobile-img-carousel {
-    top: 75%;
+    display: flex;
+    top: 38%;
     height: 250px;
+  }
+  .mobile-img-carousel img {
+    display: block;
   }
 }
 
@@ -307,6 +310,7 @@
     padding: 20px 15px 0;
     height: 104vh;
     margin-top: 30px;
+    margin-bottom: 20px;
     position: relative;
     background-image: url(../assets/hero-shape-2.png);
     background-size: 100% 60%;
@@ -344,8 +348,12 @@
     height: 60%;
   }
   .mobile-img-carousel {
-    top: 75%;
+    display: initial;
+    top: 77%;
     height: 250px;
+  }
+  .mobile-img-carousel img {
+    display: initial;
   }
 }
 
@@ -357,6 +365,7 @@
     padding: 20px 15px 0;
     height: 104vh;
     margin-top: 30px;
+    margin-bottom: 40px;
     position: relative;
     background-image: url(../assets/hero-shape-2.png);
     background-size: 100% 69%;
@@ -399,8 +408,12 @@
     height: 60%;
   }
   .mobile-img-carousel {
-    top: 75%;
-    height: 250px;
+    display: initial;
+    top: 77%;
+    height: 380px;
+  }
+   .mobile-img-carousel img {
+    display: initial;
   }
 }
 
