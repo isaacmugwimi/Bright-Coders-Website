@@ -379,12 +379,14 @@
     margin-top: 80px;
     height: auto;
   }
-  .hero-left,
-  .hero-right {
+  .hero-left {
     width: 100%;
     padding: 10px 0;
+    background-color: darkgoldenrod;
   }
-
+.hero-right{
+  display: none;
+}
   .wavy-text h1 {
     font-size: 55px;
   }
