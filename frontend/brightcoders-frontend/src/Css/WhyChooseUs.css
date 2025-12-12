@@ -85,3 +85,14 @@
   color: #6b7280; /* gray text */
   line-height: 1.4;
 }
+
+
+@media (max-width: 399px) {
+  .section-subheader {
+    font-size: 35px;
+  }
+}
+@media (min-width: 400px) and (max-width: 599px) {
+.section-subheader {
+    font-size: 35px;
+  }}

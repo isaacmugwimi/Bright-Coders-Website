@@ -43,7 +43,7 @@ const Navbar = () => {
         <ul>
           <li>
             <NavLink to="/home">
-              <FaHome className="nav-icon" /> <span>Home</span>
+              <FaHome className="nav-icon"  /> <span>Home</span>
             </NavLink>
           </li>
 
@@ -64,7 +64,7 @@ const Navbar = () => {
           {/* DROPDOWN */}
           <li className="dropdown">
             <div className="dropdown-link">
-              <IoMdArrowDropdown className="nav-icon" />
+              <IoMdArrowDropdown className="nav-icon"  />
               <span>More</span>
             </div>
 

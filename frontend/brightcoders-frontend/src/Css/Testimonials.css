@@ -1,15 +1,15 @@
 .carousel {
   background-color: rgba(240, 248, 255, 0.788);
 
-  width: 90%;
+  width: 100%;
   justify-self: center;
-  padding: 30px 20px;
+  padding: 30px 10px;
 }
 
 .testimonials-wrapper {
   position: relative;
-  padding-top: 100px;
-  scroll-margin-top: 100px; /*height of the navbar*/
+  padding-top: 130px;
+  scroll-margin-top: 110px; /*height of the navbar*/
 }
 
 .custom-shape-divider-top-1764543608 {
@@ -30,7 +30,7 @@
 }
 
 .custom-shape-divider-top-1764543608 .shape-fill {
-  fill: #fdf7ee;
+  fill: red;
 }
 
 /* ============================================================
@@ -67,7 +67,7 @@
 =============================================================== */
 @media (min-width: 400px) and (max-width: 599px) {
   .testimonials-wrapper {
-    padding-top: 80px;
+    padding-top: 120px;
   }
 
   .custom-shape-divider-top-1764543608 svg {

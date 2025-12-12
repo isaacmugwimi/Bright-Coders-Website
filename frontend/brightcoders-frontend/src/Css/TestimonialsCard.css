@@ -2,7 +2,7 @@
   width: 95%;
   /* background-color: white; */
   justify-self: center;
-  padding: 30px;
+  padding: 20px;
 }
 
 .corousel-item {
@@ -158,8 +158,7 @@
     margin: 25px 10px 55px 10px;
   }
   .quotes-mark {
-    right: 15%;
-  }
+display: none;  }
 }
 
 /* ============================================================
@@ -191,6 +190,9 @@
 
   .slick-slide > div {
     margin: 30px 15px 60px 15px;
+  }
+  .quotes-mark{
+    display: none;
   }
 }
 

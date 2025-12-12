@@ -9,6 +9,9 @@
   justify-content: space-between;
   padding: 30px 40px;
   margin-top: 80px;
+  background-image: url(..//assets/hero-shape-2.png);
+  background-repeat: no-repeat;
+  background-size: 100% 95%;
   position: relative;
 }
 
@@ -79,7 +82,7 @@
 ======================= */
 .text {
   color: #1b1711;
-  font-size: 45px;
+  font-size: 40px;
   font-weight: 700;
 }
 
@@ -188,7 +191,7 @@
 }
 
 .hero-shape {
-  display: block;
+  display: none;
 }
 
 .img-container {
@@ -202,7 +205,7 @@
 }
 
 .one {
-  top: 10%;
+  top: 1%;
   right: 45%;
   border-radius: 0 25% 0 40%;
   width: 50%;
@@ -210,7 +213,7 @@
 }
 
 .two {
-  top: 47%;
+  top: 46%;
   right: 4%;
   border-radius: 25% 0 40% 0;
 }
@@ -219,18 +222,22 @@
    Mobile Slider
 ======================= */
 .mobile-img-carousel {
+  display: none;
   position: absolute;
-  right: 0;
-  top: 68%;
-  width: 100%;
+  /* right: 0;
+    top: 68%;
+    width: 100%; */
   height: 250px;
   overflow: hidden;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   border-radius: 15px;
+  display: flex;
+  justify-content: center;
 }
 
 .mobile-img-carousel img {
-  width: 100%;
+  display: none;
+  width: 90%;
   height: 100%;
   object-fit: cover;
   border-radius: 15px;
@@ -244,56 +251,66 @@
 /* Extra small devices (phones <400px) */
 @media (max-width: 399px) {
   .home-section {
+    display: flex;
     flex-direction: column;
-    padding: 20px 30px;
-    height: auto;
-    margin-top: 80px;
+    padding: 20px 15px 0;
+    height: 104vh;
+    background-size: 100% 60%;
+    margin-top: 30px;
+    position: relative;
+    background-image: url(../assets/hero-shape-2.png);
+    background-repeat: no-repeat;
   }
-
   .hero-left,
   .hero-right {
     width: 100%;
-    padding: 10px 0;
   }
   .hero-right {
     display: none;
   }
 
   .wavy-text h1 {
-    font-size: 36px;
-    text-align: center;
+    font-size: 37px;
+    justify-self: center;
+    margin-bottom: 10px;
   }
-  .text {
-    font-size: 21px;
-  }
+  .text,
   .animated.second-word {
-    font-size: 22px;
+    font-size: 23px;
   }
   .hero-headline2 p {
-    font-size: 16px;
-    text-align: center;
+    font-size: 18px;
   }
   .enroll-button {
-    width: 80%;
-    font-size: 15px;
+    width: 75%;
+    font-size: 16px;
     height: 50px;
-    margin-top: 40%;
-    gap: 15px;
+    margin-top: 30%;
+    margin-left: 15%;
+    justify-self: center;
   }
   .cta-btn-bg {
-    width: 60px;
+    width: 65px;
     height: 60%;
+  }
+  .mobile-img-carousel {
+    top: 75%;
+    height: 250px;
   }
 }
 
 /* Small devices (400px – 599px) */
 @media (min-width: 400px) and (max-width: 599px) {
   .home-section {
+    display: flex;
     flex-direction: column;
     padding: 20px 15px 0;
-    height: 99vh;
-    margin-top: 80px;
+    height: 104vh;
+    margin-top: 30px;
     position: relative;
+    background-image: url(../assets/hero-shape-2.png);
+    background-size: 100% 60%;
+    background-repeat: no-repeat;
   }
   .hero-left,
   .hero-right {
@@ -305,64 +322,85 @@
 
   .wavy-text h1 {
     font-size: 50px;
+    justify-self: center;
+    margin-bottom: 10px;
   }
   .text,
   .animated.second-word {
     font-size: 26px;
   }
   .hero-headline2 p {
-    font-size: 22px;
+    font-size: 19px;
   }
   .enroll-button {
-    width: 85%;
+    width: 75%;
     font-size: 16px;
     height: 60px;
-    margin-top: 3%;
+    margin-top: 15%;
+    margin-left: 15%;
   }
   .cta-btn-bg {
     width: 65px;
     height: 60%;
   }
   .mobile-img-carousel {
-    top: 65%;
+    top: 75%;
     height: 250px;
-    padding: 0 20px;
   }
 }
 
 /* Medium devices (600px – 767px) */
 @media (min-width: 600px) and (max-width: 767px) {
   .home-section {
+    display: flex;
     flex-direction: column;
-    padding: 30px 20px;
-    height: auto;
+    padding: 20px 15px 0;
+    height: 104vh;
+    margin-top: 30px;
+    position: relative;
+    background-image: url(../assets/hero-shape-2.png);
+    background-size: 100% 69%;
+    background-repeat: no-repeat;
   }
   .hero-left,
   .hero-right {
     width: 100%;
   }
-  .wavy-text h1 {
-    font-size: 55px;
+  .hero-right {
+    display: none;
   }
-  .text,
-  .animated.second-word {
+
+  .wavy-text h1 {
+    font-size: 70px;
+    justify-self: center;
+    margin-bottom: 10px;
+  }
+  .text {
     font-size: 30px;
+    margin-left: 10px;
+  }
+
+  .animated.second-word {
+    font-size: 40px;
   }
   .hero-headline2 p {
     font-size: 20px;
+    text-align: center;
   }
   .enroll-button {
-    width: 65%;
-    font-size: 20px;
-    height: 70px;
+    width: 75%;
+    font-size: 16px;
+    height: 60px;
+    margin-top: 15%;
+    margin-left: 15%;
   }
-  .hero-right {
-    margin-top: 20px;
+  .cta-btn-bg {
+    width: 65px;
+    height: 60%;
   }
-  .one,
-  .two {
-    width: 50%;
-    height: auto;
+  .mobile-img-carousel {
+    top: 75%;
+    height: 250px;
   }
 }
 
@@ -379,17 +417,37 @@
   .hero-right {
     width: 51%;
     height: 70vh;
-    padding: 15px;
+    padding: 13px;
   }
   .wavy-text h1 {
-    font-size: 65px;
+    font-size: 45px;
   }
   .text,
   .animated.second-word {
-    font-size: 35px;
+    font-size: 30px;
   }
   .hero-headline2 p {
     font-size: 22px;
+  }
+
+  /* .one {
+  top: 1%;
+  right: 45%;
+  border-radius: 0 25% 0 40%;
+  width: 50%;
+  height: 40%;
+} */
+
+  .two {
+    top: 40%;
+    right: 4%;
+    border-radius: 25% 0 40% 0;
+    width: 60%;
+    height: 60%;
+  }
+
+  .mobile-img-carousel {
+    display: none;
   }
 }
 
@@ -418,6 +476,22 @@
     font-size: 22px;
     height: 80px;
   }
+
+  /* .one {
+  top: 1%;
+  right: 45%;
+  border-radius: 0 25% 0 40%;
+  width: 50%;
+  height: 40%;
+} */
+
+  .two {
+    top: 42%;
+    right: 4%;
+    border-radius: 25% 0 40% 0;
+    width: 53%;
+    height: 55%;
+  }
 }
 
 /* Desktops / large screens (1280px – 1599px) */
@@ -442,9 +516,6 @@
     width: 53%;
     height: 78vh;
   }
-  .hero-shape {
-    height: 70vh;
-  }
 }
 
 /* Extra large screens (1600px – 1919px) */
@@ -468,8 +539,20 @@
     width: 53%;
     height: 70vh;
   }
-  .hero-shape {
-    height: 60vh;
+  .one {
+    top: 1%;
+    right: 45%;
+    border-radius: 0 25% 0 40%;
+    width: 50%;
+    height: 40%;
+  }
+
+  .two {
+    top: 42%;
+    right: 4%;
+    border-radius: 25% 0 40% 0;
+    width: 60%;
+    height: 55%;
   }
 }
 

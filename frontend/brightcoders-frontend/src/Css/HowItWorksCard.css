@@ -70,12 +70,12 @@
   .step-card {
     height: 200px;
     padding: 10px;
-    background-color: aqua;
+    /* background-color: aqua; */
   }
 
-  .steps-icon-section {
+  /* .steps-icon-section {
     background-color: red;
-  }
+  } */
 
   .steps-overlay {
     font-size: 12px;
@@ -83,7 +83,7 @@
 
   .step-card h3 {
     font-size: 16px;
-    background-color: blue;
+    /* background-color: blue; */
   }
 
   .step-card p {

@@ -99,13 +99,13 @@ const Home = () => {
         <div className="mobile-img-carousel">
           <AnimatePresence>
             <motion.img
-              key={currentIndex}
-              src={mobileImages[currentIndex]}
+              key={currentIndex} // Changes every interval
+              src={mobileImages[currentIndex]} // Current image
               alt="Mobile Banner"
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -50 }}
-              transition={{ duration: 1 }}
+              initial={{ opacity: 0, scale: 0.8 }} // ← starting state: invisible and slightly smaller
+              animate={{ opacity: 1, scale: 1 }} // ← final state: fully visible and normal size
+              exit={{ opacity: 0, scale: 0.8 }} // ← when leaving: fade out and shrink slightly
+              transition={{ duration: 1 }} // ← animation duration
             />
           </AnimatePresence>
         </div>

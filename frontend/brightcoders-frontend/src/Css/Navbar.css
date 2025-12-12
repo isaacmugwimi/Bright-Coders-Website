@@ -105,7 +105,7 @@
 .hamburger-menu {
   display: none !important;
 }
-.close-menu{
+.close-menu {
   display: none;
 }
 /* Hide nav-links on small screens by default */
@@ -124,13 +124,18 @@
     gap: 1rem;
     box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
     z-index: 999;
+    font-size: 16px;
   }
 
   /* Show menu when active */
   .nav-links.mobile-active {
     display: flex;
+    background-color: whitesmoke;
+    opacity: 0.9;
+    width: 50%;
+    padding: 2rem 0;
   }
-  .nav-links-2 ul{
+  .nav-links-2 ul {
     display: flex;
     gap: 20px;
     align-items: center;
@@ -142,31 +147,51 @@
     z-index: 1000;
     color: #006666;
   }
-  .close-menu{
+  .close-menu {
     display: block;
-    
   }
 
   .nav-links ul {
     flex-direction: column;
     width: 100%;
+    gap: 10px;
+    margin-top: 20px;
   }
 
   .nav-links ul li {
     width: 100%;
-    
+  }
+  .nav-links ul li > :first-child {
+    gap: 10px;
+  }
+
+  .active,
+  .nav-links ul li > :first-child:hover {
+    border-radius: 0px;
   }
 
   /* Dropdown submenu on mobile */
   .dropdown .sub-menu {
     position: relative;
-    top: 0;
+    top: 0px;
+    right: -10%;
     border: none;
     box-shadow: none;
-    width: 100%;
+    width: 80%;
     display: none;
+    border: 1px solid darkcyan;
+    border-top: none;
   }
-
+  /* .sub-menu{
+    padding: 0;
+  }
+  .sub-menu ul{
+    padding: 0 !important;
+  } */
+  .sub-menu ul li {
+    padding: 0px 5px;
+    border-bottom: 1px solid #006666;
+  }
   .dropdown.mobile-open .sub-menu {
     display: flex;
     flex-direction: column;
