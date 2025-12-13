@@ -59,7 +59,7 @@ const FAQs = () => {
       <div
         className="faq-list"
         ref={faqListRef}
-        style={{ maxHeight: "600px", overflowY: "auto" }}
+        
       >
         {visibleFaqs.map((item, index) => (
           <div

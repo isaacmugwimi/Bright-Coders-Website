@@ -294,7 +294,7 @@
   }
   .mobile-img-carousel {
     display: flex;
-    top: 38%;
+    top: 68%;
     height: 250px;
   }
   .mobile-img-carousel img {
@@ -349,7 +349,7 @@
   }
   .mobile-img-carousel {
     display: initial;
-    top: 77%;
+    top: 85%;
     height: 250px;
   }
   .mobile-img-carousel img {

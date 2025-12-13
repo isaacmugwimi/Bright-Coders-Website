@@ -32,6 +32,7 @@
 }
 
 .faq-list {
+  -webkit-overflow-scrolling: touch;
   margin-top: 20px;
   margin: 60px auto;
   max-width: 900px;

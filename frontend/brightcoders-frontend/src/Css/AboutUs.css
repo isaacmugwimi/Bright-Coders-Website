@@ -285,10 +285,10 @@
     text-align: center;
   }
   .about-hero h1 {
-    font-size: 2rem;
+    font-size: 1.7rem;
   }
   .about-hero p {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
   .founder-preview {
     flex-direction: column;
