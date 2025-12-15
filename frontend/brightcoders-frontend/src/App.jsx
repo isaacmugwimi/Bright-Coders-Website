@@ -19,6 +19,7 @@ import { AnimatePresence } from "framer-motion";
 import PageWrapper from "./helper/PageWrapper";
 import FAQs from "./Components/FAQs";
 import Blog from "./Pages/BlogPage";
+import CourseDetail from "./Components/CourseDetail";
 // import React from "react";
 
 function AnimatedRoutes() {
@@ -54,6 +55,16 @@ function AnimatedRoutes() {
             </PageWrapper>
           }
         />
+
+        <Route
+          path="/course-detail"
+          element={
+            <PageWrapper>
+              <CourseDetail />
+            </PageWrapper>
+          }
+        />
+
         <Route
           path="/register"
           element={
@@ -83,7 +94,7 @@ function AnimatedRoutes() {
           path="/blogs"
           element={
             <PageWrapper>
-              <Blog/>
+              <Blog />
             </PageWrapper>
           }
         />

@@ -315,16 +315,20 @@
   }
 
   .wavy-text h1 {
-    font-size: 55px;
+    font-size: 50px;
   }
 
   .text {
-    font-size: 35px;
+    font-size: 28px;
   }
 
   .animated.second-word {
-    font-size: 40px;
+    font-size: 33px;
   }
+
+    .cursor-style {
+  font-size: 33px;
+}
 
   .hero-headline2 {
     font-size: 18px;
@@ -350,6 +354,8 @@
     top: 22%;
     margin-right: 10%;
   }
+
+
 
   .banner {
     width: 95%;
