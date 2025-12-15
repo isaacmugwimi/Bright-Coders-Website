@@ -1,0 +1,300 @@
+/* ==========================
+   GLOBAL PAGE WRAPPER
+========================== */
+.about-page {
+  font-family: "Poppins", sans-serif;
+  /* color: #1b1b1b; */
+}
+
+.who-we-are,
+.mission-vision,
+.values-section,
+.our-story,
+.founder-preview,
+.cta-section {
+  margin: 0 9%; /* Apply padding to content sections */
+}
+
+/* ==========================
+   HERO SECTION
+========================== */
+
+.about-hero {
+  width: 100%;
+  min-height: 20vh;
+  background-image: linear-gradient(rgba(8, 0, 58, 0.7), rgba(8, 0, 58, 0.7)),
+    url("https://images.pexels.com/photos/421129/pexels-photo-421129.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+  /* padding-left: -5%; */
+  /* margin: 0 -5%; */
+}
+
+.about-hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+}
+
+.about-hero p {
+  margin-top: 10px;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.87);
+  /* background-color: darkcyan; */
+  letter-spacing: 1.6px;
+}
+
+/* ==========================
+   WHO WE ARE
+========================== */
+.who-we-are {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 60px 0;
+  align-items: center;
+}
+
+.who-text h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #084b83;
+}
+
+.who-text p {
+  font-size: 1.05rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+.who-image img {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 128, 0, 0.1);
+}
+
+/* ==========================
+   MISSION & VISION
+========================== */
+.mission-vision {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  padding: 60px 0;
+}
+
+.mv-card {
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  transition: 0.3s ease;
+  border: 1px solid #e8e8e8;
+  border-bottom: 2px solid darkcyan;
+}
+
+.mv-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 128, 0, 0.15);
+}
+
+.mv-icon {
+  font-size: 2.5rem;
+  color: #084b83;
+  margin-bottom: 15px;
+}
+
+.mv-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+/* ==========================
+   VALUES SECTION
+========================== */
+.values-section {
+  text-align: center;
+  padding: 60px 0;
+}
+
+.values-section h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #084b83;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+}
+
+.value-card {
+  background: #ffffff;
+  padding: 30px 20px;
+  border-radius: 20px;
+  text-align: center;
+  border: 1px solid #eee;
+  border-bottom: 2px solid darkcyan;
+  transition: 0.3s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 128, 0, 0.12);
+}
+
+.value-icon {
+  font-size: 2.2rem;
+  color: #ffbf00;
+  margin-bottom: 12px;
+}
+
+/* ==========================
+   OUR STORY
+========================== */
+.our-story {
+  padding: 70px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.story-text h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #084b83;
+}
+
+.story-text p {
+  font-size: 1.05rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+.story-image img {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 128, 0, 0.1);
+}
+
+/* ==========================
+   FOUNDER PREVIEW
+========================== */
+.founder-preview {
+  margin-top: 60px;
+  padding: 50px 40px;
+  display: flex;
+  gap: 40px;
+  background: white;
+  border-radius: 20px;
+  align-items: center;
+  border: 1px solid #eee;
+}
+
+.founder-img {
+  width: 150px;
+  height: 180px;
+  /* object-fit: cover; */
+  border-radius: 50%;
+  border: 4px solid #008000;
+}
+
+.founder-info h2 {
+  font-size: 1.7rem;
+  margin-bottom: 10px;
+}
+
+.btn-read-more {
+  background: #008000;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: 0.3s ease;
+}
+
+.btn-read-more:hover {
+  background: #006600;
+}
+
+/* ==========================
+   CALL TO ACTION BUTTON
+========================== */
+.cta-section {
+  text-align: center;
+  padding: 70px 20px;
+  margin-top: 60px;
+  margin-bottom: 40px;
+  background: #008000;
+  color: white;
+  border-radius: 25px;
+}
+
+.cta-section .cta-btn {
+  margin-top: 20px;
+  background: white;
+  color: #084b83;
+  border: none;
+  padding: 12px 25px;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.cta-section .cta-btn:hover {
+  background: #f1f1f1;
+}
+
+.bottom-margin {
+  height: 20px;
+}
+
+/* ==========================
+   RESPONSIVENESS
+========================== */
+/* @media (max-width: 899px){
+  .about-hero h1 {
+    font-size: 1rem;
+  }
+
+  .about-hero p {
+    font-size: 1.3rem;
+    background-color: red;
+  }
+} */
+@media (max-width: 900px) {
+  .who-we-are,
+  .our-story,
+  .founder-preview {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .about-hero {
+    text-align: center;
+  }
+  .about-hero h1 {
+    font-size: 1.7rem;
+  }
+  .about-hero p {
+    font-size: 0.9rem;
+  }
+  .founder-preview {
+    flex-direction: column;
+  }
+
+  .founder-img {
+    margin-bottom: 20px;
+  }
+}

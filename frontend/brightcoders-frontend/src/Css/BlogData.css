@@ -1,0 +1,153 @@
+.blog-container {
+  padding: 40px 0;
+  width: 100%;
+}
+
+.blog-hero {
+  width: 100%;
+  text-align: center;
+  padding: 60px 0px;
+  color: white;
+  background: linear-gradient(135deg, #001f54, #003680);
+}
+
+.blog-hero h1 {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.blog-hero p {
+  font-size: 18px;
+  color: gray;
+}
+
+/* GRID */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  gap: 40px;
+  padding: 90px;
+}
+
+/* CARD */
+.blog-card {
+  background: #ffffff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: 0.3s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+}
+
+.blog-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.blog-content {
+  padding: 20px;
+}
+
+.blog-content h3 {
+  margin-bottom: 10px;
+}
+
+.blog-content p {
+  font-size: 14px;
+  color: #555;
+}
+
+.blog-meta {
+  margin-top: 12px;
+  font-size: 13px;
+  color: darkcyan;
+  display: flex;
+  justify-content: space-between;
+}
+
+.read-more {
+  margin-top: 15px;
+  padding: 10px 18px;
+  background: darkcyan;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.read-more:hover {
+  background: #005f5f;
+}
+
+/* ===================== MEDIA QUERIES ===================== */
+
+/* Extra small devices (phones, <400px) */
+@media (max-width: 399px) {
+  .blog-hero h1 { font-size: 24px; }
+  .blog-hero p { font-size: 12px; }
+  .blog-grid { padding: 20px; gap: 20px; }
+  .blog-card img { height: 150px; }
+  .blog-content h3 { font-size: 16px; }
+  .blog-content p { font-size: 12px; }
+}
+
+/* Small devices (400px – 599px) */
+@media (min-width: 400px) and (max-width: 599px) {
+  .blog-hero h1 { font-size: 28px; }
+  .blog-hero p { font-size: 14px; }
+  .blog-grid { padding: 30px; gap: 25px; }
+  .blog-card img { height: 160px; }
+  .blog-content h3 { font-size: 18px; }
+  .blog-content p { font-size: 13px; }
+}
+
+/* Medium devices (tablets, portrait, 600px – 767px) */
+@media (min-width: 600px) and (max-width: 767px) {
+  .blog-hero h1 { font-size: 32px; }
+  .blog-hero p { font-size: 15px; }
+  .blog-grid { padding: 40px; gap: 30px; }
+  .blog-card img { height: 180px; }
+  .blog-content h3 { font-size: 19px; }
+  .blog-content p { font-size: 14px; }
+}
+
+/* Large tablets (landscape, 768px – 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .blog-hero h1 { font-size: 36px; }
+  .blog-hero p { font-size: 16px; }
+  .blog-grid { padding: 50px; gap: 35px; }
+  .blog-card img { height: 200px; }
+}
+
+/* Laptops / small desktops (1024px – 1279px) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .blog-hero h1 { font-size: 38px; }
+  .blog-hero p { font-size: 17px; }
+  .blog-grid { padding: 60px; gap: 40px; }
+}
+
+/* Desktops / large screens (1280px – 1599px) */
+@media (min-width: 1280px) and (max-width: 1599px) {
+  .blog-hero h1 { font-size: 40px; }
+  .blog-hero p { font-size: 18px; }
+  .blog-grid { padding: 80px; gap: 45px; }
+}
+
+/* Extra large screens (1600px – 1919px) */
+@media (min-width: 1600px) and (max-width: 1919px) {
+  .blog-hero h1 { font-size: 42px; }
+  .blog-hero p { font-size: 18px; }
+  .blog-grid { padding: 90px; gap: 50px; }
+}
+
+/* Ultra wide / 4K screens (>=1920px) */
+@media (min-width: 1920px) {
+  .blog-hero h1 { font-size: 44px; }
+  .blog-hero p { font-size: 20px; }
+  .blog-grid { padding: 100px; gap: 55px; }
+}

@@ -1,0 +1,310 @@
+.carousel-inner {
+  width: 95%;
+  /* background-color: white; */
+  justify-self: center;
+  padding: 20px;
+}
+
+.corousel-item {
+  border: 1px solid silver;
+  background-color: white;
+  margin-bottom: 20px;
+  text-align: center;
+  padding: 20px;
+  height: 300px;
+  position: relative;
+  border-radius: 20px;
+}
+
+.corousel-item .testimonial-feedback {
+  font-size: 18px;
+  height: 140px;
+  color: darkblue;
+  position: relative;
+  z-index: 999;
+}
+
+.arrow {
+  width: 40px;
+  height: 40px;
+  background: darkgreen;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  position: absolute;
+  top: 40%;
+  cursor: pointer;
+  z-index: 999;
+  font-size: 20px;
+  transition: 0.3s ease;
+}
+
+.arrow:hover {
+  transform: scale(1.105);
+}
+
+.next {
+  right: -40px;
+}
+
+.prev {
+  left: -40px;
+}
+
+.testimonial-image-section {
+  /* border-radius: 50%; */
+  width: 100px;
+  height: 100px;
+  left: 35%;
+  bottom: -15%;
+  position: absolute;
+}
+
+.testimonial-image-section img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid darkcyan;
+}
+
+.placeholder-icon {
+  width: 100px;
+  height: 100px;
+  background: #e5e7eb;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 30px;
+  border: 2px solid darkcyan;
+  /* margin: 10px auto; */
+}
+
+.quotes-mark {
+  position: absolute;
+  top: 0;
+  right: 25%;
+}
+
+.slick-slide > div {
+  margin: 45px 20px 65px 20px;
+  /* background-color: red; */
+}
+
+.slick-slide {
+  transform: scale(0.9);
+  transition: all 0.4s ease;
+  opacity: 0.7;
+}
+
+/* Enlarge only the center (active) slide */
+.slick-center {
+  transform: scale(1.2);
+  opacity: 1;
+  z-index: 2;
+}
+
+.slick-center .corousel-item {
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.5);
+  border: 1px solid #e6e6e6;
+}
+/* ============================================================
+   EXTRA SMALL – phones under 400px
+=============================================================== */
+@media (max-width: 399px) {
+  .carousel-inner {
+    padding: 15px;
+    width: 100%;
+  }
+
+  .corousel-item {
+    height: 260px;
+    padding: 15px;
+  }
+
+  .testimonial-feedback {
+    font-size: 14px;
+    height: 110px;
+  }
+
+  .testimonial-image-section {
+    width: 80px;
+    height: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* react-slick arrows */
+  .arrow {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+    top: 45%;
+  }
+
+  .next {
+    right: -20px;
+  }
+
+  .prev {
+    left: -20px;
+  }
+
+  .slick-slide > div {
+    margin: 25px 10px 55px 10px;
+  }
+  .quotes-mark {
+display: none;  }
+}
+
+/* ============================================================
+   SMALL – 400px–599px
+=============================================================== */
+@media (min-width: 400px) and (max-width: 599px) {
+  .corousel-item {
+    height: 280px;
+  }
+
+  .testimonial-feedback {
+    font-size: 15px;
+    height: 120px;
+  }
+
+  .testimonial-image-section {
+    width: 90px;
+    height: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+    top: 45%;
+  }
+
+  .slick-slide > div {
+    margin: 30px 15px 60px 15px;
+  }
+  .quotes-mark{
+    display: none;
+  }
+}
+
+/* ============================================================
+   MEDIUM – 600px–767px
+=============================================================== */
+@media (min-width: 600px) and (max-width: 767px) {
+  .corousel-item {
+    height: 290px;
+  }
+
+  .testimonial-image-section {
+    width: 95px;
+    height: 95px;
+  }
+
+  .arrow {
+    width: 35px;
+    height: 35px;
+    font-size: 18px;
+  }
+}
+
+/* ============================================================
+   TABLETS – 768px–1023px
+=============================================================== */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .corousel-item {
+    height: 300px;
+  }
+
+  .testimonial-feedback {
+    font-size: 17px;
+  }
+
+  .testimonial-image-section {
+    width: 100px;
+    height: 100px;
+  }
+
+  /* Arrows move outward */
+  .next {
+    right: -30px;
+  }
+
+  .prev {
+    left: -30px;
+  }
+  .quotes-mark {
+    right: 10%;
+  }
+}
+
+/* ============================================================
+   SMALL LAPTOPS – 1024px–1279px
+=============================================================== */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .slick-slide > div {
+    margin: 40px 20px 70px 20px;
+  }
+
+  .corousel-item {
+    height: 320px;
+  }
+  .quotes-mark {
+    right: 2%;
+  }
+ 
+}
+
+/* ============================================================
+   DESKTOP – 1280px–1599px
+=============================================================== */
+@media (min-width: 1280px) and (max-width: 1599px) {
+  .corousel-item {
+    height: 330px;
+
+  }
+   .corousel-item .testimonial-feedback {
+    height: 170px;
+  }
+   .quotes-mark {
+    top: 0;
+    right: 5%;
+    margin-top: -20px;
+  }
+}
+
+/* ============================================================
+   LARGE DESKTOP – 1600px–1919px
+=============================================================== */
+@media (min-width: 1600px) and (max-width: 1919px) {
+  .corousel-item {
+    height: 340px;
+  }
+}
+
+/* ============================================================
+   ULTRA-WIDE – 1920px+
+=============================================================== */
+@media (min-width: 1920px) {
+  .carousel-inner {
+    width: 80%;
+  }
+
+  .corousel-item {
+    height: 360px;
+    padding: 30px;
+  }
+
+  .testimonial-feedback {
+    font-size: 19px;
+    height: 150px;
+  }
+}

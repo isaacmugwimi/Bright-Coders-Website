@@ -1,0 +1,263 @@
+/* -------------------------
+   GLOBAL STYLES
+-------------------------- */
+ .programs-page {
+  width: 100%;
+  /* padding: 100px 7%; */
+  background: #f8faff;
+  font-family: "Poppins", sans-serif;
+} 
+
+/* -------------------------
+   HEADER SECTION
+-------------------------- */
+.programs-header {
+  /* text-align: center;
+  margin-bottom: 50px; */
+  width: 100%;
+  min-height: 20vh;
+  background-image: linear-gradient(rgba(8, 0, 58, 0.7), rgba(8, 0, 58, 0.7)),
+    url("https://images.pexels.com/photos/2653362/pexels-photo-2653362.jpeg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #fff;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+}
+
+.programs-header h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.programs-header p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.61);
+}
+
+/* -------------------------
+   CATEGORY SECTION
+-------------------------- */
+.program-category {
+  /* margin-bottom: 60px; */
+  padding: 50px 7%;
+}
+
+.program-category h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #084b83;
+  margin-bottom: 20px;
+  border-left: 5px solid #1cb65d;
+  padding-left: 10px;
+}
+
+/* -------------------------
+   PROGRAM GRID
+-------------------------- */
+.program-grid {
+  display: grid;
+  /* grid-template-columns: repeat(3, 1fr); */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  justify-content: center;
+  justify-items: center;
+  gap: 30px;
+  /* background-color: red; */
+  
+}
+
+/* -------------------------
+   PROGRAM CARD
+-------------------------- */
+.program-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  padding-bottom: 20px;
+  position: relative;
+  box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.08);
+  transition: 0.3s ease-in-out;
+  border-bottom: 3px solid #084B83;
+  cursor:pointer;
+}
+
+.program-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Program Image */
+.program-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Duration Badge */
+.program-duration {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  background: #1cb65d;
+  color: white;
+  padding: 3px 12px;
+  border-radius:0px 14px 0 14px;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* Title */
+.program-card h3 {
+  font-size: 1.2rem;
+  color: #0b2e4e;
+  font-weight: 600;
+  margin: 15px;
+}
+
+/* Focus Tags */
+.focus-area {
+  padding: 0 15px;
+}
+
+.focus-area strong {
+  font-size: 0.9rem;
+  color: #222f43;
+}
+
+.tags {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  background: #e7f1ff;
+  color: #084b83;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  border-radius: 15px;
+}
+
+/* Price */
+.price {
+  margin: 15px;
+  color: #0b2e4e;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Level Badge */
+.level {
+  margin-left: 15px;
+  padding: 4px 12px;
+  font-size: 0.75rem;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.beginner {
+  background: #ccf5d8;
+  color: #0f8b2f;
+}
+
+.intermediate {
+  background: #d9ecff;
+  color: #0a61a8;
+}
+
+.advanced {
+  background: #ffe4cc;
+  color: #c25400;
+}
+
+/* -------------------------
+   BENEFITS / WHAT YOU GET
+-------------------------- */
+.benefits {
+  margin-top: 80px;
+  text-align: center;
+}
+
+.benefits h2 {
+  color: #0b2e4e;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.benefits ul {
+  list-style: none;
+  padding: 0;
+  width: 60%;
+  margin: auto;
+}
+
+.benefits ul li {
+  font-size: 1rem;
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  color: #333;
+}
+
+.benefits ul li svg {
+  color: #1cb65d;
+  font-size: 1.2rem;
+}
+
+/* -------------------------
+   CALL TO ACTION BUTTON
+-------------------------- */
+.program-cta {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.program-cta button {
+  background: #0a61a8;
+  color: white;
+  padding: 14px 30px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.program-cta button:hover {
+  background: #084b83;
+  transform: translateY(-3px);
+}
+
+/* -------------------------
+   RESPONSIVE (MOBILE)
+-------------------------- */
+@media (max-width: 768px) {
+  .programs-header {
+    text-align: center;
+    padding: 10px;
+  }
+  .programs-header h1 {
+    font-size: 2.2rem;
+  }
+
+  .programs-header p {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.61);
+}
+
+  .benefits ul {
+    width: 90%;
+  }
+}

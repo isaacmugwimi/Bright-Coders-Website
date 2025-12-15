@@ -1,0 +1,227 @@
+.featured {
+  padding: 60px 20px;
+}
+
+.featured .header {
+  text-align: center;
+  font-size: 35px;
+  padding: 30px 0 0px 0;
+  color: #2f4f4f;
+}
+
+.header-paragraph {
+  font-size: 50px;
+  text-align: center;
+  font-family: "Agraham", serif;
+  color: #1e3a8a;
+  margin-bottom: 33px;
+}
+
+.featured-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  justify-items: center;
+}
+
+.view-more-btn {
+  width: 23%;
+  justify-self: center;
+  /* justify-self: center; */
+  padding: 15px 8px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  border-radius: 10px;
+  outline: none;
+  background-color: #3a83f5;
+  border: 2px solid #3a83f5;
+  color: #ffffff;
+  font-weight: 700;
+  margin-top: 5%;
+  cursor: pointer;
+}
+.arrow-right {
+  font-size: 30px;
+}
+
+.view-more-btn:hover {
+  background-color: darkcyan;
+  border: 2px solid darkcyan;
+}
+
+/* Extra small devices (phones, less than 400px) */
+@media (max-width: 399px) {
+  .featured {
+    padding: 40px 10px;
+  }
+
+  .featured .header {
+    font-size: 24px;
+  }
+
+  .header-paragraph {
+    font-size: 32px !important;
+    padding: 10px 0;
+  }
+
+  .featured-cards-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .view-more-btn {
+    width: 80%;
+    padding: 10px;
+    font-size: 14px;
+    gap: 15px;
+  }
+
+  .arrow-right {
+    font-size: 20px;
+  }
+}
+
+/* Small devices (phones, 400px – 599px) */
+@media (min-width: 400px) and (max-width: 599px) {
+  .featured {
+    padding: 50px 15px;
+  }
+
+  .featured .header {
+    font-size: 28px;
+  }
+
+  .header-paragraph {
+    font-size: 37px !important;
+  }
+
+  .featured-cards-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .featured-cards-container > * {
+    width: 90%;
+    padding: 12px;
+  }
+
+  .view-more-btn {
+    width: 70%;
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .arrow-right {
+    font-size: 22px;
+  }
+}
+
+/* Medium devices (tablets, portrait 600–767px) */
+@media (min-width: 600px) and (max-width: 767px) {
+  .featured .header {
+    font-size: 32px;
+  }
+
+  .header-paragraph {
+    font-size: 30px;
+  }
+
+  .featured-cards-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .view-more-btn {
+    width: 50%;
+    font-size: 16px;
+  }
+}
+
+/* Large tablets (landscape 768–1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .featured {
+    padding: 60px 25px;
+  }
+
+  .header-paragraph {
+    font-size: 32px;
+  }
+
+  .featured-cards-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+  }
+
+  .view-more-btn {
+    width: 40%;
+    font-size: 16px;
+  }
+}
+
+/* Laptops / small desktops 1024–1279px */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .featured-cards-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .view-more-btn {
+    width: 35%;
+    font-size: 17px;
+  }
+}
+
+/* Desktops / large screens 1280–1599px */
+@media (min-width: 1280px) and (max-width: 1599px) {
+  .featured-cards-container {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+  }
+
+  .view-more-btn {
+    width: 30%;
+  }
+}
+
+/* Extra large screens 1600–1919px */
+@media (min-width: 1600px) and (max-width: 1919px) {
+  .header-paragraph {
+    font-size: 42px;
+  }
+
+  .featured-cards-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .view-more-btn {
+    width: 25%;
+    font-size: 18px;
+  }
+}
+
+/* Ultra wide / 4K screens 1920px+ */
+@media (min-width: 1920px) {
+  .featured {
+    padding: 80px 120px;
+  }
+
+  .featured .header {
+    font-size: 45px;
+  }
+
+  .header-paragraph {
+    font-size: 55px;
+  }
+
+  .featured-cards-container {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+
+  .view-more-btn {
+    width: 23%;
+    font-size: 20px;
+  }
+}

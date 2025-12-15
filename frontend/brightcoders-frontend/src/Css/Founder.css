@@ -1,0 +1,206 @@
+.founder-container {
+  width: 100%;
+  padding: 40px 0;
+  background: #f8fbff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* HERO SECTION */
+.founder-hero {
+  width: 100%;
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, #001f54, #003680);
+  color: white;
+}
+
+.founder-hero h1 {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.founder-hero p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+
+/* FOUNDER SECTION */
+.founder-wrapper {
+  width: 80%;
+  margin: 60px auto;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+
+.founder-image img {
+  width: 100%;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+.founder-details h2 {
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+.founder-details h4 {
+  opacity: 0.6;
+  margin-bottom: 15px;
+}
+
+.bio-text {
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.read-story-btn {
+  text-decoration: none;
+  color: white;
+  background: #0a7cff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+.read-story-btn:hover {
+  background: #005fcc;
+}
+
+/* PHILOSOPHY SECTION */
+.founder-philosophy {
+  width: 80%;
+  margin: 50px auto;
+  text-align: center;
+}
+
+.founder-philosophy h2 {
+  margin-bottom: 30px;
+}
+
+.philosophy-cards {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.philosophy-card {
+  width: 30%;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0px 6px 16px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.philosophy-card h3 {
+  margin-bottom: 10px;
+}
+
+/* ===================== MEDIA QUERIES ===================== */
+
+/* Extra small devices (phones, <400px) */
+@media (max-width: 399px) {
+  .founder-hero h1 {
+    font-size: 26px;
+  }
+  .founder-hero p {
+    font-size: 14px;
+  }
+
+  .founder-wrapper {
+    width: 90%;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .philosophy-card {
+    width: 100%;
+  }
+}
+
+/* Small devices (400px – 599px) */
+@media (min-width: 400px) and (max-width: 599px) {
+  .founder-hero h1 {
+    font-size: 28px;
+  }
+  .founder-hero p {
+    font-size: 15px;
+  }
+
+  .founder-wrapper {
+    width: 90%;
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .philosophy-card {
+    width: 100%;
+  }
+}
+
+/* Medium devices (tablets, portrait, 600px – 767px) */
+@media (min-width: 600px) and (max-width: 767px) {
+  .founder-hero h1 {
+    font-size: 32px;
+  }
+  .founder-hero p {
+    font-size: 16px;
+  }
+
+  .founder-wrapper {
+    width: 90%;
+    flex-direction: column;
+    gap: 35px;
+  }
+
+  .philosophy-card {
+    width: 45%;
+  }
+}
+
+/* Large tablets (landscape, 768px – 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .founder-wrapper {
+    width: 85%;
+    flex-direction: row;
+  }
+
+  .philosophy-card {
+    width: 45%;
+  }
+}
+
+/* Laptops / small desktops (1024px – 1279px) */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .founder-wrapper {
+    width: 80%;
+  }
+  .philosophy-card {
+    width: 30%;
+  }
+}
+
+/* Desktops / large screens (1280px – 1599px) */
+@media (min-width: 1280px) and (max-width: 1599px) {
+  .founder-wrapper {
+    width: 75%;
+  }
+}
+
+/* Extra large screens (1600px – 1919px) */
+@media (min-width: 1600px) and (max-width: 1919px) {
+  .founder-wrapper {
+    width: 70%;
+  }
+}
+
+/* Ultra wide / 4K screens (>=1920px) */
+@media (min-width: 1920px) {
+  .founder-wrapper {
+    width: 65%;
+  }
+}

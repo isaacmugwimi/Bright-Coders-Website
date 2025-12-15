@@ -1,0 +1,44 @@
+/* Extra small devices (phones, less than 400px) */
+@media (max-width: 399px) {
+  /* Styles for tiny phones */
+}
+
+/* Small devices (phones, 400px – 599px) */
+@media (min-width: 400px) and (max-width: 599px) {
+  /* Styles for most phones */
+}
+
+/* Medium devices (tablets, portrait) */
+@media (min-width: 600px) and (max-width: 767px) {
+  /* Styles for small tablets */
+}
+
+/* Large tablets (landscape) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Styles for standard tablets */
+}
+
+/* Laptops / small desktops */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  /* Styles for small laptops */
+}
+
+/* Desktops / large screens */
+@media (min-width: 1280px) and (max-width: 1599px) {
+  /* Styles for standard desktops */
+}
+
+/* Extra large screens */
+@media (min-width: 1600px) and (max-width: 1919px) {
+  /* Styles for large desktops */
+}
+
+/* Ultra wide / 4K screens */
+@media (min-width: 1920px) {
+  /* Styles for ultra-wide monitors */
+}
+
+
+
+
+

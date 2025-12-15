@@ -1,0 +1,754 @@
+/* =======================
+   General Home Section
+======================= */
+.home-section {
+  display: grid;
+  width: 100%;
+  background-color: #f6f2ec;
+  height: 100%;
+  grid-template-columns: 45% 55%;
+  justify-content: space-between;
+  padding: 30px 40px 0px 40px;
+  margin-top: 80px;
+  background-image: url(..//assets/Rectangle\ 1.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+}
+
+/* =======================
+   Hero Left Section
+======================= */
+.hero-left {
+  /* width: 49%; */
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px;
+}
+
+.hero-headline {
+  margin-bottom: 20px;
+}
+
+.hero-headline2 {
+  margin-top: 55px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #2f4f4f8f;
+}
+
+/* =======================
+   Animated Wavy Text
+======================= */
+.wavy-text {
+  margin-top: 20px;
+  padding-bottom: 45px;
+}
+
+.wavy-text h1 {
+  color: white;
+  font-weight: 900;
+  font-size: 75px;
+  letter-spacing: 1.9px;
+  background: repeating-linear-gradient(
+    -45deg,
+    red 0%,
+    yellow 7.14%,
+    rgb(0, 255, 0),
+    14.28%,
+    rgb(0, 255, 255) 21.4%,
+    cyan 28.56%,
+    blue 35.7%,
+    magenta 42.84%,
+    red 50%
+  );
+  background-size: 400vw;
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  animation: slide 10s linear infinite forwards;
+}
+
+@keyframes slide {
+  0% {
+    background-position-x: 0%;
+  }
+  100% {
+    background-position-x: 400vw;
+  }
+}
+
+/* =======================
+   Animated Words
+======================= */
+.text {
+  color: #1b1711;
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.animated.second-word {
+  color: #4171ec;
+  font-size: 55px;
+}
+
+.cursor-style {
+  color: darkgreen;
+  font-size: 49px;
+  font-weight: 900;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #4171ec, #00c6ff, red, #00ff99, #4171ec);
+  background-size: 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientMove 6s ease infinite;
+}
+
+@keyframes gradientMove {
+  0% {
+    background-position: 0%;
+  }
+  50% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: 0%;
+  }
+}
+
+/* =======================
+   Enroll Button
+======================= */
+.enroll-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  justify-content: center;
+  width: 350px;
+  height: 75px;
+  border-radius: 4rem;
+  font-size: 20px;
+  outline: none;
+  cursor: pointer;
+  margin-top: 100px;
+  background-color: #3a83f5;
+  color: white;
+  overflow: hidden;
+}
+
+.enroll-button:hover {
+  animation: animate-btn 0.9s both;
+}
+
+.arrow-icon {
+  font-size: 16px;
+}
+
+.cta-btn-bg {
+  position: absolute;
+  width: 85px;
+  height: 70%;
+  background-color: rgb(255, 255, 255);
+  border-radius: 3.5rem;
+  opacity: 0.5;
+}
+
+@keyframes animate-btn {
+  0% {
+    transform: scale3d(1, 1, 1);
+  }
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+/* =======================
+   Hero Right Section
+======================= */
+.hero-right {
+  /* width: 63%; */
+  display: flex;
+  position: relative;
+}
+
+.image-holder {
+  position: absolute;
+}
+
+.one {
+  display: flex;
+  width: 80%;
+  height: 55%;
+  top: 20%;
+  right: 1%;
+  border-top-left-radius: 20%;
+  border-top-right-radius: 20%;
+  border-bottom-right-radius: 40%;
+  border-bottom-left-radius: 40%;
+}
+
+.banner {
+  width: 100%;
+  margin-left: 10%;
+  margin-top: 3%;
+}
+.home_footer {
+  grid-column: 1 / -1;
+  width: 112%;
+  max-height: 40%;
+  margin-left: -6%;
+  margin-right: -6%;
+  margin-top: -8%;
+  z-index: 1;
+}
+
+/* =======================
+   Mobile Slider (Fix)
+======================= */
+.mobile-img-carousel {
+  display: none;
+  width: 100%;
+  height: 230px;
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25);
+  position: relative;
+  margin-top: -55%; /* 🔥 pulls carousel upward 50–60px for “half visible effect” */
+}
+
+/* Carousel images */
+.mobile-img-carousel img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  border-radius: 18px;
+}
+
+/* =======================
+   Responsive Breakpoints
+======================= */
+
+/* Extra Small Devices (0–399px) */
+@media screen and (max-width: 399px) {
+  .home-section {
+    grid-template-columns: 1fr;
+    padding: 20px;
+    height: auto;
+    margin-top: 50px;
+  }
+
+  .hero-left {
+    padding-top: 30px;
+  }
+
+  .wavy-text h1 {
+    font-size: 50px;
+    margin-top: 20%;
+  }
+
+  .text {
+    font-size: 25px;
+  }
+
+  .animated.second-word {
+    font-size: 33px;
+  }
+
+  .hero-headline2 {
+    font-size: 17px;
+  }
+
+  .enroll-button {
+    width: 90%;
+    height: 60px;
+    font-size: 16px;
+    gap: 15px;
+    margin-top: 50px;
+  }
+
+  /* .mobile-img-carousel {
+    display: block;
+    height: 180px;
+    margin-top: -40%;
+  } */
+
+  .hero-right .image-holder.one {
+    width: 80%;
+    height: 55%;
+    top: 22%;
+    margin-right: 10%;
+  }
+
+  .banner {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 5%;
+  }
+}
+
+/* Small Devices (400px–599px) */
+@media screen and (min-width: 400px) and (max-width: 599px) {
+  .home-section {
+    grid-template-columns: 1fr;
+    padding: 25px;
+    height: auto;
+    margin-top: 60px;
+  }
+
+  .wavy-text h1 {
+    font-size: 75px;
+  }
+
+  .text {
+    font-size: 38px;
+  }
+
+  .animated.second-word {
+    font-size: 50px;
+  }
+
+  .hero-headline2 {
+    font-size: 18px;
+  }
+
+  .enroll-button {
+    width: 85%;
+    height: 65px;
+    font-size: 18px;
+    gap: 20px;
+    margin-top: 60px;
+  }
+
+  /* .mobile-img-carousel {
+    display: block;
+    height: 200px;
+    margin-top: -45%;
+  } */
+
+  .hero-right .image-holder.one {
+    width: 80%;
+    height: 55%;
+    top: 22%;
+    margin-right: 10%;
+  }
+
+  .banner {
+    width: 95%;
+    margin-left: 2.5%;
+    margin-top: 4%;
+  }
+}
+
+/* Medium Devices (600px–767px) */
+@media screen and (min-width: 600px) and (max-width: 767px) {
+  .home-section {
+    grid-template-columns: 1fr;
+    padding: 30px;
+    height: auto;
+    margin-top: 70px;
+  }
+
+  .wavy-text h1 {
+    font-size: 90px;
+  }
+
+  .text {
+    font-size: 50px;
+  }
+
+  .animated.second-word {
+    font-size: 72px;
+  }
+
+  .hero-headline2 {
+    font-size: 20px;
+  }
+
+  .enroll-button {
+    width: 80%;
+    height: 70px;
+    font-size: 20px;
+    gap: 25px;
+    margin-top: 80px;
+  }
+
+  /* .mobile-img-carousel {
+    display: block;
+    height: 220px;
+    margin-top: -50%;
+  } */
+
+  .hero-right .image-holder.one {
+    width: 80%;
+    height: 60%;
+    top: 19%;
+    margin-right: 8%;
+  }
+
+  .banner {
+    width: 95%;
+    margin-left: 5%;
+    margin-top: 3%;
+  }
+}
+
+/* Tablets (768px–1023px) */
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .home-section {
+    grid-template-columns: 50% 50%;
+    padding: 30px 40px;
+    height: auto;
+    margin-top: 70px;
+  }
+
+  .wavy-text h1 {
+    font-size: 55px;
+  }
+
+  .text {
+    font-size: 27px;
+  }
+
+  .animated.second-word {
+    font-size: 35px;
+  }
+
+  .hero-headline2 {
+    font-size: 22px;
+  }
+
+  .enroll-button {
+    width: 350px;
+    height: 75px;
+    font-size: 20px;
+    gap: 25px;
+    margin-top: 90px;
+    margin-bottom: 90px;
+  }
+
+  /* .mobile-img-carousel {
+    display: block;
+    height: 230px;
+    margin-top: -55%;
+  } */
+
+  .hero-right .image-holder.one {
+    width: 80%;
+    height: 40%;
+    top: 13%;
+  }
+
+  .banner {
+    width: 100%;
+    margin-left: 10%;
+    margin-top: 3%;
+  }
+}
+
+/* Small Laptops (1024px–1279px) */
+@media screen and (min-width: 1024px) and (max-width: 1279px) {
+  .home-section {
+    grid-template-columns: 45% 55%;
+    padding: 35px 50px;
+    height: 90vh;
+  }
+
+  .wavy-text h1 {
+    font-size: 70px;
+  }
+
+  .text {
+    font-size: 38px;
+  }
+
+  .animated.second-word {
+    font-size: 50px;
+  }
+
+  .hero-headline2 {
+    font-size: 24px;
+  }
+
+  .enroll-button {
+    width: 360px;
+    height: 75px;
+    font-size: 22px;
+  }
+
+  .mobile-img-carousel {
+    display: none;
+  }
+}
+
+/* Desktops (1280px–1599px) */
+@media screen and (min-width: 1280px) and (max-width: 1599px) {
+  .home-section {
+    grid-template-columns: 45% 55%;
+    padding: 0px 60px;
+  }
+
+  .wavy-text h1 {
+    font-size: 75px;
+  }
+
+  .text {
+    font-size: 40px;
+  }
+
+  .animated.second-word {
+    font-size: 50px;
+  }
+  .hero-right .image-holder.one {
+    width: 80%;
+    height: 55%;
+    top: 13%;
+  }
+}
+
+/* Large Desktops (1600px–1919px) */
+@media screen and (min-width: 1600px) and (max-width: 1919px) {
+  .home-section {
+    grid-template-columns: 45% 55%;
+    padding: 50px 80px;
+  }
+
+  .wavy-text h1 {
+    font-size: 85px;
+  }
+
+  .text {
+    font-size: 44px;
+  }
+
+  .animated.second-word {
+    font-size: 60px;
+  }
+}
+
+/* Ultra-Wide (1920px and above) */
+@media screen and (min-width: 1920px) {
+  .home-section {
+    grid-template-columns: 45% 55%;
+    padding: 60px 100px;
+  }
+
+  .wavy-text h1 {
+    font-size: 100px;
+  }
+
+  .text {
+    font-size: 48px;
+  }
+
+  .animated.second-word {
+    font-size: 70px;
+  }
+}
+
+/* ================= Tablets: 768–869px ================= */
+@media screen and (min-width: 768px) and (max-width: 869px) {
+  .hero-right .image-holder.one {
+    width: 70%;
+    height: 35%;
+    top: 10%;
+    right: 10%;
+  }
+  .banner {
+    width: 95%;
+    margin-left: 8%;
+    margin-top: 3%;
+  }
+}
+
+/* 870–969px */
+@media screen and (min-width: 870px) and (max-width: 969px) {
+  .hero-right .image-holder.one {
+    width: 77%;
+    height: 39%;
+    top: 14%;
+  }
+  .banner {
+    width: 97%;
+    margin-left: 6%;
+    margin-top: 3%;
+  }
+}
+
+/* 970–1023px */
+@media screen and (min-width: 970px) and (max-width: 1023px) {
+  .hero-right .image-holder.one {
+    width: 79%;
+    height: 40%;
+    top: 13%;
+  }
+  .banner {
+    width: 98%;
+    margin-left: 5%;
+    margin-top: 3%;
+  }
+}
+
+/* Small Laptops: 1024–1123px */
+@media screen and (min-width: 1024px) and (max-width: 1123px) {
+  .hero-right .image-holder.one {
+    width: 80%;
+    height: 42%;
+    top: 12%;
+  }
+  .banner {
+    width: 100%;
+    margin-left: 5%;
+    margin-top: 3%;
+  }
+}
+
+/* 1124–1223px */
+@media screen and (min-width: 1124px) and (max-width: 1223px) {
+  .hero-right .image-holder.one {
+    width: 82%;
+    height: 44%;
+    top: 11%;
+  }
+  .banner {
+    width: 100%;
+    margin-left: 5%;
+    margin-top: 3%;
+  }
+}
+
+/* 1224–1279px */
+@media screen and (min-width: 1224px) and (max-width: 1279px) {
+  .hero-right .image-holder.one {
+    width: 85%;
+    height: 45%;
+    top: 10%;
+  }
+  .banner {
+    width: 100%;
+    margin-left: 5%;
+    margin-top: 3%;
+  }
+}
+
+/* Desktops: 1280–1379px */
+@media screen and (min-width: 1280px) and (max-width: 1379px) {
+  .home-section {
+    height: 100%;
+    /* margin-bottom: 100px; */
+    background-size: 100% 100%;
+  }
+  .hero-right .image-holder.one {
+    width: 80%;
+    height: 58%;
+    top: 19%;
+    right: 7%;
+  }
+  .banner {
+    width: 100%;
+    margin-left: 5%;
+    margin-top: 3%;
+  }
+}
+
+/* 1380–1479px */
+@media screen and (min-width: 1380px) and (max-width: 1479px) {
+  .hero-right .image-holder.one {
+    width: 80%;
+    height: 52%;
+    top: 9%;
+  }
+  .banner {
+    width: 100%;
+    margin-left: 5%;
+    margin-top: 3%;
+  }
+}
+
+/* 1480–1599px */
+@media screen and (min-width: 1480px) and (max-width: 1599px) {
+  .hero-right .image-holder.one {
+    width: 90%;
+    height: 55%;
+    top: 8%;
+  }
+  .banner {
+    width: 100%;
+    margin-left: 5%;
+    margin-top: 3%;
+  }
+}
+
+/* Large Desktops: 1600–1699px */
+@media screen and (min-width: 1600px) and (max-width: 1699px) {
+  .hero-right .image-holder.one {
+    width: 92%;
+    height: 57%;
+    top: 7%;
+  }
+  .banner {
+    width: 100%;
+    margin-left: 5%;
+    margin-top: 3%;
+  }
+}
+
+/* 1700–1799px */
+@media screen and (min-width: 1700px) and (max-width: 1799px) {
+  .hero-right .image-holder.one {
+    width: 94%;
+    height: 58%;
+    top: 6%;
+  }
+  .banner {
+    width: 100%;
+    margin-left: 5%;
+    margin-top: 3%;
+  }
+}
+
+/* 1800–1919px */
+@media screen and (min-width: 1800px) and (max-width: 1919px) {
+  .hero-right .image-holder.one {
+    width: 95%;
+    height: 60%;
+    top: 5%;
+  }
+  .banner {
+    width: 100%;
+    margin-left: 5%;
+    margin-top: 3%;
+  }
+}
+
+/* Ultra-Wide 1920+ */
+@media screen and (min-width: 1920px) {
+  .hero-right .image-holder.one {
+    width: 100%;
+    height: 65%;
+    top: 4%;
+  }
+  .banner {
+    width: 100%;
+    margin-left: 0%;
+    margin-top: 3%;
+  }
+}

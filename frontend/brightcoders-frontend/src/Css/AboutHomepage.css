@@ -1,0 +1,199 @@
+
+
+.custom-shape-divider-bottom-1764543154 .shape-fill {
+    fill: #FDF7EE;
+}
+.about-section {
+  background-color: rgba(224, 147, 30, 0.075);
+  padding: 40px 20px;
+
+  /* padding-top: 100px; */
+  /* padding-top: 40px; */
+}
+.aboutHomepage {
+  width: 90%;
+  padding: 20px 20px;
+  display: grid;
+  border: 1px solid goldenrod;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  justify-self: center;
+  border-radius: 20px;
+  align-items: center;
+  background-color: white;
+}
+
+.aboutLeft img {
+  border-radius: 10px;
+}
+
+.aboutRight {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.read-more-btn {
+  width: 23%;
+  justify-self: center;
+  /* justify-self: center; */
+  padding: 13px 8px;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  border-radius: 10px;
+  outline: none;
+  background-color: #3a83f5;
+  border: 2px solid #3a83f5;
+  color: #ffffff;
+  font-weight: 700;
+  margin-top: 5%;
+  cursor: pointer;
+  width: 50%;
+  
+}
+
+
+.read-more-btn:hover {
+  background-color: darkcyan;
+  border: 2px solid darkcyan;
+}
+
+.aboutRight p{
+    font-size: 17px;
+}
+
+/*=============================================
+ Extra small devices (phones, <400px)
+==============================================*/
+@media (max-width: 399px) {
+  .aboutHomepage {
+    width: 100%;
+    gap: 20px;
+    padding: 15px;
+  }
+
+  .aboutRight p {
+    font-size: 15px;
+    padding: 5px;
+  }
+
+  .read-more-btn {
+    width: 85%;
+    font-size: 15px;
+    padding: 12px;
+  }
+}
+
+/*=============================================
+ Small devices (400px–599px)
+==============================================*/
+@media (min-width: 400px) and (max-width: 599px) {
+  .aboutHomepage {
+    width: 100%;
+    gap: 25px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .aboutRight p {
+    font-size: 16px;
+  }
+
+  .read-more-btn {
+    width: 85%;
+    font-size: 16px;
+  }
+}
+
+/*=============================================
+ Medium devices (600px–767px)
+==============================================*/
+@media (min-width: 600px) and (max-width: 767px) {
+   .aboutHomepage {
+    width: 100%;
+    gap: 25px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .aboutRight p {
+    font-size: 16px;
+  }
+
+  .read-more-btn {
+    width: 80%;
+  }
+}
+
+/*=============================================
+ Large tablets (768px–1023px)
+==============================================*/
+@media (min-width: 768px) and (max-width: 1023px) {
+  .aboutHomepage {
+    width: 85%;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .read-more-btn {
+    width: 65%;
+  }
+}
+
+/*=============================================
+ Laptops / small desktops (1024px–1279px)
+==============================================*/
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .aboutHomepage {
+    width: 80%;
+  }
+
+  .read-more-btn {
+    width: 60%;
+  }
+}
+
+/*=============================================
+ Standard desktops (1280px–1599px)
+==============================================*/
+@media (min-width: 1280px) and (max-width: 1599px) {
+  .aboutHomepage {
+    width: 75%;
+  }
+
+  .read-more-btn {
+    width: 50%;
+  }
+}
+
+/*=============================================
+ Large desktops (1600px–1919px)
+==============================================*/
+@media (min-width: 1600px) and (max-width: 1919px) {
+  .aboutHomepage {
+    width: 65%;
+  }
+
+  .read-more-btn {
+    width: 50%;
+  }
+}
+
+/*=============================================
+ Ultra wide / 4K (≥1920px)
+==============================================*/
+@media (min-width: 1920px) {
+  .aboutHomepage {
+    width: 60%;
+  }
+
+  .read-more-btn {
+    width: 50%;
+  }
+}

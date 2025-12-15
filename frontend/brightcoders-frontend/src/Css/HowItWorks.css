@@ -1,0 +1,247 @@
+.howItWorkSection {
+  margin-top: 50px;
+  padding-bottom: 20px;
+  padding: 20px 20px;
+  /* background: red; */
+}
+.header {
+  text-align: center;
+  color: #2f4f4f;
+}
+
+.main-work-section {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  /* width: 100%; */
+  align-items: center;
+  /* background-color: red; */
+  width: 100%;
+  padding:0 20px;
+  /* margin: 0 5%; */
+}
+
+.right-section {
+  width: 20%;
+  height: 53vh;
+   /* border-radius: 50%; */
+   /* background-color: red; */
+
+}
+
+.right-section .right-image-section {
+  width: 100%;
+  height: 100%;
+  /* border-radius: 50%; */
+  /* background-color: blue; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.right-section .right-image-section img {
+  width: 100%;
+  height: 32%;
+  /* border-radius: 50%; */
+}
+
+.left-section {
+  background-color: #e5e5e5;
+  width: 70%;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.left-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  padding-bottom: 30px;
+  margin-top: 10px;
+  color: #2f4f4f;
+  /* border: 1px solid red; */
+}
+
+
+
+/* ==============================================
+   Extra small devices (phones, less than 400px)
+=================================================*/
+@media (max-width: 399px) {
+  .main-work-section {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .left-section {
+    width: 100%;
+    text-align: center;
+  }
+
+  .right-section {
+    width: 100%;
+    height: auto;
+  }
+   .right-image-section{
+    gap: 20px;
+  }
+
+  .right-image-section img {
+    height: 28%;
+  }
+
+  .left-header {
+    font-size: 16px;
+  }
+
+  .view-more-btn {
+    width: 90%;
+    font-size: 14px;
+    margin-top: 50px;
+  }
+}
+
+/* ==============================================
+   Small devices (phones, 400px – 599px)
+=================================================*/
+@media (min-width: 400px) and (max-width: 599px) {
+  .main-work-section {
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .left-section {
+    width: 100%;
+  }
+
+  .right-section {
+    width: 90%;
+    height: auto;
+  }
+  
+
+  .right-image-section{
+    gap: 20px;
+  }
+  .right-image-section img {
+    height: 30%;
+  }
+
+  .left-header {
+    font-size: 18px;
+  }
+
+  .view-more-btn {
+    width: 85%;
+    font-size: 15px;
+        margin-top: 50px;
+  }
+}
+
+/* ==============================================
+   Medium devices (tablets portrait 600px–767px)
+=================================================*/
+@media (min-width: 600px) and (max-width: 767px) {
+  .main-work-section {
+    flex-direction: column;
+  }
+
+  .left-section {
+    width: 100%;
+  }
+
+  .right-section {
+    width: 70%;
+    height: 40vh;
+  }
+
+  .view-more-btn {
+    width: 50%;
+    font-size: 16px;
+  }
+}
+
+/* ==============================================
+   Large tablets (landscape 768px–1023px)
+=================================================*/
+@media (min-width: 768px) and (max-width: 1023px) {
+  .main-work-section {
+    flex-direction: row;
+  }
+
+  .left-section {
+    width: 65%;
+  }
+
+  .right-section {
+    width: 30%;
+    height: 45vh;
+  }
+
+  .view-more-btn {
+    width: 45%;
+  }
+}
+
+/* ==============================================
+   Laptops / small desktops 1024px–1279px
+=================================================*/
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .left-section {
+    width: 65%;
+  }
+
+  .right-section {
+    width: 30%;
+    height: 50vh;
+  }
+
+  .view-more-btn {
+    width: 30%;
+  }
+}
+
+/* ==============================================
+   Standard desktops 1280px–1599px
+=================================================*/
+@media (min-width: 1280px) and (max-width: 1599px) {
+  .left-section {
+    width: 68%;
+  }
+
+  .right-section {
+    width: 28%;
+  }
+}
+
+/* ==============================================
+   Large desktops 1600px–1919px
+=================================================*/
+@media (min-width: 1600px) and (max-width: 1919px) {
+  .left-section {
+    width: 70%;
+  }
+
+  .right-section {
+    width: 25%;
+  }
+}
+
+/* ==============================================
+   Ultra wide 4K screens 1920px and above
+=================================================*/
+@media (min-width: 1920px) {
+  .left-section {
+    width: 65%;
+  }
+
+  .right-section {
+    width: 25%;
+  }
+
+  .view-more-btn {
+    width: 20%;
+  }
+}

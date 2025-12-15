@@ -1,0 +1,184 @@
+.howItWorksCard-card-body {
+  /* border: 1px solid red; */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.step-card {
+  /* border:  1px solid red; */
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.3s ease;
+  height: 220px;
+}
+.step-card:hover {
+  transform: scale(0.9);
+}
+
+.step-card .steps-icon-section {
+  border: 2px solid silver;
+  width: 100px;
+  /* height: 100px; */
+  aspect-ratio: 1/1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.steps-icon-section .steps-overlay {
+  background-color: darkcyan;
+  padding: 7%;
+  border-radius: 50%;
+  color: white;
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-weight: 800;
+  font-size: 14px;
+  /* left: 0; */
+}
+
+.steps-icon-section .step-icon {
+  width: 40%;
+  height: 40%;
+}
+
+.step-card h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+/*=============================================
+  Extra small devices (phones, <400px)
+==============================================*/
+@media (max-width: 399px) {
+  .howItWorksCard-card-body {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .step-card {
+    height: 200px;
+    padding: 10px;
+    /* background-color: aqua; */
+  }
+
+  /* .steps-icon-section {
+    background-color: red;
+  } */
+
+  .steps-overlay {
+    font-size: 12px;
+  }
+
+  .step-card h3 {
+    font-size: 16px;
+    /* background-color: blue; */
+  }
+
+  .step-card p {
+    font-size: 14px;
+  }
+}
+
+/*=============================================
+  Small devices (400px–599px)
+==============================================*/
+@media (min-width: 400px) and (max-width: 599px) {
+  .howItWorksCard-card-body {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .step-card {
+    height: 210px;
+  }
+
+  .steps-icon-section {
+    width: 120px;
+  }
+
+  .step-card h3 {
+    font-size: 17px;
+  }
+}
+
+/*=============================================
+  Medium devices (600px–767px)
+==============================================*/
+@media (min-width: 600px) and (max-width: 767px) {
+  .howItWorksCard-card-body {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .step-card {
+    height: 210px;
+  }
+
+  .steps-icon-section {
+   width: 150px;;
+  }
+}
+
+/*=============================================
+  Large tablets (768px–1023px)
+==============================================*/
+@media (min-width: 768px) and (max-width: 1023px) {
+  .howItWorksCard-card-body {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .step-card {
+    height: 220px;
+  }
+}
+
+/*=============================================
+  Laptops / small desktops (1024px–1279px)
+==============================================*/
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .howItWorksCard-card-body {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .step-card {
+    height: 220px;
+  }
+}
+
+/*=============================================
+  Desktop 1280px–1599px
+==============================================*/
+@media (min-width: 1280px) and (max-width: 1599px) {
+  .howItWorksCard-card-body {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/*=============================================
+  Large desktops 1600px–1919px
+==============================================*/
+@media (min-width: 1600px) and (max-width: 1919px) {
+  .howItWorksCard-card-body {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/*=============================================
+  Ultra wide (1920px and above)
+==============================================*/
+@media (min-width: 1920px) {
+  .howItWorksCard-card-body {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

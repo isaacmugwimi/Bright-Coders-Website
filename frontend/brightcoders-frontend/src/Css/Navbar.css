@@ -1,0 +1,240 @@
+.navbar-main-section {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+
+  /* background-color: darkgreen; */
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding: 10px 25px;
+  color: #1a2e40;
+  font-size: 18px;
+  background: #e3e6f3;
+  box-shadow: 0 15px 30px rgb(0, 0, 0, 0.26);
+}
+
+.nav-links ul {
+  width: 120%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav-links ul li > :first-child,
+.nav-links-2 ul li > :first-child {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 10px;
+}
+
+.active,
+.nav-links ul li > :first-child:hover,
+.nav-links-2 ul li > :first-child:not(.hamburger-menu):hover {
+  background-color: darkcyan;
+  color: white;
+  border-radius: 10px;
+}
+.active .nav-icon,
+.nav-links ul li > :first-child:hover .nav-icon,
+.nav-links-2 ul li > :first-child:hover .nav-icon {
+  color: white;
+}
+
+.nav-icon {
+  color: #006666;
+}
+
+/* container */
+.dropdown {
+  position: relative;
+}
+
+/* style the dropdown header */
+.dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 10px;
+  cursor: pointer;
+}
+
+/* hide submenu by default */
+.sub-menu {
+  display: none;
+  position: absolute;
+  background: #e3e6f3;
+  border: 1px solid darkcyan;
+  box-shadow: 0 15px 30px rgb(0, 0, 0, 0.26);
+  padding: 10px 0;
+  top: 40px; /* below the More button */
+  width: 200px;
+  border-radius: 8px;
+  /* box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2); */
+  z-index: 999;
+}
+
+/* show submenu on hover */
+.dropdown:hover .sub-menu {
+  display: block;
+}
+
+/* submenu items */
+.sub-menu ul {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sub-menu ul li {
+  padding: 10px 15px;
+  /* background-color: red; */
+  width: 200px;
+}
+
+.sub-menu ul li:hover {
+  /* background-color: #2bab0d; */
+  border-radius: 10px;
+  width: 200px;
+}
+
+.hamburger-menu {
+  display: none !important;
+  color: #006666;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+.close-menu {
+  display: none;
+}
+/* Hide nav-links on small screens by default */
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 80%;
+    background: #e3e6f3;
+    flex-direction: column;
+    padding: 2rem;
+    gap: 10px;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid red;
+    z-index: 999;
+  }
+
+  .hamburger-menu {
+    display: block !important;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  .hamburger-menu.hamburger-active {
+    background-color: none;
+    /* color: darkcyan; */
+  }
+  .close-menu {
+    display: flex;
+    color: rgba(0, 0, 139, 0.623);
+    /* background-color: #006666; */
+    justify-content: flex-end;
+    padding: 0 15px 0 15px;
+  }
+
+  /* Show menu when active */
+  .nav-links.mobile-active {
+    display: flex;
+    flex-direction: column;
+    /* background-color: red; */
+    padding: 27px 0 0 0;
+  }
+  .nav-links-2 ul {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .nav-links ul {
+    flex-direction: column;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .active,
+  .nav-links ul li > :first-child:hover,
+  .nav-links-2 ul li > :first-child:not(.hamburger-menu):hover {
+    background-color: darkcyan;
+    /* color: white;   */
+    border-radius: 0;
+  }
+
+  .nav-links ul li {
+    width: 100%;
+    border-radius: 0;
+    background-color: white;
+    /* background: darkgoldenrod; */
+    border: 1px solid silver;
+    /* display: flex; */
+  }
+  .nav-links ul li :first-child {
+    gap: 15px;
+  }
+
+  /* .dropdown .sub-menu {
+    position: relative;
+    top: 0;
+    box-shadow: none;
+    width: 80%;
+    display: none;
+    padding: 0;
+    margin-left: 20%;
+
+  }
+
+  .dropdown.mobile-open .sub-menu {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .dropdown.mobile-open .nav-icon.nav-icon-more {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+  }
+
+  .dropdown .sub-menu ul li {
+    padding: 0;
+  } */
+     .dropdown .sub-menu {
+    position: relative;
+    top: 0;
+    width: 80%;
+    margin-left: 20%;
+    box-shadow: none;
+
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+
+    transition:
+      max-height 0.35s ease,
+      opacity 0.25s ease;
+  }
+
+  .dropdown.mobile-open .sub-menu {
+    max-height: 500px; /* enough to fit items */
+    opacity: 1;
+  }
+
+  .dropdown.mobile-open .nav-icon-more {
+    transform: rotate(180deg);
+    transition: transform 0.3s ease;
+  }
+}

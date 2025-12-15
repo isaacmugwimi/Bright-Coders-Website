@@ -1,0 +1,168 @@
+.carousel {
+  background-color: rgba(240, 248, 255, 0.788);
+
+  width: 100%;
+  justify-self: center;
+  padding: 30px 10px;
+}
+
+.testimonials-wrapper {
+  position: relative;
+  padding-top: 130px;
+  scroll-margin-top: 110px; /*height of the navbar*/
+}
+
+.custom-shape-divider-top-1764543608 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-top-1764543608 svg {
+  position: relative;
+  display: block;
+  width: calc(170% + 1.3px);
+  height: 154px;
+  transform: rotateY(180deg);
+}
+
+.custom-shape-divider-top-1764543608 .shape-fill {
+  fill: red;
+}
+
+/* ============================================================
+   Extra Small Devices (0–399px)
+=============================================================== */
+@media (max-width: 399px) {
+  .testimonials-wrapper {
+    padding-top: 70px;
+    
+  }
+
+  .custom-shape-divider-top-1764543608 svg {
+    
+    display: none;
+  }
+
+  .carousel {
+    width: 95%;
+    padding: 20px 15px;
+  }
+
+  .header {
+    font-size: 22px;
+  }
+
+  .header-paragraph {
+    font-size: 14px;
+    padding: 0 10px;
+  }
+}
+
+/* ============================================================
+   Small Devices (400px–599px)
+=============================================================== */
+@media (min-width: 400px) and (max-width: 599px) {
+  .testimonials-wrapper {
+    padding-top: 120px;
+  }
+
+  .custom-shape-divider-top-1764543608 svg {
+    height: 120px;
+    width: 180%;
+  }
+
+  .carousel {
+    width: 92%;
+    padding: 25px 18px;
+  }
+
+  .header {
+    font-size: 24px;
+  }
+
+  .header-paragraph {
+    font-size: 15px;
+  }
+}
+
+/* ============================================================
+   Medium Devices (600px–767px)
+=============================================================== */
+@media (min-width: 600px) and (max-width: 767px) {
+  .testimonials-wrapper {
+    padding-top: 90px;
+  }
+
+  .custom-shape-divider-top-1764543608 svg {
+    height: 130px;
+    width: 150%;
+  }
+
+  .carousel {
+    width: 85%;
+    padding: 30px 20px;
+  }
+}
+
+/* ============================================================
+   Large Tablets (768px–1023px)
+=============================================================== */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .custom-shape-divider-top-1764543608 svg {
+    height: 150px;
+    width: 140%;
+  }
+
+  .carousel {
+    width: 80%;
+  }
+}
+
+/* ============================================================
+   Small Laptops (1024px–1279px)
+=============================================================== */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .custom-shape-divider-top-1764543608 svg {
+    height: 160px;
+  }
+
+  .carousel {
+    width: 75%;
+  }
+}
+
+/* ============================================================
+   Desktops (1280px–1599px)
+=============================================================== */
+@media (min-width: 1280px) and (max-width: 1599px) {
+  .carousel {
+    width: 70%;
+  }
+}
+
+/* ============================================================
+   Large Desktops (1600px–1919px)
+=============================================================== */
+@media (min-width: 1600px) and (max-width: 1919px) {
+  .carousel {
+    width: 65%;
+  }
+}
+
+/* ============================================================
+   Ultra Wide (1920px and up)
+=============================================================== */
+@media (min-width: 1920px) {
+  .custom-shape-divider-top-1764543608 svg {
+    height: 200px;
+    width: 130%;
+  }
+
+  .carousel {
+    width: 60%;
+  }
+}

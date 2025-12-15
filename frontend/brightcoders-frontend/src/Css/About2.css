@@ -1,0 +1,218 @@
+.about-section2 {
+  position: relative;
+  padding: 90px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bg-shapes {
+  position: absolute;
+  display: flex;
+  gap: 20px;
+}
+
+.shape {
+  width: 110px;
+  height: 110px;
+  background: #9b2c7e; /* purple tone */
+  transform: rotate(45deg);
+  opacity: 0.9;
+}
+
+.s2 {
+  background: #c53faa;
+}
+.s3 {
+  background: #7e1c64;
+}
+
+/* Diamond card */
+.about-card {
+  width: 260px;
+  height: 260px;
+  background: white;
+  padding: 40px 30px;
+  text-align: center;
+  border: 4px solid white;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  transform: rotate(45deg);
+  /* z-index: 5; */
+}
+
+.about-card h2,
+.about-card p {
+  transform: rotate(-45deg); /* Re-rotate the text back to normal */
+}
+
+.about-card h2 {
+  /* margin-bottom: 0px; */
+  font-size: 24px;
+  color: #9b2c7e;
+  text-align: justify;
+  padding-bottom: 20px;
+}
+
+.about-card p {
+  font-size: 15px;
+  color: #555;
+  margin-right: -20px;
+}
+/* ============================================
+   Extra Small Devices (0–399px)
+=============================================== */
+@media (max-width: 399px) {
+  .about-section2 {
+    padding: 60px 0;
+  }
+
+  .shape {
+    width: 70px;
+    height: 70px;
+  }
+
+  .about-card {
+    width: 180px;
+    height: 180px;
+    padding: 25px 15px;
+  }
+
+  .about-card h2 {
+    font-size: 18px;
+    margin-top: -23px;
+    margin-left: -8px;
+  }
+
+  .about-card p {
+    font-size: 13px;
+    margin-right: -24px;
+    margin-top: -15px;
+  }
+}
+
+/* ============================================
+   Small Devices (400px–599px)
+=============================================== */
+@media (min-width: 400px) and (max-width: 599px) {
+  .about-section2 {
+    padding: 70px 0;
+  }
+
+  .shape {
+    width: 85px;
+    height: 85px;
+  }
+
+  .about-card {
+    width: 200px;
+    height: 200px;
+    padding: 30px 18px;
+  }
+
+  .about-card h2 {
+    font-size: 20px;
+    margin-top: -15px;
+  }
+
+  .about-card p {
+    font-size: 14px;
+  }
+}
+
+/* ============================================
+   Medium Devices (600px–767px)
+=============================================== */
+@media (min-width: 600px) and (max-width: 767px) {
+  .about-section2 {
+    padding: 80px 0;
+  }
+
+  .shape {
+    width: 145px;
+    height: 145px;
+  }
+
+  .about-card {
+    width: 330px;
+    height: 330px;
+    padding: 35px 22px;
+  }
+  .about-card h2 {
+    font-size: 20px;
+    /* margin-right: -45px; */
+    /* text-align: center; */
+    padding-left: 20px;
+    margin-top: -19px;
+    padding-top: 20px;
+    margin-bottom: 20px;
+  }
+  .about-card p {
+    font-size: 16px;
+    padding-right: 35px;
+  }
+}
+
+/* ============================================
+   Large Tablets (768px–1023px)
+=============================================== */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .shape {
+    width: 85px;
+    height: 85px;
+  }
+
+  .about-card {
+    width: 210px;
+    height: 210px;
+    padding: 0;
+  }
+}
+
+/* ============================================
+   Small Laptops (1024px–1279px)
+=============================================== */
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .shape {
+    width: 100px;
+    height: 100px;
+  }
+
+  .about-card {
+    width: 240px;
+    height: 240px;
+  }1}
+
+/* ============================================
+   Desktops (1280px–1599px)
+=============================================== */
+@media (min-width: 1280px) and (max-width: 1599px) {
+  .shape {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+/* ============================================
+   Large Desktops (1600px–1919px)
+=============================================== */
+@media (min-width: 1600px) and (max-width: 1919px) {
+  .shape {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+/* ============================================
+   Ultra-Wide (1920px and above)
+=============================================== */
+@media (min-width: 1920px) {
+  .shape {
+    width: 130px;
+    height: 130px;
+  }
+
+  .about-card {
+    width: 300px;
+    height: 300px;
+  }
+}
