@@ -365,6 +365,7 @@ textarea {
   .wizard-container {
     margin: 100px 10px;
     padding: 20px;
+    width: 90%;
   }
   .wizard-title {
     font-size: 1.6rem;
