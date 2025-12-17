@@ -8,7 +8,7 @@
 .faq-header-section {
   width: 100%;
   height: 200px;
-  margin-top: 70px;
+  /* margin-top: 70px; */
   background: #041e43;
   background-size: 10px 10px;
   display: flex;

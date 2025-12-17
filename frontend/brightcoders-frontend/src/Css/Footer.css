@@ -268,6 +268,7 @@ button {
     grid-template-columns: 1fr 1fr;
     padding: 40px;
     gap: 40px;
+    font-size: 80%;
   }
 
   .background-img {

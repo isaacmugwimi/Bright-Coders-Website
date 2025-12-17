@@ -63,7 +63,7 @@ const Navbar = () => {
 
   return (
     <div className="navbar-main-section">
-      <div className="nav-logo">
+      <div className="nav-logo" style={{ flexShrink: 0 }}>
         <img src={logo} alt="Website Logo" width={"125"} height={"125"} />
       </div>
 
