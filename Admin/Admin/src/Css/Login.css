@@ -1,0 +1,148 @@
+/* --- Global & Layout --- */
+.login_page {
+  display: grid;
+  grid-template-columns: 55% 45%; 
+  height: 100%; 
+  width: 100%;
+  background-color: #fff;
+  transform: scale(1.1);
+
+}
+
+/* --- Form Container --- */
+.login_page form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px; /* Adjusted to prevent crowding */
+  margin: auto; 
+  padding: 1.5rem;
+}
+
+.login_title h2 {
+  color: #1a2e40;
+  font-size: 2.2rem; /* Scaled down slightly for the 560px container */
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+
+/* --- Social Icons Section --- */
+.login_social_icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.social-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e3e6f3;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.social-icon svg {
+  color: #666;
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  background-color: #f8f9fa;
+  border-color: #ccc;
+  transform: translateY(-3px);
+}
+
+/* Brand Colors on Hover */
+.social-icon:nth-child(1):hover svg { color: #4285f4; }
+.social-icon:nth-child(2):hover svg { color: #1877f2; }
+.social-icon:nth-child(3):hover svg { color: #181717; }
+.social-icon:nth-child(4):hover svg { color: #0a66c2; }
+
+/* --- Alternative Text --- */
+.alternative {
+  text-align: center;
+  margin: 0.5rem 0;
+}
+
+.alternative p {
+  color: #7d7d7d;
+  font-size: 0.85rem;
+}
+
+/* --- Input Fields & Labels --- */
+.login_page form label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1a2e40;
+  margin-bottom: 0.3rem;
+  align-self: flex-start;
+}
+
+.login_page form input {
+  width: 100%;
+  padding: 10px 15px; /* Slimmed down for fixed height container */
+  background-color: #f0f2f5;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.login_page form input:focus {
+  background-color: #fff;
+  border-color: darkcyan;
+  box-shadow: 0 0 5px rgba(0, 139, 139, 0.2);
+}
+
+/* --- Link & Button --- */
+.login_page form a {
+  color: #1a2e40;
+  text-decoration: none;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  align-self: center;
+  transition: color 0.3s;
+}
+
+.login_page form a:hover {
+  color: darkcyan;
+  text-decoration: underline;
+}
+
+.login_page form button {
+  width: 100%;
+  padding: 12px;
+  background-color: darkcyan;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.login_page form button:hover {
+  background-color: #007070;
+  transform: translateY(-2px);
+}
+
+/* --- Responsiveness --- */
+@media (max-width: 768px) {
+  .login_page {
+    grid-template-columns: 1fr;
+  }
+  .PopupScreen {
+    display: none;
+  }
+}

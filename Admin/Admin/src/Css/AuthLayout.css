@@ -1,0 +1,34 @@
+.authlayout_container {
+  background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  perspective: 1500px; /* Gives the 3D depth */
+}
+
+.wrapper_container {
+  width: 900px;
+  height: 600px;
+  position: relative;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d; /* Allows children to be 3D */
+}
+
+.wrapper_container.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.auth-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Hides the side facing away */
+  background-color: #fff;
+  border-radius: 30px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.signin-face {
+  transform: rotateY(180deg); /* Starts facing the back */
+}

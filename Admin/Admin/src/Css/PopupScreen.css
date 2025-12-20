@@ -1,0 +1,94 @@
+.popup-section {
+  /* Layout */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+/* min-height: ; */
+  
+  /* Dimensions & Spacing */
+  height: 100%; 
+  padding: 0 10%;
+  gap: 20px; /* 
+  
+  /* Styling */
+  color: white;
+  background-color: darkcyan;
+  border-top-left-radius: 150px;
+  border-bottom-left-radius: 150px;
+  
+  /* Animation Safety */
+  overflow: hidden;
+  position: relative;
+}
+
+.logo-section{
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: white;
+  margin-bottom: -1rem;
+  margin-top: -30%
+  
+  
+}
+.logo-section img{
+  width: 100%;
+  height: 100%;
+}
+.popup-section h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+
+}
+
+.popup-section p {
+  font-size: 1rem;
+  letter-spacing: 0.1rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.popup-section button {
+  position: relative;
+  width: 100%;
+  max-width: 200px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  z-index: 1;
+  overflow: hidden;
+  transition: color 0.4s ease;
+}
+
+.popup-section button:hover {
+  color: darkcyan;
+}
+
+/* The Animation Layer */
+.popup-section button:after {
+  content: "";
+  background: white;
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  
+  /* Animation starts hidden */
+  transform: skewX(-45deg) scale(0, 1);
+  transform-origin: center;
+  transition: transform 0.5s ease;
+}
+
+.popup-section button:hover:after {
+  /* Animation fills the button */
+  transform: skewX(-45deg) scale(1.6, 1); 
+}

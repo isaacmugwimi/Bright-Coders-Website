@@ -1,0 +1,177 @@
+/* --- Global & Layout --- */
+.sign-up-page {
+  display: grid;
+  grid-template-columns: 45% 55%;
+  height: 100%;
+  width: 100%;
+  background-color: #fff;
+  overflow: hidden;
+  transform: scale(1.1);
+}
+
+/* --- Form Container --- */
+.sign-up-page .form-container-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+
+.sign-up-page form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+}
+
+.sign-up-page h3 {
+  color: #1a2e40;
+  font-size: 1.8rem;
+  text-align: center;
+  margin-top: 0;
+}
+
+.sign-up-page .signIn-p {
+  color: #666;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+/* --- Profile Picture Section --- */
+.profile-pic-section {
+  display: flex;
+  /* flex-direction: column; */
+  align-items: center;
+  margin-bottom: 1rem;
+  justify-content: center;
+  position: relative;
+}
+
+.placeholder-circle {
+  cursor: pointer;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 80px;
+  height: 80px;
+  /* border: 2px dashed #7a53ef; */
+  border: 1px solid darkcyan;
+  background-color: #f3e8ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: border-color 0.3s;
+}
+
+.profile-pic-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-pic-input {
+  display: none;
+}
+.upload-icon {
+  position: absolute;
+  bottom: 0;
+  right: 40%;
+  background-color: #7a53ef;
+  border-radius: 100%;
+  padding: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.upload-icon img {
+  width: 15px;
+  height: 15px;
+  transition: transform 0.3s ease, opacity 0.3s ease; /* image transition */
+}
+
+/* --- Inputs & Labels --- */
+.sign-up-page .label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #1a2e40;
+  margin-bottom: 0.3rem;
+  margin-top: 0.8rem;
+}
+
+.sign-up-page input:not(.profile-pic-input) {
+  width: 100%;
+  padding: 10px 12px; /* Slimmer padding for 560px height */
+  background-color: #f0f2f5;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.sign-up-page input:focus {
+  background-color: #fff;
+  border-color: darkcyan;
+  box-shadow: 0 0 5px rgba(0, 139, 139, 0.2);
+}
+
+/* --- Button & Toggle Link --- */
+.sign-up-page button {
+  width: 100%;
+  padding: 12px;
+  background-color: darkcyan;
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+  margin-top: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.sign-up-page button:hover {
+  background-color: #007070;
+  transform: translateY(-2px);
+}
+
+.sign-up-page form p {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+
+/* 2. Style the 'Login' text as a clickable span for the flip */
+.sign-up-page form .toggle-link {
+  color: darkcyan;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 5px;
+}
+
+.sign-up-page form .toggle-link:hover {
+  text-decoration: underline;
+}
+
+/* --- Responsiveness --- */
+@media (max-width: 768px) {
+  .sign-up-page {
+    grid-template-columns: 1fr;
+  }
+  .PopupScreen2 {
+    display: none;
+  }
+}
+
+.error-paragraph {
+  color: red;
+  font-size: 13px;
+  /* margin-bottom: -5%; */
+  /* background-color: blue; */
+  
+}
+.error-border {
+  border-color: red !important;
+}
