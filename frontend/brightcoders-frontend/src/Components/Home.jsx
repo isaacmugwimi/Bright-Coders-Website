@@ -2,7 +2,7 @@ import React from "react";
 import "../Css/Home.css";
 import { useTypewriter, Cursor } from "react-simple-typewriter";
 // import heroIllustration from "../assets/hero-image.png"; // Save the image I provided here
-import heroIllustration from "../assets/gemini.png";
+import heroIllustration from "../assets/gemini2.png";
 import NumberCounter from "number-counter";
 
 const Home = () => {
@@ -68,9 +68,12 @@ const Home = () => {
         </div>
 
         {/* Right Image */}
-        <div className="hero-image-section">
+        {/* <div className="hero-image-section"> */}
+        {/* Right Image */}
+        <div className="hero-image">
           <img src={heroIllustration} alt="Bright Coders Illustration" />
         </div>
+        {/* </div> */}
       </div>
 
       <div className="scroll-indicator">
