@@ -1,0 +1,45 @@
+.admin-container {
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.add-course-btn {
+  background: #058980;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.admin-table th {
+  text-align: left;
+  background: #f8fafc;
+  padding: 12px;
+  color: #64748b;
+}
+
+.admin-table td {
+  padding: 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.edit-btn { color: #058980; background: none; border: none; cursor: pointer; margin-right: 10px; }
+.delete-btn { color: #ef4444; background: none; border: none; cursor: pointer; }

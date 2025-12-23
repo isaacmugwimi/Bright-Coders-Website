@@ -5,12 +5,24 @@ import dotenv from "dotenv";
 dotenv.config();
 import { initDb } from "./Database/Config/config.db.js";
 import authRouter from "./Router/authRouter.js";
+import courseRouter from "./Router/courseRouter.js";
+
 import path from "path";
 import { fileURLToPath } from "url";
 // backend starts here
 const app = express();
 
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" },
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        "img-src": ["'self'", "data:", "http://localhost:8000"], // Allow images from your backend
+      },
+    },
+  })
+);
 
 //Midleware to handle CORS
 app.use(
@@ -27,6 +39,7 @@ const __dirname = path.dirname(__filename);
 app.use(express.json());
 // routes
 app.use("/api/auth", authRouter);
+app.use("/api/courses", courseRouter);
 
 // serve uploads folder statically
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

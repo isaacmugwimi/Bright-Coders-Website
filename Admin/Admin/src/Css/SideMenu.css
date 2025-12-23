@@ -1,0 +1,93 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.main-side-bar {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  border-right: 1px solid darkcyan; /* Changed to right-border for a cleaner look */
+  background-color: #058980;
+  padding: 10px 10px;
+}
+
+.profile-pic-menu {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.profile-img,
+.profile-img-placeholder {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #7c52f4;
+  display: flex; /* For placeholder text centering */
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-img-placeholder {
+  background-color: #f3f0ff; /* Light purple background */
+  color: #7c52f4;
+  font-weight: 700;
+  font-size: 24px;
+}
+
+.status-dot {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 14px;
+  height: 14px;
+  background-color: #22c55e;
+  border-radius: 50%;
+  border: 2px solid white;
+  z-index: 10;
+}
+
+.profile-pic-name {
+  font-weight: 700;
+  font-size: 20px;
+  font-family: inherit; /* Use your global font */
+  margin-top: 5px;
+  color: white;
+}
+
+.last-active {
+  font-size: 0.75rem;
+  color: white;
+  margin-top: 2px;
+}
+
+.side-menu-buttons {
+  padding: 10px 15px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  margin-top: 20px;
+  border-radius: 10px;
+  display: flex;
+  width: 100%;
+  /* border: 2px solid white; */
+  justify-content: flex-start;
+  color: #013a59;
+  cursor: pointer;
+  transition: 0.3s all ease;
+  align-items: center;
+  gap: 10px;
+}
+/* .logout-btn:hover{
+    transform: translateY(-3px);
+} */
+

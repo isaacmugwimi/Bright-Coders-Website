@@ -1,0 +1,39 @@
+.AdminDashBoard {
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(8, 0, 58, 0.7), rgba(8, 0, 58, 0.7)),
+    url(../assets/adminDashboardImg.png);
+  background-size: auto; /* Default for large screens */
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+/* Short Screen Height Adjustments (Laptops) */
+@media (max-height: 768px) {
+  .AdminDashBoard {
+    /* Change auto to cover so the iMac scales down to fit the smaller height */
+    background-size: cover; 
+    /* Shift slightly up so the monitor screen stays behind the text */
+    background-position: center 30%; 
+  }
+  
+  .AdminDashBoard h1 {
+    font-size: 1.8rem;
+    padding: 0 20px;
+    text-align: center;
+  }
+}
+
+/* Very Short Height (Small Laptops/Split Screen) */
+@media (max-height: 600px) {
+  .AdminDashBoard {
+    background-position: center 15%;
+  }
+  .AdminDashBoard h1 {
+    font-size: 1.4rem;
+  }
+}

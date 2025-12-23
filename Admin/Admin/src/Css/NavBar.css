@@ -5,11 +5,14 @@
   display: flex;
   gap: 10px;
   flex-direction: column;
+    border-bottom:1px solid darkcyan;
+    z-index: 1;
 }
 
 .navBarMain {
   display: flex;
   gap: 8px;
+
 }
 
 .toggleSideMenu {

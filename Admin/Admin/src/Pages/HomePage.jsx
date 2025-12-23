@@ -2,6 +2,8 @@ import React from "react";
 import SideMenu from "../Components/SideMenu";
 import Layout from "../Components/Layout";
 import DashBoardLayout from "../Layouts/DashBoardLayout.jsx";
+import ProgramManagement from "../Components/ProgramManagement.jsx";
+import AdminDashBoard from "../Components/AdminDashBoard.jsx";
 
 const HomePage = () => {
   return (
@@ -11,10 +13,8 @@ const HomePage = () => {
     // </div>
 
     <DashBoardLayout>
-      <div className="content">
-        <h1>Welcome to the Dashboard</h1>
-        <p>This is your main content area.</p>
-      </div>
+      <AdminDashBoard />
+      <ProgramManagement />
     </DashBoardLayout>
   );
 };

@@ -2,20 +2,12 @@ import dotenv from "dotenv";
 dotenv.config();
 import { neon } from "@neondatabase/serverless";
 import bcrypt from "bcryptjs";
+import { courseTableSchema } from "./courseQueries";
 const { PGUSER, PGPASSWORD, PGHOST, PGDATABASE } = process.env;
 
 export const sql = neon(
   `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}?sslmode=require`
 );
-
-// export default async function testDbConnection(params) {
-//   try {
-//     const result = await initDb`SELECT 1`;
-//     console.log("✅ Database connected successfully!", result);
-//   } catch (err) {
-//     console.error("❌ Database connection error:", err.message);
-//   }
-// }
 
 // ========================================
 //  🔹 Initialize Database & Tables
@@ -38,6 +30,9 @@ export async function initDb() {
       updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 `;
+
+    await sql([courseTableSchema]);
+    console.log("Course Table Initialized");
   } catch (error) {
     console.error("Error in initializing the Database: ", error);
   }
