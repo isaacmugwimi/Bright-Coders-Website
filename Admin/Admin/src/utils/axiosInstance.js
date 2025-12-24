@@ -27,16 +27,15 @@ axiosInstance.interceptors.request.use(
 // Response interceptors
 
 axiosInstance.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
     // handle common errors globally
-    if (error.message) {
-      if (error.response.status === 401) {
+    if (error.response) {
+      const { status } = error.response;
+      if (status === 401) {
         // redirect to homepage
-        window.location.href = "/login";
-      } else if (error.response.status === 500)
+        window.location.href = "/authentication";
+      } else if (status === 500)
         console.error("Server error. Please try again later");
     } else if (error.code === "ECONNABORTED") {
       console.error("Request timeout. Please try again.");

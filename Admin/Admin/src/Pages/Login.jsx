@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../Css/Login.css";
 import UserContext from "../Components/Context/UserContext";
 import PopupScreen from "./AuthLayout/PopupScreen";
-import axiosInstance from "../utils/axiosInsatance";
+import axiosInstance from "../utils/axiosInstance";
 import { API_PATHS } from "../utils/apiPaths";
 const Login = ({ onToggle }) => {
   // added the states for  form data and errors

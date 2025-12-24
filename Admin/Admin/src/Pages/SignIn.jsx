@@ -7,7 +7,7 @@ import "../Css/SignIn.css";
 import user_pic from "../assets/user.svg";
 import upload from "../assets/upload.svg";
 import delete_icon from "../assets/trash-2.svg";
-import axiosInstance from "../utils/axiosInsatance";
+import axiosInstance from "../utils/axiosInstance.js";
 import { API_PATHS } from "../utils/apiPaths";
 import { validateEmail, validateName, validatePassword } from "../utils/helper";
 import UserContext from "../Components/Context/UserContext";

@@ -1,4 +1,4 @@
-import * as Queries from "../Database/Config/courseQueries";
+import * as Queries from "../Database/Config/courseQueries.js";
 // ========================================
 // 🔹 Create Course
 // ========================================
