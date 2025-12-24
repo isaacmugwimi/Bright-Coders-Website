@@ -1,4 +1,4 @@
-.form-container {
+.form-wrapper {
   background: #ffffff;
   border-radius: 12px;
   max-width: 850px;
@@ -8,21 +8,21 @@
   overflow-y: auto;
 }
 
-.form-container::-webkit-scrollbar {
+.form-wrapper::-webkit-scrollbar {
   width: 8px;
 }
 
-.form-container::-webkit-scrollbar-track {
+.form-wrapper::-webkit-scrollbar-track {
   background: #f1f5f9;
   border-radius: 10px;
 }
 
-.form-container::-webkit-scrollbar-thumb {
+.form-wrapper::-webkit-scrollbar-thumb {
   background: #cbd5e1;
   border-radius: 10px;
 }
 
-.form-container::-webkit-scrollbar-thumb:hover {
+.form-wrapper::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
 

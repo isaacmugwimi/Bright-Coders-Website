@@ -1,27 +1,35 @@
-import { Plus, Trash2, Image as ImageIcon, CheckCircle } from "lucide-react";
-import React, { useState } from "react";
+import { Plus, Trash2, Image as ImageIcon, CheckCircle, X } from "lucide-react";
+import React, { useState, useRef, useEffect } from "react";
 import "./AddCourseForm.css";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 
-const AddCourseForm = ({ onClose, refreshCourses }) => {
+const AddCourseForm = ({ onClose, refreshCourses, initialData }) => {
   const [loading, setLoading] = useState(false);
+  const formEndRef = useRef(null);
+
+  // Initialize state: Handling both snake_case (DB) and camelCase (JS)
   const [formData, setFormData] = useState({
-    title: "",
-    category: "",
-    duration: "",
-    price: "",
-    level: "Beginner",
-    imageUrl: "",
-    isPublic: false,
-    focus: [""],
-    requirements: [""],
+    title: initialData?.title || "",
+    category: initialData?.category || "",
+    duration: initialData?.duration || "",
+    price: initialData?.price || "",
+    level: initialData?.level || "Beginner",
+    imageUrl: initialData?.imageUrl || initialData?.image_url || "",
+    isPublic: initialData?.isPublic ?? initialData?.is_public ?? false,
+    focus: initialData?.focus || [""],
+    requirements: initialData?.requirements || [""],
     description: {
-      definition: "",
-      learningPoints: [""],
-      outcome: "",
+      definition: initialData?.description?.definition || "",
+      learningPoints: initialData?.description?.learningPoints || [""],
+      outcome: initialData?.description?.outcome || "",
     },
   });
+
+  // Smooth scroll to bottom when adding fields
+  const scrollToBottom = () => {
+    formEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -66,6 +74,7 @@ const AddCourseForm = ({ onClose, refreshCourses }) => {
     } else {
       setFormData((prev) => ({ ...prev, [field]: [...prev[field], ""] }));
     }
+    setTimeout(scrollToBottom, 50);
   };
 
   const removeArrayField = (index, field, subField = null) => {
@@ -94,16 +103,14 @@ const AddCourseForm = ({ onClose, refreshCourses }) => {
         API_PATHS.IMAGE.UPLOAD_IMAGE,
         uploadData,
         {
-          headers: {
-            "Content-Type": "multipart/form-data", // Force the correct header
-          },
+          headers: { "Content-Type": "multipart/form-data" },
         }
       );
       if (response.data?.imageUrl) {
         setFormData((prev) => ({ ...prev, imageUrl: response.data.imageUrl }));
       }
     } catch (error) {
-      alert("Upload failed");
+      alert("Upload failed. Check backend console.");
     } finally {
       setLoading(false);
     }
@@ -113,7 +120,14 @@ const AddCourseForm = ({ onClose, refreshCourses }) => {
     e.preventDefault();
     try {
       setLoading(true);
-      await axiosInstance.post(API_PATHS.COURSES.CREATE, formData);
+      if (initialData) {
+        await axiosInstance.put(
+          API_PATHS.COURSES.UPDATE(initialData.id),
+          formData
+        );
+      } else {
+        await axiosInstance.post(API_PATHS.COURSES.CREATE, formData);
+      }
       refreshCourses();
       onClose();
     } catch (error) {
@@ -124,19 +138,18 @@ const AddCourseForm = ({ onClose, refreshCourses }) => {
   };
 
   return (
-    <div className="form-container">
+    <div className="form-wrapper">
       <form onSubmit={handleSubmit} className="premium-form">
-        
-
         <div className="form-grid">
           <div className="form-group">
             <label>Course Title</label>
             <input
               type="text"
               name="title"
-              placeholder="e.g. Scratch Coding"
+              value={formData.title}
               onChange={handleChange}
               required
+              placeholder="e.g. Scratch Coding"
             />
           </div>
           <div className="form-group">
@@ -144,9 +157,10 @@ const AddCourseForm = ({ onClose, refreshCourses }) => {
             <input
               type="text"
               name="category"
-              placeholder="e.g. Young Coders"
+              value={formData.category}
               onChange={handleChange}
               required
+              placeholder="e.g. Young Coders"
             />
           </div>
           <div className="form-group">
@@ -154,8 +168,9 @@ const AddCourseForm = ({ onClose, refreshCourses }) => {
             <input
               type="text"
               name="price"
-              placeholder="KSh 3,000"
+              value={formData.price}
               onChange={handleChange}
+              placeholder="KSh 3,000"
             />
           </div>
           <div className="form-group">
@@ -163,8 +178,9 @@ const AddCourseForm = ({ onClose, refreshCourses }) => {
             <input
               type="text"
               name="duration"
-              placeholder="3 weeks"
+              value={formData.duration}
               onChange={handleChange}
+              placeholder="3 weeks"
             />
           </div>
         </div>
@@ -174,8 +190,9 @@ const AddCourseForm = ({ onClose, refreshCourses }) => {
           <textarea
             name="definition"
             rows="3"
-            placeholder="Describe the program..."
+            value={formData.description.definition}
             onChange={handleDescriptionChange}
+            placeholder="Describe the program..."
           />
         </div>
 
@@ -186,7 +203,7 @@ const AddCourseForm = ({ onClose, refreshCourses }) => {
               <div key={index} className="array-item">
                 <input
                   value={item}
-                  placeholder="What will they learn?"
+                  placeholder="Skill learned..."
                   onChange={(e) =>
                     handleArrayChange(
                       index,
@@ -222,7 +239,7 @@ const AddCourseForm = ({ onClose, refreshCourses }) => {
               <div key={index} className="array-item">
                 <input
                   value={item}
-                  placeholder="e.g. A laptop"
+                  placeholder="e.g. Laptop"
                   onChange={(e) =>
                     handleArrayChange(index, e.target.value, "requirements")
                   }
@@ -251,8 +268,9 @@ const AddCourseForm = ({ onClose, refreshCourses }) => {
           <input
             type="text"
             name="outcome"
-            placeholder="By the end, students will..."
+            value={formData.description.outcome}
             onChange={handleDescriptionChange}
+            placeholder="What will they achieve?"
           />
         </div>
 
@@ -289,9 +307,7 @@ const AddCourseForm = ({ onClose, refreshCourses }) => {
         <div className="upload-section">
           <label className="file-label">
             <ImageIcon size={20} />
-            <span>
-              {formData.imageUrl ? "Change Image" : "Upload Course Image"}
-            </span>
+            <span>{formData.imageUrl ? "Change Image" : "Upload Image"}</span>
             <input type="file" hidden onChange={handleFileUpload} />
           </label>
           {formData.imageUrl && (
@@ -301,12 +317,18 @@ const AddCourseForm = ({ onClose, refreshCourses }) => {
           )}
         </div>
 
-        <div className="form-actions">
+        <div ref={formEndRef} style={{ height: "1px" }} />
+
+        <div className="form-actions sticky-footer">
           <button type="button" className="btn-secondary" onClick={onClose}>
             Cancel
           </button>
           <button type="submit" className="btn-primary" disabled={loading}>
-            {loading ? "Saving..." : "Create Program"}
+            {loading
+              ? "Processing..."
+              : initialData
+              ? "Update Program"
+              : "Create Program"}
           </button>
         </div>
       </form>

@@ -10,10 +10,23 @@ const ProgramManagement = () => {
   const [courses, setCourses] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [selectedCourse, setSelectedCourse] = useState(null);
 
   useEffect(() => {
     fetchCourses();
   }, []);
+
+  // Open modal for Adding
+  const handleAddNew = () => {
+    setSelectedCourse(null); // Clear previous selection
+    setIsModalOpen(true);
+  };
+
+  // Open modal for Editing
+  const handleEdit = (course) => {
+    setSelectedCourse(course); // Put the clicked course into state
+    setIsModalOpen(true);
+  };
 
   const fetchCourses = async () => {
     try {
@@ -103,7 +116,11 @@ const ProgramManagement = () => {
                     </td>
                     <td>
                       <div className="action-btns">
-                        <button className="edit-btn" title="Edit">
+                        <button
+                          className="edit-btn"
+                          title="Edit"
+                          onClick={() => handleEdit(course)}
+                        >
                           <Edit size={16} />
                         </button>
                         <button
@@ -133,7 +150,8 @@ const ProgramManagement = () => {
         <div className="modal-overlay">
           <div className="modal-content">
             <div className="modal-header">
-              <h2>Add New Course</h2>
+              {/* Change title based on whether we are editing or adding */}
+              <h2>{selectedCourse ? "Edit Course" : "Add New Course"}</h2>
               <button className="close-x" onClick={() => setIsModalOpen(false)}>
                 &times;
               </button>
@@ -142,6 +160,7 @@ const ProgramManagement = () => {
             <AddCourseForm
               onClose={() => setIsModalOpen(false)}
               refreshCourses={fetchCourses}
+              initialData={selectedCourse}
             />
           </div>
         </div>
