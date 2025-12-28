@@ -119,14 +119,14 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                  <HashLink
-                    smooth
-                    to={"/home#testimonials-wrapper"}
+                  <NavLink
+                 
+                    to={"/testimonials"}
                     onClick={closeAllMenus}
                   >
                     <FaComments className="nav-icon" />
                     <span>Testimonials</span>{" "}
-                  </HashLink>
+                  </NavLink>
                 </li>
 
                 <li>

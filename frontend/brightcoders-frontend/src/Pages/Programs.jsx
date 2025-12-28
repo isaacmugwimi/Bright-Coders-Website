@@ -74,78 +74,110 @@ const Programs = () => {
   return (
     <div className="programs-page">
       {/* Header */}
-      <motion.div
-        className="programs-header"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-      >
-        <h1>Our Programs</h1>
-        <p>Choose the perfect coding journey for your child.</p>
-      </motion.div>
+      <section className="programs-hero">
+        <div className="hero-image-overlay"></div>
+        <div className="hero-content">
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="hero-badge"
+          >
+            BRIGHT CODERS ACADEMY
+          </motion.span>
+          <motion.h1
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            Empowering Your Child's <br />
+            <span className="highlight">Digital Future</span>
+          </motion.h1>
+          <motion.p
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            Expert-led coding programs designed for the next generation of
+            African tech leaders.
+          </motion.p>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            className="hero-cta"
+            onClick={() =>
+              document
+                .getElementById("programs-grid")
+                .scrollIntoView({ behavior: "smooth" })
+            }
+          >
+            View All Courses
+          </motion.button>
+        </div>
+      </section>
 
-      {loading ? (
-        <div className="loading-container">
-          <div className="simple-spinner"></div>
-          <p>Fetching latest programs...</p>
-        </div>
-      ) : (
-        <div className="content-wrapper">
-          {categories.length > 0 ? (
-            categories.map((category, index) => (
-              <motion.div
-                key={index}
-                className="program-category"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.1 }}
-                variants={cardVariants}
-              >
-                <h2>{category}</h2>
-                <div className="program-grid">
-                  {groupedCourses[category].map((item) => (
-                    <motion.div
-                      className="program-card"
-                      key={item.id}
-                      whileHover={{ scale: 1.03 }}
-                      onClick={() => handleCardClick(item)}
-                    >
-                      {/* Note: changed item.image to item.image_url for DB compatibility */}
-                      <img
-                        src={item.image_url || "/placeholder.png"}
-                        alt={item.title}
-                      />
-                      <div className="program-duration">
-                        <FaClock /> {item.duration}
-                      </div>
-                      <h3>{item.title}</h3>
-                      <div className="focus-area">
-                        <strong>Focus:</strong>
-                        <div className="tags">
-                          {item.focus &&
-                            item.focus.map((tag, t) => (
-                              <span key={t} className="tag">
-                                {tag}
-                              </span>
-                            ))}
+      <section id="programs-grid">
+        {loading ? (
+          <div className="loading-container" id="programs-grid">
+            <div className="simple-spinner"></div>
+            <p>Fetching latest programs...</p>
+          </div>
+        ) : (
+          <div className="content-wrapper">
+            {categories.length > 0 ? (
+              categories.map((category, index) => (
+                <motion.div
+                  key={index}
+                  className="program-category"
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, amount: 0.1 }}
+                  variants={cardVariants}
+                >
+                  <h2>{category}</h2>
+                  <div className="program-grid">
+                    {groupedCourses[category].map((item) => (
+                      <motion.div
+                        className="program-card"
+                        key={item.id}
+                        whileHover={{ scale: 1.03 }}
+                        onClick={() => handleCardClick(item)}
+                      >
+                        <img
+                          src={item.image_url || "/placeholder.png"}
+                          alt={item.title}
+                        />
+                        <div className="program-duration">
+                          <FaClock /> {item.duration}
                         </div>
-                      </div>
-                      <p className="price">Ksh. {item.price}</p>
-                      <span className={`level ${item.level?.toLowerCase()}`}>
-                        {item.level}
-                      </span>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            ))
-          ) : (
-            <div className="empty-programs">
-              <h3>No programs live at the moment.</h3>
-              <p>Check back later or browse our upcoming courses!</p>
-            </div>
-          )}
-        </div>
-      )}
+                        <h3>{item.title}</h3>
+                        <div className="focus-area">
+                          <strong>Focus:</strong>
+                          <div className="tags">
+                            {item.focus &&
+                              item.focus.map((tag, t) => (
+                                <span key={t} className="tag">
+                                  {tag}
+                                </span>
+                              ))}
+                          </div>
+                        </div>
+                        <p className="price">Ksh. {item.price}</p>
+                        <span className={`level ${item.level?.toLowerCase()}`}>
+                          {item.level}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              ))
+            ) : (
+              <div className="empty-programs">
+                <h3>No programs live at the moment.</h3>
+                <p>Check back later or browse our upcoming courses!</p>
+              </div>
+            )}
+          </div>
+        )}
+      </section>
 
       {/* Benefits Section */}
       <div className="benefits">

@@ -3,12 +3,15 @@ import * as Queries from "../Database/Config/testimonialsQueries.js";
 
 // 1. ADD NEW TESTIMONIAL (Public Submission)
 export const handleAddTestimonial = async (request, response) => {
+  // Log both to verify Multer is working
+  console.log("Body Data:", request.body);
+  console.log("File Data:", request.file);
+
   try {
+    // 1. Validate the text fields from the body
     const { error, value } = testimonialValidationSchema.validate(
       request.body,
-      {
-        abortEarly: false,
-      }
+      { abortEarly: false }
     );
 
     if (error) {
@@ -18,7 +21,19 @@ export const handleAddTestimonial = async (request, response) => {
         .json({ message: "Validation failed!", errors: errorMessages });
     }
 
-    const newTestimonial = await Queries.createTestimonial(value);
+    // 2. Capture the image path if a file was uploaded
+    // We use request.file.filename (or path) provided by Multer
+    const imagePath = request.file ? `/uploads/${request.file.filename}` : null;
+
+    // 3. Merge the validated text with the image path
+    const testimonialData = {
+      ...value,
+      imageUrl: imagePath, // This must match the column name in your database
+    };
+
+    // 4. Pass the combined object to your Query
+    const newTestimonial = await Queries.createTestimonial(testimonialData);
+
     return response.status(201).json({
       message: "Thank you! Your testimonial has been submitted for review.",
       data: newTestimonial,

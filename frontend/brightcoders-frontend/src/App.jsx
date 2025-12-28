@@ -17,6 +17,7 @@ import Founder from "./Components/Founder";
 import FAQs from "./Components/FAQs";
 import Blog from "./Pages/BlogPage";
 import CourseDetail from "./Components/CourseDetail";
+import TestimonialPage from "./Components/Testimonials/TestimonialPage";
 
 function AppRoutes() {
   return (
@@ -32,6 +33,7 @@ function AppRoutes() {
       <Route path="/faqs" element={<FAQs />} />
       <Route path="/blogs" element={<Blog />} />
       <Route path="/founder" element={<Founder />} />
+      <Route path="/testimonials" element={<TestimonialPage />} />
     </Routes>
   );
 }

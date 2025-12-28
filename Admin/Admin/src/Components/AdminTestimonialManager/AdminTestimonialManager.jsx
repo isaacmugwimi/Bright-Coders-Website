@@ -20,6 +20,8 @@ import "../AdminBlogManager/AdminBlogManager.css";
 import "./AdminTestimonialManager.css";
 
 const AdminTestimonialManager = () => {
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
+  
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -228,14 +230,25 @@ const AdminTestimonialManager = () => {
                   <tr key={t.id}>
                     <td>
                       <div className="user-profile-cell">
-                        <img
-                          src={
-                            t.image_url ||
-                            "https://ui-avatars.com/api/?name=" + t.user_name
-                          }
-                          className="avatar-sm"
-                          alt=""
-                        />
+                        <div className="user-profile-cell">
+                          <img
+                            src={
+                              t.image_url
+                                ? t.image_url.startsWith("http")
+                                  ? t.image_url
+                                  : `${API_URL.replace(
+                                      /\/$/,
+                                      ""
+                                    )}/${t.image_url.replace(/^\//, "")}`
+                                : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                                    t.user_name
+                                  )}`
+                            }
+                            className="avatar-sm"
+                            alt={t.user_name}
+                          />
+                          {/* ... rest of your code ... */}
+                        </div>
                         <div>
                           <div className="font-bold">{t.user_name}</div>
                           <div className="text-muted small">{t.user_role}</div>

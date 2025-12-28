@@ -1,0 +1,376 @@
+/* --- Global Wrapper --- */
+.testimonial-wrapper {
+  font-family: "Inter", -apple-system, sans-serif;
+  color: #1e293b;
+  background-color: #fdfdfd;
+}
+
+/* --- 1. Hero Header --- */
+.testimonial-hero {
+  position: relative;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* background-image: url("https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=2070"); */
+  background-image: url(../../assets/photoHeader.avif);
+  background-size: cover;
+  background-position: center;
+
+  color: white;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(15, 23, 42, 0.4) 0%,
+    rgba(15, 23, 42, 0.8) 100%
+  );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.hero-content h1 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.hero-content p {
+  font-size: 1.25rem;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn-primary {
+  background: #3b82f6;
+  color: white;
+  padding: 14px 28px;
+  border-radius: 12px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.btn-outline {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 14px 28px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(5px);
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+}
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* --- 2. Testimonials Grid --- */
+.testimonials-display-section {
+  padding: 80px 5%;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 50px;
+  color: #0f172a;
+}
+
+.testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+.testimonial-card {
+  background: white;
+  padding: 40px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f1f5f9;
+  position: relative;
+  transition: 0.3s;
+  border-bottom: 1px solid darkcyan;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+.card-quotes {
+  font-size: 2.5rem;
+  color: #e2e8f0;
+  margin-bottom: 20px;
+}
+
+.card-message {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #475569;
+  margin-bottom: 30px;
+  font-style: italic;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-img-wrapper {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #94a3b8;
+}
+
+.user-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.user-info h4 {
+  margin: 0;
+  font-size: 1rem;
+  color: #0f172a;
+}
+.user-info span {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.star-filled {
+  color: #f59e0b;
+}
+
+/* --- 3. Dashboard Style Form --- */
+.form-section {
+  padding: 100px 5%;
+  background: #f8fafc;
+}
+
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  padding: 50px;
+  border-radius: 32px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.form-header h2 {
+  font-size: 2rem;
+  color: #0f172a;
+}
+
+.testimonial-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.05em;
+}
+
+.field-group input,
+.field-group textarea,
+.field-group select {
+  padding: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  outline: none;
+  transition: 0.2s;
+}
+
+.field-group input:focus,
+.field-group textarea:focus {
+  border-color: #3b82f6;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.form-flex-bottom {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  gap: 20px;
+}
+
+/* --- THE DASHED UPLOAD BOX --- */
+.dashed-upload-box {
+  height: 120px;
+  border: 2px dashed #cbd5e1;
+  border-radius: 16px;
+  background: #f8fafc;
+  transition: 0.3s;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.dashed-upload-box:hover {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.upload-box-content {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.placeholder-mode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+}
+
+.placeholder-mode svg {
+  font-size: 1.5rem;
+}
+
+.preview-mode {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.preview-mode img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 0.3s;
+  gap: 5px;
+}
+
+.preview-mode:hover .preview-overlay {
+  opacity: 1;
+}
+
+.submit-btn {
+  background: darkcyan;
+  color: white;
+  padding: 18px;
+  border-radius: 14px;
+  border: none;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 10px;
+}
+
+.submit-btn:hover {
+  transform: scale(0.9);
+}
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* --- Error Styling --- */
+.input-err {
+  border-color: #ef4444 !important;
+}
+.err-msg {
+  color: #ef4444;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+.box-err {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .form-row,
+  .form-flex-bottom {
+    grid-template-columns: 1fr;
+  }
+  .testimonial-hero {
+    height: 400px;
+  }
+  .hero-content h1 {
+    font-size: 2.2rem;
+  }
+  .form-container {
+    padding: 30px 20px;
+  }
+}

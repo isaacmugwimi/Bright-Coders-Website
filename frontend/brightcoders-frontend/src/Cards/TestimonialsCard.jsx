@@ -14,6 +14,7 @@ import {
 import { RiDoubleQuotesR } from "react-icons/ri";
 
 const TestimonialsCard = () => {
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
   const [liveTestimonials, setLiveTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -22,7 +23,7 @@ const TestimonialsCard = () => {
     const fetchLiveReviews = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/testimonials/live"
+          `${API_URL.replace(/\/$/, "")}/api/testimonials/live`
         );
         setLiveTestimonials(response.data);
       } catch (error) {
@@ -32,7 +33,7 @@ const TestimonialsCard = () => {
       }
     };
     fetchLiveReviews();
-  }, []);
+  }, [API_URL]);
 
   const NextArrow = ({ onClick }) => (
     <div className="arrow next" onClick={onClick} aria-hidden="true">
@@ -90,7 +91,17 @@ const TestimonialsCard = () => {
 
             <div className="testimonial-image-section">
               {item.image_url ? (
-                <img src={item.image_url} alt={item.user_name} />
+                <img
+                  src={
+                    item.image_url.startsWith("http")
+                      ? item.image_url
+                      : `${API_URL.replace(/\/$/, "")}/${item.image_url.replace(
+                          /^\//,
+                          ""
+                        )}`
+                  }
+                  alt={item.user_name}
+                />
               ) : (
                 <div className="placeholder-icon">
                   <FaUserAlt />
@@ -99,7 +110,7 @@ const TestimonialsCard = () => {
             </div>
 
             <div className="quotes-mark" aria-hidden="true">
-              <RiDoubleQuotesR size={150}  />
+              <RiDoubleQuotesR size={150} />
             </div>
           </div>
         ))}

@@ -8,6 +8,7 @@ import {
   handleApproveTestimonial,
   handleHideTestimonial,
 } from "../Controller/testimonialController.js";
+import upload from "../Middleware/uploadMiddleware.js";
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ const router = express.Router();
 router.get("/live", handleGetLiveTestimonials);
 
 // Anyone can submit a new testimonial (Validation is handled inside the controller)
-router.post("/submit", handleAddTestimonial);
+router.post("/submit", upload.single("image"), handleAddTestimonial);
 
 // --- ADMIN ROUTES (Protected) ---
 // Admin can see all submissions (including pending ones)
