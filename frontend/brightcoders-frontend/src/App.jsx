@@ -18,6 +18,7 @@ import FAQs from "./Components/FAQs";
 import Blog from "./Pages/BlogPage";
 import CourseDetail from "./Components/CourseDetail";
 import TestimonialPage from "./Components/Testimonials/TestimonialPage";
+import CertificateVerify from "./Components/CertificateVerify/CertificateVerify";
 
 function AppRoutes() {
   return (
@@ -34,6 +35,11 @@ function AppRoutes() {
       <Route path="/blogs" element={<Blog />} />
       <Route path="/founder" element={<Founder />} />
       <Route path="/testimonials" element={<TestimonialPage />} />
+   {/* 1. This handles clicking "Verify" from the Navbar (Search Mode) */}
+      <Route path="/verify" element={<CertificateVerify />} />
+      
+      {/* 2. This handles the QR Code scan (Direct Verification Mode) */}
+      <Route path="/verify/:regNumber" element={<CertificateVerify />} />
     </Routes>
   );
 }

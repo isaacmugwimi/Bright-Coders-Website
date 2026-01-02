@@ -67,6 +67,7 @@ const SuccessScreen = ({ formData, mpesaCode, isPayLater }) => {
     doc.setFontSize(12);
     doc.setFont(undefined, "bold");
     doc.text(`Date: ${date}`, 20, 50);
+    doc.text(`Reg No: ${formData.regNumber || "N/A"}`, 140, 50);
 
     if (isPayLater) {
       doc.setTextColor(243, 156, 18);
@@ -113,7 +114,7 @@ const SuccessScreen = ({ formData, mpesaCode, isPayLater }) => {
         {isPayLater
           ? ` We have reserved a slot for `
           : ` We have received the registration for `}
-        <strong>{formData.childName}</strong> for the
+        <strong>{formData.childName} (ID: <strong>{formData.regNumber}</strong>) </strong> for the
         <strong> {formData.course}</strong> course.
       </p>
 

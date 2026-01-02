@@ -1,0 +1,151 @@
+/* Container for the whole page */
+.verify-page {
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background-color: #f8fafc; /* Soft light gray background */
+  font-family: "Inter", sans-serif;
+}
+
+/* Base Card Style */
+.verify-card {
+  background: white;
+  width: 100%;
+  max-width: 500px;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+/* Animation for the Loader */
+.spin {
+  animation: rotate 2s linear infinite;
+  color: #3b82f6;
+  margin-bottom: 20px;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --- SEARCH VIEW --- */
+.search-card h2 {
+  font-size: 1.8rem;
+  color: #1e293b;
+  margin: 20px 0 10px;
+}
+
+.search-card p {
+  color: #64748b;
+  margin-bottom: 30px;
+}
+
+.search-box {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.search-box input {
+  padding: 14px 20px;
+  border: 2px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.search-box button {
+  background: #3b82f6;
+  color: white;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.search-box button:hover {
+  background: #2563eb;
+}
+
+/* --- SUCCESS VIEW --- */
+.success-card {
+  border-top: 8px solid #10b981; /* Green success bar */
+}
+
+.success-card h1 {
+  color: #064e3b;
+  font-size: 1.5rem;
+  margin: 20px 0 30px;
+}
+
+.data-grid {
+  text-align: left;
+  background: #f1f5f9;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.data-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.data-item:last-child {
+  margin-bottom: 0;
+}
+
+.data-item span {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 1px;
+  font-weight: 700;
+}
+
+.data-item strong {
+  font-size: 1.1rem;
+  color: #1e293b;
+  margin-top: 4px;
+}
+
+.btn-reset {
+  background: transparent;
+  color: #64748b;
+  border: 1px solid #cbd5e1;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-reset:hover {
+  background: #f8fafc;
+  color: #1e293b;
+}
+
+/* --- ERROR TEXT --- */
+.error-text {
+  color: #ef4444;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}

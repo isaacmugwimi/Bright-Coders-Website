@@ -8,6 +8,7 @@ import authRouter from "./Router/authRouter.js";
 import courseRouter from "./Router/courseRouter.js";
 import blogRouter from "./Router/blogRouter.js";
 import testimonialRouter from "./Router/testimonialRouter.js";
+import registrationRouter from "./Router/registrationRouter.js";
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -30,7 +31,7 @@ app.use(
 app.use(
   cors({
     origin: process.env.CLIENT_URL || "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
@@ -45,6 +46,9 @@ app.use("/api/courses", courseRouter);
 app.use("/api/blogs", blogRouter);
 app.use("/api/blogs", blogRouter);
 app.use("/api/testimonials", testimonialRouter);
+app.use("/api/registration", registrationRouter);
+
+
 
 // serve uploads folder statically
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));

@@ -1,11 +1,10 @@
 import {
   LayoutDashboard,
-  Wallet,
-  HandCoins,
   LogOut,
   Newspaper,
-  BookOpen, // Icon for Courses
-  MessageSquareQuote, // Icon for Testimonials
+  BookOpen,
+  MessageSquareQuote,
+  Users, // Better icon for student registrations
 } from "lucide-react";
 
 export const SIDE_MENU_DATA = [
@@ -21,14 +20,13 @@ export const SIDE_MENU_DATA = [
     icon: BookOpen,
     path: "/programs",
   },
-
   {
     id: "03",
     label: "Testimonials",
     icon: MessageSquareQuote,
     path: "/testimonials",
   },
-   {
+  {
     id: "04",
     label: "Blogs",
     icon: Newspaper,
@@ -36,6 +34,12 @@ export const SIDE_MENU_DATA = [
   },
   {
     id: "05",
+    label: "Students",
+    icon: Users,      
+    path: "/studentRegistration",
+  },
+  {
+    id: "06",
     label: "Logout",
     icon: LogOut,
     path: "/logout",

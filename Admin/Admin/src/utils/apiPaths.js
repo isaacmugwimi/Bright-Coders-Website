@@ -35,6 +35,12 @@ export const API_PATHS = {
     APPROVE: (id) => `/api/testimonials/${id}/approve`,
     HIDE: (id) => `/api/testimonials/${id}/hide`,
   },
+  REGISTRATIONS: {
+    GET_ALL: "/api/registration/StudentsRegistration", 
+    UPDATE_PAYMENT: (id) => `/api/registration/payment/${id}`, 
+    ISSUE_CERTIFICATE: (id) => `/api/registration/certificate/${id}`,
+    DELETE: (id) => `/api/registration/${id}`,
+  },
   IMAGE: {
     UPLOAD_IMAGE: "/api/auth/upload-image",
   },

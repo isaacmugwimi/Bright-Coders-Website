@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { courseTableSchema, runMigrations } from "./courseQueries.js";
 import { blogTableSchema } from "./blogQueries.js";
 import { testimonialTableSchema } from "./testimonialsQueries.js";
+import { registrationTableSchema } from "./registrationQueries.js";
 const { PGUSER, PGPASSWORD, PGHOST, PGDATABASE } = process.env;
 
 export const sql = neon(
@@ -38,11 +39,20 @@ export async function initDb() {
 
     await sql(Object.assign([blogTableSchema], { raw: [blogTableSchema] }));
     await sql(
+      Object.assign([registrationTableSchema], {
+        raw: [registrationTableSchema],
+      })
+    );
+    await sql(
       Object.assign([testimonialTableSchema], { raw: [testimonialTableSchema] })
     );
+
+    // await sql({ raw: [registrationTableSchema] });
+
     console.log("Course Table Initialized");
     console.log("Blog Table Initialized");
     console.log("testimonial Table Initialized");
+    console.log("registration Table Schema Initialized");
   } catch (error) {
     console.error("Error in initializing the Database: ", error);
   }

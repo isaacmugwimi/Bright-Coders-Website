@@ -29,6 +29,23 @@ export const runMigrations = async () => {
   }
 };
 
+export const getCourseTitles = async () => {
+  try {
+    const result = await sql`SELECT title FROM courses`;
+
+    // DEBUG: log raw result
+    console.log("Raw DB result:", result);
+
+
+    return result.map((row) => row.title);
+  } catch (err) {
+    console.error("GET_COURSE_TITLES_ERROR:", err);
+    return []; // always return array to prevent Joi crash
+  }
+};
+
+
+
 // ➤ CREATE: Add new course
 export async function createCourse(data) {
   const result = await sql`

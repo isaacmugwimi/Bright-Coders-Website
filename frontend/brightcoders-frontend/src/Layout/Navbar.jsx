@@ -119,11 +119,7 @@ const Navbar = () => {
                 </li>
 
                 <li>
-                  <NavLink
-                 
-                    to={"/testimonials"}
-                    onClick={closeAllMenus}
-                  >
+                  <NavLink to={"/testimonials"} onClick={closeAllMenus}>
                     <FaComments className="nav-icon" />
                     <span>Testimonials</span>{" "}
                   </NavLink>
@@ -133,6 +129,13 @@ const Navbar = () => {
                   <NavLink to={"/blogs"} onClick={closeAllMenus}>
                     <FaBlog className="nav-icon" />
                     <span>Blogs</span>
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink to={"/verify"} onClick={closeAllMenus}>
+                    <FaBlog className="nav-icon" />
+                    <span>Verify Certificate</span>
                   </NavLink>
                 </li>
 
@@ -154,6 +157,7 @@ const Navbar = () => {
                     <FaStarHalfAlt className="nav-icon" />
                     <span>Why Choose Us</span>
                   </HashLink>
+
                   {/* </NavLink > */}
                 </li>
               </ul>

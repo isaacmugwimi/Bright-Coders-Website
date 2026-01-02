@@ -120,52 +120,60 @@ export default function Register() {
     setShowModal(true);
   };
 
-  // const handleRegistrationSubmit = async (paymentType) => {
-  //   setIsLoading(true);
-  //   setShowModal(false);
-
-  //   const submissionData = {
-  //     ...formData,
-  //     paymentMethod: paymentType,
-  //     // If it's Pay Later, we send a placeholder code
-  //     mpesaCode: paymentType === "Pay Later" ? "PAY_LATER" : mpesaCode,
-  //   };
-
-  //   try {
-  //     const response = await fetch("http://localhost:5000/api/register", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(submissionData),
-  //     });
-
-  //     if (response.ok) {
-  //       setIsLoading(false);
-  //       setIsFinished(true);
-  //     } else {
-  //       setIsLoading(false);
-  //       alert("Submission failed. Please check your connection.");
-  //     }
-  //   } catch (error) {
-  //     setIsLoading(false);
-  //     console.error("Error:", error);
-  //   }
-  // };
-
-  // Helper for copying number
-
   const handleRegistrationSubmit = async (paymentType) => {
     setIsLoading(true);
     setShowModal(false);
-    if(paymentType==="Pay Later"){
-      setMpesaCode("PAY_LATER")
-    }
 
-    // SIMULATION: Instead of fetching, we just wait 2 seconds
-    setTimeout(() => {
+    // This line handles the "OR" logic:
+    // If paymentType is "Pay Later", we use that string.
+    // Otherwise, we use the mpesaCode the user typed in the input.
+    const finalCode = paymentType === "Pay Later" ? "PAY_LATER" : mpesaCode;
+
+    const submissionData = {
+      ...formData,
+      mpesaCode: finalCode,
+    };
+
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_API_BASE_URL}/registration`,
+        submissionData
+      );
+
+      if (response.status === 201 || response.data) {
+        // 1. Sync the UI state with what we sent to the DB
+        setMpesaCode(finalCode);
+
+        // 2. Save the official Reg Number from the Backend
+        setFormData((prev) => ({
+          ...prev,
+          regNumber: response.data.registration_number,
+        }));
+
+        setIsLoading(false);
+        setIsFinished(true);
+      }
+    } catch (error) {
       setIsLoading(false);
-      setIsFinished(true);
-    }, 2000);
+      alert(error.response?.data?.message || "Submission failed.");
+    }
   };
+
+  // Helper for copying number
+
+  // const handleRegistrationSubmit = async (paymentType) => {
+  //   setIsLoading(true);
+  //   setShowModal(false);
+  //   if(paymentType==="Pay Later"){
+  //     setMpesaCode("PAY_LATER")
+  //   }
+
+  //   // SIMULATION: Instead of fetching, we just wait 2 seconds
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //     setIsFinished(true);
+  //   }, 2000);
+  // };
 
   const handleCopy = () => {
     navigator.clipboard.writeText("0712345678");
@@ -631,6 +639,7 @@ export default function Register() {
 
                 if (!mpesaRegex.test(mpesaCode)) {
                   alert("Please enter a valid M-Pesa transaction code.");
+                  return;
                 }
                 handleRegistrationSubmit("M-Pesa");
               }}

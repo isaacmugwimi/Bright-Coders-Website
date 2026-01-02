@@ -1,0 +1,238 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Cinzel:wght@600;800&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;600&display=swap");
+
+/* --- Control Bar Layout --- */
+.cert-viewer-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0f172a;
+  z-index: 9999;
+  overflow-y: auto;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cert-top-bar {
+  width: 1120px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-group {
+  display: flex;
+  gap: 10px;
+}
+.btn-exit,
+.btn-download,
+.btn-print {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: white;
+}
+.btn-exit {
+  background: #475569;
+}
+.btn-download {
+  background: #10b981;
+}
+.btn-print {
+  background: #3b82f6;
+}
+
+/* --- Certificate Paper --- */
+.certificate-paper {
+  background: #fff;
+  width: 1120px;
+  height: 792px; /* Fixed A4 Landscape Height */
+  padding: 30px;
+  position: relative;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+  color: #1e293b;
+  font-family: "Libre Baskerville", serif;
+  box-sizing: border-box;
+}
+
+.gold-icon {
+  color: #f59e0b;
+}
+.cert-outer-border {
+  border: 5px double #1e293b;
+  height: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.cert-inner-border {
+  border: 1px solid #cbd5e1;
+  height: 100%;
+  position: relative;
+  background: radial-gradient(circle, #ffffff 0%, #fcfdfe 100%);
+  display: flex;
+  justify-content: center;
+}
+
+/* --- Content Arrangement --- */
+.cert-content {
+  position: relative;
+  z-index: 10;
+  width: 90%;
+  height: 100%; /* Important: Occupy full height of border */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* This spreads Header, Body, and Footer apart */
+  align-items: center;
+  padding: 40px 0 25px 0;
+  box-sizing: border-box;
+}
+
+/* Watermark Fixes */
+.cert-watermark-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 480px;
+  opacity: 0.06;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* --- Sections --- */
+.cert-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.academy-name {
+  font-family: "Cinzel", serif;
+  font-size: 1.8rem;
+  letter-spacing: 5px;
+  margin: 10px 0 0 0;
+}
+.decorative-line {
+  width: 120px;
+  height: 2px;
+  background: #d4af37;
+  margin: 12px 0;
+}
+.cert-main-title {
+  font-family: "Cinzel", serif;
+  font-size: 3rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.cert-body {
+  text-align: center;
+}
+.student-name {
+  font-family: "Dancing Script", cursive;
+  font-size: 4.5rem;
+  color: #2563eb;
+  margin: 10px 0;
+  border-bottom: 2px solid #f1f5f9;
+  padding: 0 40px;
+  display: inline-block;
+}
+
+.cert-footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 20px;
+}
+
+.sig-block {
+  width: 220px;
+  text-align: center;
+}
+.handwritten-sig {
+  font-family: "Dancing Script", cursive;
+  font-size: 1.8rem;
+  margin: 0;
+}
+.sig-line {
+  border-top: 2px solid #1e293b;
+  margin-top: 5px;
+}
+.sig-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-top: 5px;
+}
+
+.cert-meta {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+.cert-qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.qr-caption {
+  font-size: 7px;
+  color: #94a3b8;
+  margin-top: 4px;
+  font-family: sans-serif;
+}
+
+.gold-seal {
+  width: 80px;
+  height: 80px;
+  background: #d4af37;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: 3px double rgba(255, 255, 255, 0.3);
+  font-size: 0.55rem;
+  font-weight: bold;
+}
+
+.date-bottom {
+  font-style: italic;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin-top: 10px;
+}
+
+@media print {
+  @page {
+    size: landscape;
+    margin: 0;
+  }
+  .cert-viewer-overlay {
+    padding: 0;
+    background: white;
+  }
+  .cert-top-bar {
+    display: none;
+  }
+  .certificate-paper {
+    box-shadow: none;
+    width: 100vw;
+    height: 100vh;
+  }
+}

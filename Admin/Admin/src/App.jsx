@@ -15,6 +15,7 @@ import AdminDashBoard from "./Components/AdminDashBoard";
 import DashBoardLayout from "./Layouts/DashBoardLayout";
 import AdminBlogManager from "./Components/AdminBlogManager/AdminBlogManager";
 import AdminTestimonialManager from "./Components/AdminTestimonialManager/AdminTestimonialManager";
+import AdminRegistrationManager from "./Components/AdminRegistrationManager/AdminRegistrationManager";
 
 function AppRoutes() {
   return (
@@ -35,6 +36,10 @@ function AppRoutes() {
         <Route path="/blogs" element={<AdminBlogManager />} />
         {/* You can add more here later */}
         <Route path="/testimonials" element={<AdminTestimonialManager />} />
+        <Route
+          path="/studentRegistration"
+          element={<AdminRegistrationManager />}
+        />
       </Route>
     </Routes>
   );
