@@ -87,4 +87,68 @@
   gap: 10px;
 }
 
+/* modal css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
 
+.modal {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  color: #111827;
+  display: flex;
+  flex-direction: column;
+}
+.delete-btns {
+  display: flex;
+  gap: 20px;
+  padding-top: 20px;
+  margin-top: 20px;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.logout {
+  background: #ef4444;
+  color: white;
+  padding: 10px 30px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid orange;
+  cursor: pointer;
+}
+
+.logout:hover {
+  background: #dc2626;
+}
+
+.cancel {
+  background: #f3f4f6;
+  color: #374151;
+  padding: 10px 30px;
+  border-radius: 10px;
+  outline: none;
+  border: 1px solid orange;
+  cursor: pointer;
+}
+.cancel:hover {
+  background: #e5e7eb;
+}
+
+.active-menu {
+  background-color: #7c52f4;
+  color: white;
+  border: 1px solid orange;
+}

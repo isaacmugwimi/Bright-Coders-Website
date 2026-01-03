@@ -170,7 +170,7 @@ export const handleVerifyCertificate = async (req, res) => {
     console.error("VERIFY_CERTIFICATE_ERROR:", error);
     return res.status(500).json({
       success: false,
-      message: "Server error during certificate verification.",
+      message: "Security check failed.",
     });
   }
 };

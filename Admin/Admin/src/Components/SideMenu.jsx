@@ -4,11 +4,13 @@ import "../Css/SideMenu.css";
 import UserContext from "../Components/Context/UserContext.jsx";
 import { motion } from "framer-motion";
 import { SIDE_MENU_DATA } from "../sideMenuData.js";
+import { useState } from "react";
 
 const SideMenu = () => {
-  const { user } = useContext(UserContext);
+  const { user, clearUser } = useContext(UserContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const [logoutModal, setLogoutModal] = useState(null);
 
   const lastUpdated = new Date().toLocaleTimeString([], {
     hour: "2-digit",
@@ -16,10 +18,17 @@ const SideMenu = () => {
   });
 
   const handleClick = (path) => {
-    if (path === "logout") {
-      localStorage.removeItem("token");
-      // window.location.href = "/authentication";
-    } else navigate(path);
+    if (path === "/logout") {
+      setLogoutModal(true);
+      return;
+    }
+    navigate(path);
+  };
+
+  const handleLogout = () => {
+    localStorage.clear();
+    clearUser();
+    navigate("/authentication");
   };
 
   // Helper to determine if we should show the image
@@ -81,12 +90,23 @@ const SideMenu = () => {
             </button>
           );
         })}
-
-        {/* <button className="logout-btn">
-          <LogOut size={20} color="#ef4444" /> 
-          <span>Logout</span>
-        </button> */}
       </div>
+
+      {logoutModal ? (
+        <div className="modal-overlay" onClick={() => setLogoutModal(null)}>
+          <div className="modal">
+            <h4>Are you sure {user?.full_name || ""} you want to logout?</h4>
+            <div className="delete-btns">
+              <button onClick={() => handleLogout()} className="logout">
+                Logout
+              </button>
+              <button className="cancel" onClick={() => setLogoutModal(false)}>
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

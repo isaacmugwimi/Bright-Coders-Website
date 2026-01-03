@@ -18,10 +18,11 @@ import axiosInstance from "../../utils/axiosInstance.js";
 import { API_PATHS } from "../../utils/apiPaths.js";
 import "../AdminBlogManager/AdminBlogManager.css";
 import "./AdminTestimonialManager.css";
+import TestimonialViewModal from "./TestimonialViewModal.jsx";
 
 const AdminTestimonialManager = () => {
   const API_URL = import.meta.env.VITE_API_BASE_URL;
-  
+  const [viewingTestimonial, setViewingTestimonial] = useState(null);
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -227,7 +228,11 @@ const AdminTestimonialManager = () => {
               </thead>
               <tbody>
                 {filteredData.map((t) => (
-                  <tr key={t.id}>
+                  <tr
+                    key={t.id}
+                    onClick={() => setViewingTestimonial(t)}
+                    className="clickable-row"
+                  >
                     <td>
                       <div className="user-profile-cell">
                         <div className="user-profile-cell">
@@ -247,7 +252,7 @@ const AdminTestimonialManager = () => {
                             className="avatar-sm"
                             alt={t.user_name}
                           />
-                          {/* ... rest of your code ... */}
+                      
                         </div>
                         <div>
                           <div className="font-bold">{t.user_name}</div>
@@ -279,7 +284,7 @@ const AdminTestimonialManager = () => {
                         {t.is_approved ? "Approved" : "Pending"}
                       </span>
                     </td>
-                    <td>
+                    <td onClick={(e)=>e.stopPropagation()}>
                       <div className="action-btns">
                         <button
                           className={
@@ -330,6 +335,13 @@ const AdminTestimonialManager = () => {
           message={toastConfig.message}
           type={toastConfig.type}
           onClose={() => setToastConfig((prev) => ({ ...prev, show: false }))}
+        />
+      )}
+
+      {viewingTestimonial && (
+        <TestimonialViewModal
+          testimonial={viewingTestimonial}
+          onClose={() => setViewingTestimonial(null)}
         />
       )}
     </>

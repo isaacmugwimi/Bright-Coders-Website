@@ -19,6 +19,7 @@ import axiosInstance from "../../utils/axiosInstance.js";
 import { API_PATHS } from "../../utils/apiPaths.js";
 import "../AdminBlogManager/AdminBlogManager.css"; // Reuse your existing CSS
 import { RegistrationDetailsModal } from "./RegistrationDetailsModal/RegistrationDetailsModal.jsx";
+import { getAllRegistrations } from "../../services/generalServices.js";
 
 const AdminRegistrationManager = () => {
   const [registrations, setRegistrations] = useState([]);
@@ -60,8 +61,8 @@ const AdminRegistrationManager = () => {
   const fetchRegistrations = async () => {
     try {
       setLoading(true);
-      const response = await axiosInstance.get(API_PATHS.REGISTRATIONS.GET_ALL);
-      setRegistrations(response.data);
+      const data = await getAllRegistrations();
+      setRegistrations(data);
     } catch (err) {
       triggerToast("Error fetching registrations", "error");
     } finally {

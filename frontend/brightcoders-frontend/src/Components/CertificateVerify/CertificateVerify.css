@@ -144,8 +144,9 @@
 
 /* --- ERROR TEXT --- */
 .error-text {
-  color: #ef4444;
+  color: #ef4444 !important;
   margin-top: 20px;
   font-size: 0.9rem;
   font-weight: 500;
+  
 }

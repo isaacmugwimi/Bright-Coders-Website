@@ -11,15 +11,25 @@ import {
 } from "../Controller/registrationController.js";
 import path from "path";
 import fs from "fs";
+import rateLimit from "express-rate-limit";
 
 const router = express.Router();
+
+// Define the limit: 10 requests per 15 minutes per IP
+const verifyLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: {
+    message: "Too many verification attempts. Please try again in 15 minutes.",
+  },
+});
 
 // ==========================
 // --- PUBLIC ROUTES ---
 // ==========================
 // Anyone can submit a registration
 router.post("/", handleAddRegistration);
-router.get("/verify/:regNumber", handleVerifyCertificate);
+router.get("/verify/:regNumber", verifyLimiter, handleVerifyCertificate);
 
 // ==========================
 // --- ADMIN ROUTES (Protected) ---

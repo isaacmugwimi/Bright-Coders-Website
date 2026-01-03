@@ -27,7 +27,22 @@ const CertificateVerify = () => {
       );
       setResult(res.data.data);
     } catch (err) {
-      setError(err.response?.data?.message || "Certificate not found.");
+      // --- ADDED SECURE ERROR HANDLING HERE ---
+      if (err.response?.status === 429) {
+        setError(
+          "Too many attempts. Please wait 15 minutes before trying again."
+        );
+      } else if (err.response?.status === 404) {
+        setError(
+          "Invalid Registration ID. Please check the number and try again."
+        );
+      } else {
+        setError(
+          err.response?.data?.message ||
+            "An error occurred during verification."
+        );
+      }
+      // ------------------------------------------
     } finally {
       setLoading(false);
     }
@@ -117,7 +132,9 @@ const CertificateVerify = () => {
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
           />
-          <button type="submit">Check Now</button>
+          <button type="submit" disabled={loading || searchInput.length < 5}>
+            {loading ? "Validating..." : "Check Now"}
+          </button>
         </form>
 
         {error && <p className="error-text">{error}</p>}

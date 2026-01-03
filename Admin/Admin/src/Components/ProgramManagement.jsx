@@ -18,6 +18,7 @@ import axiosInstance from "../utils/axiosInstance.js";
 import { API_PATHS } from "../utils/apiPaths.js";
 import AddCourseForm from "./AddCourseForm/AddCourseForm.jsx";
 import { handleWidthDrawCourse } from "../helpers/programManagementFunction.js";
+import { useLocation } from "react-router-dom";
 
 const ProgramManagement = () => {
   const [courses, setCourses] = useState([]);
@@ -53,6 +54,15 @@ const ProgramManagement = () => {
       4000
     );
   };
+  const location = useLocation(); // Import useLocation from react-router-dom
+
+useEffect(() => {
+  if (location.state?.openAddModal) {
+    handleAddNew();
+    // Clear the state so it doesn't reopen on every refresh
+    window.history.replaceState({}, document.title);
+  }
+}, [location]);
 
   useEffect(() => {
     fetchCourses();

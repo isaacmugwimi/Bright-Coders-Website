@@ -123,7 +123,7 @@ export const updatePaymentStatus = async (
      SET payment_status = $1, receipt_status = $2,mpesa_code = COALESCE($4, mpesa_code)
      WHERE id = $3
      RETURNING *`,
-    [paymentStatus, receiptStatus, id,mpesaCode]
+    [paymentStatus, receiptStatus, id, mpesaCode]
   );
   return result[0];
 };
@@ -159,7 +159,8 @@ export const verifyCertificate = async (regNumber) => {
   const result = await sql.query(
     `SELECT child_name, course_name, certificate_issued_at, created_at
      FROM registrations 
-     WHERE registration_number = $1 `,
+     WHERE registration_number = $1 
+     AND payment_status = 'paid' `,
     [regNumber]
   );
 
