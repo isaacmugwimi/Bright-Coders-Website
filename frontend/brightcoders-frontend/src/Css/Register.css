@@ -194,8 +194,8 @@ textarea {
 }
 
 .back-btn {
-  background: #d8e4ef;
-  color: #083b62;
+  background: #0a61a8 !important;
+  color: white !important;
 }
 
 .back-btn:hover {
@@ -239,82 +239,6 @@ textarea {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-/* MODAL */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal-box {
-  background: white;
-  padding: 30px;
-  border-radius: 15px;
-  width: 90%;
-  max-width: 500px;
-  text-align: center;
-  position: relative;
-}
-
-.close-modal {
-  position: absolute;
-  right: 15px;
-  top: 10px;
-  font-size: 1.2rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-.payment-type-toggle {
-  display: flex;
-  background: #f1f5f9;
-  padding: 4px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  gap: 4px;
-  border: 1px solid #e2e8f0;
-}
-
-.payment-type-toggle button {
-  flex: 1;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  background: transparent;
-  color: #64748b;
-  transition: 0.2s ease;
-}
-
-.payment-type-toggle button.active {
-  background: white;
-  color: #2563eb; /* Change to your primary theme color */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.payment-option {
-  padding: 12px 20px;
-  background: #041e43;
-  color: white;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 1rem;
-  border: none;
-  margin-top: 20px;
-  transition: 0.3s;
-}
-
-.payment-option:hover {
-  background: #0a3d8f;
 }
 
 /* ERROR STYLING */
@@ -387,179 +311,302 @@ textarea {
 /* ==========================================
    PAYMENT MODAL STYLES
    ========================================== */
-
+/* 1. Backdrop with deep focus */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6); /* Dim background */
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 18, 22, 0.85); /* Darker cyan tint */
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 1000;
-  backdrop-filter: blur(4px); /* Modern blur effect */
+  backdrop-filter: blur(8px);
 }
 
-.payment-modal {
-  background: #ffffff;
-  padding: 30px;
+/* 2. Modal Container - Dark Cyan Base */
+.modal-box {
+  background: #003d4d; /* Solid Dark Cyan */
+  padding: 30px 50px;
   border-radius: 20px;
-  max-width: 420px;
   width: 90%;
+  max-width: 400px;
   position: relative;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  color: #ffffff;
 }
 
-.payment-modal h2 {
-  color: #2c3e50;
-  margin-bottom: 10px;
-  font-size: 1.6rem;
-}
-
+/* 3. Close Button */
 .close-modal {
   position: absolute;
   top: 15px;
   right: 15px;
-  background: none;
+  background-color: white;
   border: none;
-  font-size: 1.2rem;
+  color: red;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
   cursor: pointer;
-  color: #95a5a6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s;
 }
 
-/* Instruction Card */
-.instruction-card {
-  background: #f8fafc;
-  border: 1px solid #e2e8f0;
-  padding: 20px;
+.close-modal:hover {
+  color: darkred;
+  transform: rotate(90deg);
+}
+
+/* 4. Typography */
+.modal-box h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 5px;
+}
+
+.step-subtitle {
+  text-align: center;
+  color: #a3ced6; /* Soft cyan-white */
+  font-size: 0.85rem;
+  margin-bottom: 25px;
+}
+
+/* 5. Choice Cards (Step 1) */
+.choice-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.choice-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  padding: 16px 20px;
   border-radius: 12px;
-  margin: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  color: #ffffff;
+}
+
+.choice-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #ff8c00; /* High contrast Orange border */
+}
+
+.choice-info {
+  display: flex;
+  flex-direction: column;
   text-align: left;
 }
 
-.instruction-card p {
-  font-size: 0.95rem;
-  color: #64748b;
-  margin-bottom: 8px;
+.choice-title {
+  color: #a3ced6;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-/* Copy Box for Phone Number */
+.choice-amount {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.choice-badge {
+  background: rgba(255, 140, 0, 0.1);
+  color: #ff8c00;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border: 1px solid rgba(255, 140, 0, 0.3);
+}
+
+.choice-badge.special {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 6. Step 2 Specifics */
+.changePlan {
+  background: transparent;
+  border: none;
+  color: #a3ced6;
+  font-size: 0.85rem;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-bottom: 35px;
+  font-weight: 600;
+  gap: 10px;
+  display: flex;
+  margin-right: auto;
+}
+
+.changePlan:hover {
+  color: darkblue;
+}
+
+.instruction-card {
+  background: #002b36; /* Darker Cyan "Pit" */
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.instruction-card p {
+  color: #a3ced6;
+  font-size: 0.9rem;
+}
+
+.instruction-card b {
+  color: #ff8c00; /* Orange Amount */
+  font-size: 1.2rem;
+}
+
 .copy-box {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fff;
-  border: 2px dashed #2ecc71; /* M-Pesa Green */
-  padding: 12px 15px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px 16px;
   border-radius: 8px;
-  margin-bottom: 20px;
+  margin-top: 12px;
 }
 
 .copy-box span {
-  font-family: "Courier New", Courier, monospace;
-  font-weight: 800;
-  font-size: 1.3rem;
-  color: #2ecc71;
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #ffffff;
 }
 
 .copy-box button {
-  background: #2ecc71;
-  color: white;
+  background: #ff8c00;
+  color: #ffffff;
   border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 5px;
-  font-size: 0.85rem;
-  transition: opacity 0.2s;
+  justify-content: center;
+  gap: 10px;
 }
 
-.copy-box button:hover {
-  opacity: 0.8;
+/* 7. Input Styling */
+.input-group label {
+  display: block;
+  text-align: left;
+  font-size: 0.95rem;
+  color: #a3ced6;
+  margin-bottom: 8px;
+  text-transform: uppercase;
 }
 
-/* M-Pesa Input Field */
 .mpesa-code-input {
   width: 100%;
-  padding: 12px;
-  border: 2px solid #cbd5e1;
-  border-radius: 8px;
-  font-size: 1.1rem;
+  background: #002b36;
+  border: 1.5px solid rgba(255, 255, 255, 0.1);
+  padding: 14px;
+  border-radius: 10px;
+  color: #ff8c00; /* Orange text as they type */
+  font-size: 1.2rem;
   text-align: center;
-  text-transform: uppercase;
-  font-weight: bold;
-  letter-spacing: 2px;
-  transition: border-color 0.2s;
+  font-weight: 700;
+  letter-spacing: 3px;
 }
 
 .mpesa-code-input:focus {
   outline: none;
-  border-color: #2ecc71;
-  background: #f0fff4;
+  border-color: #ff8c00;
 }
 
-/* Divider */
-.modal-divider {
-  margin: 20px 0;
-  position: relative;
-  border-bottom: 1px solid #e2e8f0;
+.small-text {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.05rem !important;
 }
 
-.modal-divider span {
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #fff;
-  padding: 0 10px;
-  color: #94a3b8;
-  font-size: 0.8rem;
-  font-weight: bold;
-}
-
-/* Pay Later Toggle */
-.pay-later-btn {
-  width: 100%;
-  background: #f1f5f9;
-  border: 2px solid transparent;
-  padding: 12px;
-  border-radius: 8px;
-  color: #475569;
-  cursor: pointer;
-  font-weight: 600;
-  margin-bottom: 20px;
-  transition: all 0.2s;
-}
-
-.pay-later-btn.active {
-  border-color: #3498db;
-  color: #3498db;
-  background: #ebf8ff;
-}
-
-/* Final Confirm Button */
+/* 8. Main Action Button */
 .confirm-btn {
   width: 100%;
-  padding: 15px;
-  background: #2ecc71;
-  color: white;
+  background: #ff8c00; /* Bold Orange */
+  color: #ffffff;
+  padding: 16px;
   border: none;
   border-radius: 10px;
-  font-size: 1.1rem;
-  font-weight: 700;
+  font-weight: 800;
+  font-size: 1rem;
+  margin-top: 20px;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(46, 204, 113, 0.3);
+  box-shadow: 0 4px 15px rgba(255, 140, 0, 0.2);
 }
 
-.confirm-btn:disabled {
-  background: #cbd5e1;
-  cursor: not-allowed;
-  box-shadow: none;
+.confirm-btn:hover {
+  background: #e67e00;
+  transform: translateY(-1px);
+}
+
+/* 9. Divider and Animations */
+.modal-divider {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+}
+.modal-divider::before,
+.modal-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+.modal-divider span {
+  padding: 0 10px;
+  color: #a3ced6;
+  font-size: 0.75rem;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease;
+}
+.animate-slide-up {
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes slideUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Success Card */

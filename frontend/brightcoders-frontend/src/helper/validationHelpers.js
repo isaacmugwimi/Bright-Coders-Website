@@ -27,7 +27,7 @@ export const validateName = (fullName) => {
 // };
 
 export const validatePhone = (phone) => {
-  return phone.length >= 10 && phone.length <= 15
+  return phone.length >= 10 && phone.length <= 12
     ? true
-    : "Phone number must contain 10-15 digits only.";
+    : "Phone number must contain 10-12 digits only.";
 };
