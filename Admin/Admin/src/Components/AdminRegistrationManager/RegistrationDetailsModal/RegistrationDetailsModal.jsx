@@ -9,28 +9,28 @@ import {
   ShieldCheck,
   Phone,
   Settings,
+  Wallet,
+  Receipt,
 } from "lucide-react";
 import "./RegistrationDetailsModal.css";
-// Ensure this path matches where you saved the template file
 import { CertificateTemplate } from "./CertificateTemplate";
 
 export const RegistrationDetailsModal = ({ registration, onClose }) => {
-  // --- STATE FOR CAPTURING SIGNATORIES ---
   const [directorName, setDirectorName] = useState("Dr. Floyed Muchiri");
   const [instructorName, setInstructorName] = useState(
     "Developer Isaac Mugwimi"
   );
-
-  // State to toggle between Student Profile and Certificate Preview
   const [showCertPreview, setShowCertPreview] = useState(false);
 
   if (!registration) return null;
 
-  // Logic for document availability
-  const isPaid = registration.payment_status === "paid";
-  const hasCertificate = true; // Kept as true for development preview
+  // --- REFINED STATUS LOGIC ---
+  const paymentStatus = registration.payment_status; // 'paid', 'partial', 'pending'
+  const isFullyPaid = paymentStatus === "paid";
+  const hasPaidSomething =
+    paymentStatus === "paid" || paymentStatus === "partial";
+  const balance = parseFloat(registration.balance_due) || 0;
 
-  // IF THE ADMIN CLICKS VIEW CERTIFICATE, SHOW THE TEMPLATE INSTEAD
   if (showCertPreview) {
     return (
       <CertificateTemplate
@@ -59,7 +59,52 @@ export const RegistrationDetailsModal = ({ registration, onClose }) => {
         </div>
 
         <div className="modal-body">
-          {/* SECTION 1: STUDENT & COURSE INFO */}
+          {/* SECTION 1: FINANCIAL BREAKDOWN (NEW & IMPORTANT) */}
+          <div
+            className="detail-section financial-summary"
+            style={{ backgroundColor: "#fdfefe", border: "1px solid #e0e0e0" }}
+          >
+            <h3 style={{ color: "#2c3e50" }}>
+              <Wallet size={18} /> Financial Breakdown
+            </h3>
+            <div className="detail-grid">
+              <div className="detail-item">
+                <label>Total Course Price:</label>
+                <span style={{ fontWeight: "bold" }}>
+                  Ksh{" "}
+                  {parseFloat(registration.total_course_price).toLocaleString()}
+                </span>
+              </div>
+              <div className="detail-item">
+                <label>Amount Paid:</label>
+                <span style={{ color: "#27ae60", fontWeight: "bold" }}>
+                  Ksh {parseFloat(registration.amount_paid).toLocaleString()}
+                </span>
+              </div>
+              <div className="detail-item">
+                <label>Current Balance:</label>
+                <span
+                  style={{
+                    color: balance > 0 ? "#e74c3c" : "#27ae60",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Ksh {balance.toLocaleString()}
+                </span>
+              </div>
+              <div className="detail-item">
+                <label>Payment Plan:</label>
+                <span
+                  style={{ textTransform: "uppercase", fontSize: "12px" }}
+                  className="badge info"
+                >
+                  {registration.payment_plan}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* SECTION 2: STUDENT & COURSE INFO */}
           <div className="detail-section">
             <h3>
               <UserCheck size={18} /> Student & Course Info
@@ -72,10 +117,10 @@ export const RegistrationDetailsModal = ({ registration, onClose }) => {
                 <label>Gender:</label> <span>{registration.gender}</span>
               </div>
               <div className="detail-item">
-                <label>Age Group:</label> <span>{registration.age_group}</span>
-              </div>
-              <div className="detail-item">
-                <label>Grade:</label> <span>{registration.grade_group}</span>
+                <label>Age/Grade:</label>{" "}
+                <span>
+                  {registration.age_group} ({registration.grade_group})
+                </span>
               </div>
               <div className="detail-item">
                 <label>Course:</label> <span>{registration.course_name}</span>
@@ -87,58 +132,100 @@ export const RegistrationDetailsModal = ({ registration, onClose }) => {
             </div>
           </div>
 
-          {/* SECTION 2: CONTACT & EMERGENCY */}
+          {/* SECTION 3: CONTACT DETAILS */}
           <div className="detail-section">
             <h3>
               <Phone size={18} /> Contact Details
             </h3>
             <div className="detail-grid">
               <div className="detail-item">
-                <label>Parent Name:</label>{" "}
-                <span>{registration.parent_name}</span>
+                <label>Parent:</label> <span>{registration.parent_name}</span>
               </div>
               <div className="detail-item">
-                <label>Parent Email:</label>{" "}
-                <span>{registration.parent_email}</span>
+                <label>Phone:</label> <span>{registration.parent_phone}</span>
               </div>
               <div className="detail-item">
-                <label>Parent Phone:</label>{" "}
-                <span>{registration.parent_phone}</span>
-              </div>
-              <div className="detail-item">
-                <label>Emergency Contact:</label>{" "}
-                <span>{registration.emergency_contact}</span>
-              </div>
-              <div className="detail-item">
-                <label>Emergency Phone:</label>{" "}
-                <span>{registration.emergency_phone}</span>
-              </div>
-              <div className="detail-item">
-                <label>Heard From:</label>{" "}
-                <span>{registration.heard_from || "N/A"}</span>
+                <label>Emergency:</label>{" "}
+                <span>
+                  {registration.emergency_contact} (
+                  {registration.emergency_phone})
+                </span>
               </div>
             </div>
           </div>
 
-          {/* NEW SECTION: SIGNATURE SETTINGS (Only visible if paid) */}
-          {isPaid && (
+          {/* SECTION 4: STATUS & DOCUMENTS */}
+          <div className="detail-section document-section">
+            <h3>
+              <Receipt size={18} /> Status & Documents
+            </h3>
+            <div className="document-grid">
+              <div className={`status-box ${paymentStatus}`}>
+                <label>Payment Status</label>
+                <div className="status-value">
+                  {isFullyPaid
+                    ? "✅ Fully Paid"
+                    : paymentStatus === "partial"
+                    ? "🟠 Partial Payment"
+                    : "⏳ Pending"}
+                </div>
+              </div>
+
+              <div className="doc-actions">
+                <div className="button-group">
+                  {/* Allow receipts for partial OR full payments */}
+                  {hasPaidSomething ? (
+                    <button
+                      className="doc-btn receipt"
+                      onClick={() => {
+                        const downloadUrl = `http://localhost:8000/api/registration/download-receipt/${registration.registration_number}`;
+                        window.open(downloadUrl, "_blank");
+                      }}
+                    >
+                      <Download size={16} />{" "}
+                      {isFullyPaid
+                        ? "Download Receipt"
+                        : "Download Partial Receipt"}
+                    </button>
+                  ) : (
+                    <p className="locked-msg">
+                      Receipt locked until first payment.
+                    </p>
+                  )}
+
+                  {/* ONLY allow certificates for FULLY paid students */}
+                  {isFullyPaid ? (
+                    <button
+                      className="doc-btn cert"
+                      onClick={() => setShowCertPreview(true)}
+                    >
+                      <Award size={16} /> View Certificate
+                    </button>
+                  ) : (
+                    <span
+                      className="doc-pending"
+                      style={{ color: "#666", fontSize: "12px" }}
+                    >
+                      <ShieldCheck size={14} /> Certificate requires full
+                      payment.
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* SIGNATORY SETTINGS (Only if fully paid) */}
+          {isFullyPaid && (
             <div
               className="detail-section admin-settings-box"
               style={{
                 backgroundColor: "#f0f7ff",
                 border: "1px dashed #2563eb",
                 padding: "15px",
-                borderRadius: "8px",
               }}
             >
-              <h3
-                style={{
-                  color: "#2563eb",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                }}
-              >
+              <h3 style={{ color: "#2563eb" }}>
                 <Settings size={18} /> Certificate Signatories
               </h3>
               <div className="detail-grid">
@@ -147,13 +234,6 @@ export const RegistrationDetailsModal = ({ registration, onClose }) => {
                   <input
                     type="text"
                     className="sig-input"
-                    style={{
-                      width: "100%",
-                      padding: "8px",
-                      borderRadius: "4px",
-                      border: "1px solid #ccc",
-                      marginTop: "5px",
-                    }}
                     value={directorName}
                     onChange={(e) => setDirectorName(e.target.value)}
                   />
@@ -163,13 +243,6 @@ export const RegistrationDetailsModal = ({ registration, onClose }) => {
                   <input
                     type="text"
                     className="sig-input"
-                    style={{
-                      width: "100%",
-                      padding: "8px",
-                      borderRadius: "4px",
-                      border: "1px solid #ccc",
-                      marginTop: "5px",
-                    }}
                     value={instructorName}
                     onChange={(e) => setInstructorName(e.target.value)}
                   />
@@ -177,88 +250,6 @@ export const RegistrationDetailsModal = ({ registration, onClose }) => {
               </div>
             </div>
           )}
-
-          {/* SECTION 3: STATUS & DOCUMENTS */}
-          <div className="detail-section document-section">
-            <h3>
-              <CreditCard size={18} /> Status & Documents
-            </h3>
-            <div className="document-grid">
-              <div className={`status-box ${registration.payment_status}`}>
-                <label>Payment Status</label>
-                <div className="status-value">
-                  {isPaid ? "✅ Fully Paid" : "⏳ Pending Verification"}
-                </div>
-              </div>
-
-              <div className="doc-actions">
-                {isPaid ? (
-                  <div className="button-group">
-                    <button
-                      className="doc-btn receipt"
-                      onClick={() => {
-                        const downloadUrl = `http://localhost:8000/api/registration/download-receipt/${registration.registration_number}`;
-                        window.open(downloadUrl, "_blank");
-                      }}
-                    >
-                      <Download size={16} /> Download Receipt
-                    </button>
-
-                    {hasCertificate ? (
-                      <button
-                        className="doc-btn cert"
-                        onClick={() => setShowCertPreview(true)}
-                      >
-                        <Award size={16} /> View Certificate
-                      </button>
-                    ) : (
-                      <span className="doc-pending">
-                        Certificate: Not Yet Issued
-                      </span>
-                    )}
-                  </div>
-                ) : (
-                  <p className="locked-msg">
-                    Documents will be available after payment verification.
-                  </p>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* SECTION 4: TECHNICAL & LOGISTICS */}
-          <div className="detail-section">
-            <h3>
-              <Globe size={18} /> Technical Readiness
-            </h3>
-            <div className="detail-grid">
-              <div className="detail-item">
-                <label>Device Type:</label>{" "}
-                <span>{registration.device_type}</span>
-              </div>
-              <div className="detail-item">
-                <label>Internet:</label>{" "}
-                <span>{registration.internet_quality}</span>
-              </div>
-              <div className="detail-item">
-                <label>M-Pesa Code:</label>{" "}
-                <span className="mpesa-text">{registration.mpesa_code}</span>
-              </div>
-              <div className="detail-item">
-                <label>Consent Given:</label>
-                <span>{registration.consent ? "✅ Authorized" : "❌ No"}</span>
-              </div>
-            </div>
-            <div
-              className="detail-item full-width"
-              style={{ marginTop: "15px" }}
-            >
-              <label>Admin/Parent Notes:</label>
-              <p className="notes-box">
-                {registration.notes || "No additional notes provided."}
-              </p>
-            </div>
-          </div>
         </div>
 
         {/* MODAL FOOTER */}

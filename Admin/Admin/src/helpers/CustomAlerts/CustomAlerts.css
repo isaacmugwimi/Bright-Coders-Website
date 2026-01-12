@@ -100,7 +100,7 @@
   min-width: 280px;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
   overflow: hidden; /* CRITICAL: Clips the bar so it stays inside the rounded corners */
-  z-index: 1100;
+  z-index: 11100;
   animation: slideInRight 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
 }
 
@@ -115,32 +115,60 @@
   animation: toastProgress 4s linear forwards; /* Match your 4000ms timeout */
 }
 
-.toast-notification.success { background: #10b981; }
-.toast-notification.error { background: #ef4444; }
+.toast-notification.success {
+  background: #10b981;
+}
+.toast-notification.error {
+  background: #ef4444;
+}
 
 /* Progress bar colors */
-.toast-notification.success .toast-progress-bar { background: whitesmoke; }
-.toast-notification.error .toast-progress-bar { background: rgba(255, 255, 255, 0.4); }
+.toast-notification.success .toast-progress-bar {
+  background: whitesmoke;
+}
+.toast-notification.error .toast-progress-bar {
+  background: rgba(255, 255, 255, 0.4);
+}
 
 /* --- ANIMATIONS --- */
 @keyframes toastProgress {
-  from { transform: scaleX(1); }
-  to { transform: scaleX(0); }
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
 }
 
 @keyframes slideInRight {
-  from { transform: translateX(100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 .toast-notification.success {
   background: #10b981; /* Green */
@@ -149,7 +177,6 @@
 .toast-notification.error {
   background: #ef4444; /* Red */
 }
-
 
 .toast-notification span {
   flex-grow: 1;

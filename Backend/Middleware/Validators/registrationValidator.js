@@ -2,14 +2,11 @@ import Joi from "joi";
 import { getCourseTitles } from "../../Database/Config/courseQueries.js";
 
 export const registrationValidationSchema = async () => {
-  // const courses = await getCourseTitles(); // fetch dynamic courses from DB
-  const courses = [
-    "Intro to Python",
-    "Web Development",
-    "Robotics for Kids",
-    "Scratch Coding",
-  ];
-  console.log("Available courses:", courses);
+  const coursesFromDb = await getCourseTitles(); // fetch dynamic courses from DB
+ const courses = coursesFromDb.filter(Boolean); // Remove undefined or null
+
+
+  console.log("Available courses:", coursesFromDb);
 
   return Joi.object({
     parentName: Joi.string().min(3).max(255).required().messages({
@@ -18,7 +15,7 @@ export const registrationValidationSchema = async () => {
     }),
 
     parentPhone: Joi.string()
-      .pattern(/^\+?\d{9,15}$/)
+      .pattern(/^\+?\d{9,12}$/)
       .required()
       .messages({
         "any.required": "Parent phone is required",
@@ -55,7 +52,7 @@ export const registrationValidationSchema = async () => {
       }),
 
     course: Joi.string()
-      .valid(...(courses || null))
+      .valid(...courses) // spread safe array
       .required()
       .messages({
         "any.only": "Please select a valid course",
@@ -80,7 +77,7 @@ export const registrationValidationSchema = async () => {
     }),
 
     emergencyPhone: Joi.string()
-      .pattern(/^\+?\d{9,15}$/)
+      .pattern(/^\+?\d{9,12}$/)
       .required()
       .messages({
         "any.required": "Emergency phone is required",
@@ -95,13 +92,46 @@ export const registrationValidationSchema = async () => {
       "any.only": "Consent must be given",
       "any.required": "Consent is required",
     }),
+    paymentPlan: Joi.string()
+      .valid("full", "deposit", "pay_later")
+      .required()
+      .messages({
+        "any.only": "Valid payment plan is required",
+      }),
+
+    amountPaid: Joi.number()
+      .when("paymentPlan", {
+        is: "deposit",
+        then: Joi.number().greater(0).required(),
+        otherwise: Joi.number().min(0).required(),
+      })
+      .messages({
+        "number.greater": "Deposit amount must be greater than 0",
+        "any.required": "Amount paid is required",
+      }),
+
+    totalCoursePrice: Joi.number().min(1).required(),
 
     mpesaCode: Joi.string()
-      .pattern(/^[A-Z0-9]{10}$/)
-      .allow("PAY_LATER", "")
+      .uppercase()
+      .when("paymentPlan", {
+        is: "pay_later",
+        then: Joi.string().allow("PAY_LATER", ""),
+        otherwise: Joi.string()
+          .pattern(/^[A-Z0-9]{10}$/)
+          .required(),
+      })
       .messages({
-        "string.pattern.base":
-          "M-Pesa transaction code must be 10 characters (A-Z, 0-9)",
+        "string.pattern.base": "M-Pesa transaction code must be 10 characters",
+        "any.required": "M-Pesa code is required for payments",
       }),
-  }).unknown(true);
+  })
+    .custom((obj, helpers) => {
+      // LOGIC CHECK: Ensure amountPaid isn't more than total price
+      if (obj.amountPaid > obj.totalCoursePrice) {
+        return helpers.message("Amount paid cannot exceed the course price");
+      }
+      return obj;
+    })
+    .unknown(true);
 };

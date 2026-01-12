@@ -165,10 +165,7 @@ const AdminDashBoard = () => {
           <motion.div
             key={stat.id}
             variants={itemVars}
-            whileHover={{
-              y: -5,
-              boxShadow: "0 20px 25px -5px rgba(0,0,0,0.1)",
-            }}
+            whileHover={{ y: -5 }}
             className="stat-card"
           >
             <div className="stat-card-inner">
@@ -176,16 +173,15 @@ const AdminDashBoard = () => {
                 className="stat-icon-box"
                 style={{ background: `${stat.color}15`, color: stat.color }}
               >
-                <stat.icon size={24} />
+                <stat.icon size={28} />
               </div>
+
               <div className="stat-info">
                 <p className="stat-label">{stat.label}</p>
-                {/* <h3 className="stat-value">{loading ? "..." : stat.value}</h3> */}
                 <h3 className="stat-value">
                   {loading ? (
                     "..."
-                  ) : // Check if the value is actually a number before using the counter
-                  isNaN(parseInt(stat.value)) ? (
+                  ) : isNaN(parseInt(stat.value)) ? (
                     stat.value
                   ) : (
                     <NumberCounter
@@ -193,7 +189,7 @@ const AdminDashBoard = () => {
                       end={parseInt(stat.value.toString().replace(/,/g, ""))}
                     />
                   )}
-                </h3>{" "}
+                </h3>
                 <span className="stat-trend positive">
                   <ArrowUpRight size={14} /> {stat.trend}
                 </span>

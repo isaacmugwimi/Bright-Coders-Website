@@ -212,7 +212,7 @@
   gap: 12px;
   padding: 12px 16px;
   background: #ffffff;
-  border: 1px solid #e2e8f0;
+  border: 2px solid darkcyan;
   border-radius: 12px;
   margin-bottom: 32px;
   position: sticky;
@@ -316,15 +316,19 @@
   border-bottom: 1px solid #e2e8f0;
   width: 15%;
 }
+.course-code-head{
+  width: 10% !important;
+}
 
 .course-title-head {
   /* background-color: red !important; */
-  width: 40% !important;
+  width: 30% !important;
 }
 
 .price-data {
   color: darkgreen !important;
   font-weight: bold;
+  font-size: 0.95rem;
 }
 .admin-table td {
   padding: 12px 16px;
@@ -364,6 +368,18 @@
   background: #fef9c3;
   color: #854d0e;
 }
+
+.course-code-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: #1e293b;
+  color: #facc15;
+  font-weight: 600;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+}
+
 
 /* --- Action Buttons --- */
 .action-btns {

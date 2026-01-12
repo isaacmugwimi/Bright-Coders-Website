@@ -3,6 +3,7 @@ import { sql } from "./config.db.js";
 /* =========================
     REGISTRATION TABLE SCHEMA
 ========================= */
+
 export const registrationTableSchema = `
 CREATE TABLE IF NOT EXISTS registrations (
     id SERIAL PRIMARY KEY,
@@ -24,7 +25,14 @@ CREATE TABLE IF NOT EXISTS registrations (
     heard_from VARCHAR(100),
     consent BOOLEAN DEFAULT FALSE,
     mpesa_code VARCHAR(50),
-    payment_status VARCHAR(50) DEFAULT 'pending', 
+    
+    -- FINANCIAL COLUMNS --
+    total_course_price DECIMAL(10, 2) DEFAULT 0.00,
+    amount_paid DECIMAL(10, 2) DEFAULT 0.00,
+    balance_due DECIMAL(10, 2) DEFAULT 0.00,
+    payment_plan VARCHAR(50), -- 'full', 'deposit', 'pay_later'
+    
+    payment_status VARCHAR(50) DEFAULT 'pending', -- 'pending', 'partial', 'paid'
     receipt_status VARCHAR(50) DEFAULT 'pending',
     
     -- CERTIFICATE COLUMNS --
@@ -41,25 +49,23 @@ CREATE TABLE IF NOT EXISTS registrations (
 ========================= */
 export const createRegistration = async (data) => {
   const year = new Date().getFullYear().toString().slice(-2);
-  const courseMapping = {
-    "Intro to Python": "PY",
-    "Web Development": "WD",
-    "Robotics for Kids": "RB",
-    "Scratch Coding": "SC",
-  };
-  const courseCode = courseMapping[data.course] || "GN";
+  const course = await sql`
+  SELECT code FROM courses WHERE title = ${data.course}
+`;
 
-  // STEP 1: Insert into the DB without the registration_number first.
-  // We use RETURNING id to get the auto-incremented number.
+  const courseCode = course[0]?.code || "GEN";
+
+  // Insert into DB with financial data
   const result = await sql.query(
     `INSERT INTO registrations (
         parent_name, parent_phone, parent_email, 
         child_name, age_group, grade_group, gender, 
         course_name, preferred_time, device_type, internet_quality, 
         emergency_contact, emergency_phone, notes, heard_from, 
-        consent, mpesa_code, payment_status
+        consent, mpesa_code, total_course_price, amount_paid, 
+        balance_due, payment_plan, payment_status
       ) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22)
       RETURNING id`,
     [
       data.parentName,
@@ -79,33 +85,33 @@ export const createRegistration = async (data) => {
       data.heardFrom,
       data.consent || false,
       data.mpesaCode || "PAY_LATER",
-      data.mpesaCode && data.mpesaCode !== "PAY_LATER"
-        ? "awaiting_verification"
-        : "pending",
+      data.totalCoursePrice,
+      data.amountPaid,
+      data.balanceDue,
+      data.paymentPlan,
+      data.paymentStatus, // Calculated in your controller
     ]
   );
 
-  const newDbId = result[0].id; // This is the unique number (e.g., 5)
-
-  // STEP 2: Format the Registration Number using that unique ID
-  const nextSerial = newDbId.toString().padStart(3, "0"); // Turns 5 into "005"
+  const newDbId = result[0].id;
+  const nextSerial = newDbId.toString().padStart(3, "0");
   const regNumber = `BC-${year}-${courseCode}-${nextSerial}`;
 
-  // STEP 3: Update the record with the final Registration Number
   const finalResult = await sql.query(
     `UPDATE registrations SET registration_number = $1 WHERE id = $2 RETURNING *`,
     [regNumber, newDbId]
   );
 
-  return finalResult[0]; // Send the full updated record back to the controller
+  return finalResult[0];
 };
 /* =========================
     READ ALL (ADMIN DASHBOARD)
 ========================= */
 export const getAllRegistrations = async () => {
-  const result =
-    await sql`SELECT * FROM registrations ORDER BY created_at DESC`;
-
+  // Fixed to use .query for consistency
+  const result = await sql.query(
+    `SELECT * FROM registrations ORDER BY created_at DESC`
+  );
   return result;
 };
 
@@ -114,20 +120,25 @@ export const getAllRegistrations = async () => {
 ========================= */
 export const updatePaymentStatus = async (
   id,
-  paymentStatus,
-  receiptStatus = "pending",
-  mpesaCode
+  status,
+  totalPaid,
+  balance,
+  mpesa
 ) => {
+  // Use PostgreSQL $ syntax instead of ?
   const result = await sql.query(
-    `UPDATE registrations
-     SET payment_status = $1, receipt_status = $2,mpesa_code = COALESCE($4, mpesa_code)
-     WHERE id = $3
-     RETURNING *`,
-    [paymentStatus, receiptStatus, id, mpesaCode]
+    `UPDATE registrations 
+     SET payment_status = $1, 
+         amount_paid = $2, 
+         balance_due = $3, 
+         mpesa_code = $4
+     WHERE id = $5
+     RETURNING *`, // Returning * allows us to avoid a second query
+    [status, totalPaid, balance, mpesa, id]
   );
+
   return result[0];
 };
-
 /* =========================
     ISSUE CERTIFICATE (Graduation)
 ========================= */
@@ -165,4 +176,14 @@ export const verifyCertificate = async (regNumber) => {
   );
 
   return result[0];
+};
+
+/* =========================
+    GET REGISTRATION BY ID
+========================= */
+export const getRegistrationById = async (id) => {
+  const result = await sql.query(`SELECT * FROM registrations WHERE id = $1`, [
+    id,
+  ]);
+  return result[0]; // Returns the single student record
 };

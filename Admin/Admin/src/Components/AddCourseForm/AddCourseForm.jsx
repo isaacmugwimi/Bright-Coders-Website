@@ -26,6 +26,7 @@ const AddCourseForm = ({
   const [errors, setErrors] = useState({});
 
   const [formData, setFormData] = useState({
+    code: initialData?.code || "",
     title: initialData?.title || "",
     category: initialData?.category || "",
     duration: initialData?.duration || "",
@@ -47,6 +48,19 @@ const AddCourseForm = ({
   const scrollToBottom = () => {
     formEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+
+  useEffect(() => {
+    if (!initialData && formData.title && !formData.code) {
+      const initials = formData.title
+        .split(" ")
+        .map((w) => w[0])
+        .join("")
+        .toUpperCase()
+        .slice(0, 6);
+
+      setFormData((prev) => ({ ...prev, code: initials }));
+    }
+  }, [initialData, formData.title, formData.code]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -184,6 +198,7 @@ const AddCourseForm = ({
           >
             <input
               type="checkbox"
+              
               name="isFeatured"
               checked={formData.isFeatured}
               onChange={handleChange}
@@ -191,8 +206,11 @@ const AddCourseForm = ({
             />
             <Star
               size={18}
-              fill={formData.isFeatured ? "currentColor" : "none"}
+              strokeWidth={1.5}
+              stroke={formData.isFeatured ? "#f59e0b" : "#999"} // orange gold or gray
+              fill={formData.isFeatured ? "#f59e0b" : "none"} // fill the star if featured
             />
+
             <span>
               {formData.isFeatured ? "Featured Program" : "Set as Featured"}
             </span>
@@ -210,7 +228,7 @@ const AddCourseForm = ({
               onChange={handleChange}
               hidden
             />
-            {formData.isPublic ? <CheckCircle size={18} /> : <X size={18} />}
+            {formData.isPublic ? <CheckCircle size={18} color="blue" /> : <X size={18} />}
             <span>
               {formData.isPublic ? "Visible to Public" : "Draft Mode"}
             </span>
@@ -218,6 +236,19 @@ const AddCourseForm = ({
         </div>
 
         <div className="form-grid">
+          <div className="form-group">
+            <label>Course Code</label>
+            <input
+              type="text"
+              name="code"
+              className={errors.code ? "input-error" : ""}
+              value={formData.code}
+              onChange={handleChange}
+              placeholder="e.g. PY, WD, SC"
+            />
+            {errors.code && <span className="error-msg">{errors.code}</span>}
+          </div>
+
           <div className="form-group">
             <label>Course Title</label>
             <input

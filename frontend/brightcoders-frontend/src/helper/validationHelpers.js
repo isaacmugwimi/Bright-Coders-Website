@@ -27,7 +27,18 @@ export const validateName = (fullName) => {
 // };
 
 export const validatePhone = (phone) => {
-  return phone.length >= 10 && phone.length <= 12
-    ? true
-    : "Phone number must contain 10-12 digits only.";
+if (!phone) return "Phone number is required.";
+  
+  // React-phone-input-2 returns numbers without the "+"
+  // Kenya: 254 (3) + Number (9) = 12 digits
+  const phoneLength = phone.replace(/\D/g, "").length; // Remove any non-digits just in case
+
+  if (phoneLength < 12) {
+    return "Phone number is too short. Please enter the full number.";
+  }
+  
+  if (phoneLength > 12) {
+    return "Phone number is too long.";
+  }
+    return true
 };

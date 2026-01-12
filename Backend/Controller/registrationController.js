@@ -1,34 +1,66 @@
 import { registrationValidationSchema } from "../Middleware/Validators/registrationValidator.js";
 import * as Queries from "../Database/Config/registrationQueries.js";
 import { sendPaymentConfirmation } from "../Utils/mailer.js";
-import { error } from "console";
 import { generateAndSaveReceipt } from "../Utils/receiptsGenerator.js";
 
 // ==========================
 // 1. ADD NEW REGISTRATION
 // =========================
+// registrationController.js
+
 export const handleAddRegistration = async (req, res) => {
   try {
-    // Fetch the dynamic schema (async because courses come from DB)
     const schema = await registrationValidationSchema();
     const { error, value } = schema.validate(req.body, { abortEarly: false });
 
     if (error) {
-      console.log("JOI VALIDATION ERROR:", error.details);
       const errorMessages = error.details.map((err) => err.message);
       return res
         .status(400)
         .json({ message: "Validation failed!", errors: errorMessages });
     }
 
-    // Insert registration into DB
-    const newRegistration = await Queries.createRegistration(value);
+    // --- ADD BALANCE CALCULATION ---
+    // value contains the validated data from Joi
+    const total = parseFloat(value.totalCoursePrice);
+    const paid = parseFloat(value.amountPaid);
+    const balanceDue = total - paid;
+
+    // Determine initial payment status
+    let paymentStatus = "pending";
+    // If they provided an M-Pesa code or paid any amount,
+    // it MUST be verified by admin first.
+    if (value.paymentPlan === "full" || value.paymentPlan === "deposit") {
+      paymentStatus = "awaiting_verification";
+    }
+
+    // Prepare data for DB
+    const registrationData = {
+      ...value,
+      balanceDue,
+      paymentStatus,
+    };
+
+    // Insert into DB
+    const newRegistration = await Queries.createRegistration(registrationData);
+
+    // NEVER trust frontend-shaped data for receipts
+    if (paymentStatus === "paid") {
+      try {
+        // Pull the fresh DB row with snake_case fields
+        const dbRecord = await Queries.getRegistrationById(newRegistration.id);
+
+        const fileInfo = await generateAndSaveReceipt(dbRecord);
+        await sendPaymentConfirmation(dbRecord, fileInfo);
+      } catch (err) {
+        console.error("Immediate Receipt Error:", err);
+      }
+    }
+
     return res.status(201).json(newRegistration);
   } catch (err) {
     console.error("ADD_REGISTRATION_ERROR:", err);
-    return res.status(500).json({
-      message: "An internal error occurred while creating the registration.",
-    });
+    return res.status(500).json({ message: "An internal error occurred." });
   }
 };
 
@@ -53,39 +85,51 @@ export const handleGetAllRegistrations = async (req, res) => {
 export const handleUpdatePayment = async (req, res) => {
   try {
     const { id } = req.params;
-    const { paymentStatus, receiptStatus, mpesaCode } = req.body;
+    const { confirmedAmount, mpesaCode, isVerifyingExisting } = req.body;
 
-    if (!paymentStatus) {
-      return res.status(400).json({ message: "Payment status is required." });
+    const student = await Queries.getRegistrationById(id);
+    if (!student) return res.status(404).json({ message: "Not found." });
+
+    // Use DB names: total_course_price
+    const coursePrice = parseFloat(student.total_course_price);
+    const previousPaid = parseFloat(student.amount_paid) || 0;
+    const amountSent = Number(confirmedAmount);
+    if (!Number.isFinite(amountSent) || amountSent <= 0) {
+      return res.status(400).json({ message: "Invalid amount" });
     }
 
+    let newTotalPaid = isVerifyingExisting
+      ? amountSent
+      : previousPaid + amountSent;
+    const newBalance = Math.max(0, coursePrice - newTotalPaid);
+
+    const newStatus = newBalance <= 0 ? "paid" : "partial";
+
+    const safeMpesa = mpesaCode?.toUpperCase() || "PAY_LATER";
+
+    // Update DB
     const updatedRegistration = await Queries.updatePaymentStatus(
       id,
-      paymentStatus,
-      receiptStatus || "pending",
-      mpesaCode
+      newStatus,
+      newTotalPaid,
+      newBalance,
+      safeMpesa
     );
 
-    if (!updatedRegistration)
-      return res.status(404).json({ message: "Registration not found." });
-    if (paymentStatus === "paid") {
+    // GENERATE RECEIPT
+
+    setImmediate(async () => {
       try {
         const fileInfo = await generateAndSaveReceipt(updatedRegistration);
         await sendPaymentConfirmation(updatedRegistration, fileInfo);
-
-        console.log(
-          `Receipt saved and sent for ${updatedRegistration.registration_number}`
-        );
       } catch (err) {
-        console.error("Receipt/Email error:", err);
+        console.error("Receipt background error:", err);
       }
-    }
+    });
+
     return res.status(200).json(updatedRegistration);
   } catch (err) {
-    console.error("UPDATE_PAYMENT_ERROR:", err);
-    return res
-      .status(500)
-      .json({ message: "Failed to update payment/receipt status." });
+    return res.status(500).json({ message: "Failed to verify." });
   }
 };
 

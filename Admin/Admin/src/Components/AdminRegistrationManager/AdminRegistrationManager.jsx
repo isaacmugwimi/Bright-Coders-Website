@@ -10,27 +10,26 @@ import {
   Search,
   LayoutGrid,
   CheckCircle,
-  Clock,
   UserCheck,
   CreditCard,
-  Download,
+  Wallet,
+  AlertCircle,
 } from "lucide-react";
 import axiosInstance from "../../utils/axiosInstance.js";
 import { API_PATHS } from "../../utils/apiPaths.js";
-import "../AdminBlogManager/AdminBlogManager.css"; // Reuse your existing CSS
+import "../AdminBlogManager/AdminBlogManager.css";
 import { RegistrationDetailsModal } from "./RegistrationDetailsModal/RegistrationDetailsModal.jsx";
 import { getAllRegistrations } from "../../services/generalServices.js";
+import { PaymentModal } from "../../helpers/CustomAlerts/PaymentModal.jsx";
 
 const AdminRegistrationManager = () => {
   const [registrations, setRegistrations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRegistration, setSelectedRegistration] = useState(null);
-
-  // Filter Modes: 'total', 'paid', or 'pending'
   const [filterMode, setFilterMode] = useState("total");
-
   const [isUpdatingId, setIsUpdatingId] = useState(null);
+  const [paymentModalData, setPaymentModalData] = useState(null);
 
   const [alertConfig, setAlertConfig] = useState({
     isOpen: false,
@@ -70,19 +69,36 @@ const AdminRegistrationManager = () => {
     }
   };
 
-  // --- STATS ---
+  // --- STATS LOGIC ---
   const stats = useMemo(() => {
     const paid = registrations.filter(
       (r) => r.payment_status === "paid"
     ).length;
-    const awaiting = registrations.filter(
-      (r) => r.payment_status === "awaiting_verification"
+    const partial = registrations.filter(
+      (r) => r.payment_status === "partial"
     ).length;
+    const pending = registrations.filter(
+      (r) =>
+        r.payment_status === "pending" ||
+        r.payment_status === "awaiting_verification"
+    ).length;
+
+    const totalCollected = registrations.reduce(
+      (acc, r) => acc + (parseFloat(r.amount_paid) || 0),
+      0
+    );
+    const totalDebt = registrations.reduce(
+      (acc, r) => acc + (parseFloat(r.balance_due) || 0),
+      0
+    );
+
     return {
       total: registrations.length,
       paid,
-      pending: registrations.length - paid,
-      awaiting,
+      partial,
+      pending,
+      totalCollected,
+      totalDebt,
     };
   }, [registrations]);
 
@@ -94,78 +110,59 @@ const AdminRegistrationManager = () => {
         reg.registration_number.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    if (filterMode === "paid") {
+    if (filterMode === "paid")
       return result.filter((r) => r.payment_status === "paid");
-    } else if (filterMode === "pending") {
+    if (filterMode === "partial")
+      return result.filter((r) => r.payment_status === "partial");
+    if (filterMode === "pending")
       return result.filter((r) => r.payment_status !== "paid");
-    }
 
     return result;
   }, [registrations, searchTerm, filterMode]);
 
+  // --- CORE PAYMENT VERIFICATION LOGIC ---
+const handleVerifyPayment = (reg) => {
+  setPaymentModalData(reg); // This opens the modal
+};
+
+// This function is called by the Modal when the user clicks "Confirm"
+const executePaymentUpdate = async (finalMpesaCode, confirmedAmount) => {
+  const reg = paymentModalData;
+  const isAwaiting = reg.payment_status === "awaiting_verification";
+
+  setIsUpdatingId(reg.id);
+  try {
+    await axiosInstance.patch(API_PATHS.REGISTRATIONS.UPDATE_PAYMENT(reg.id), {
+      confirmedAmount: parseFloat(confirmedAmount),
+      mpesaCode: finalMpesaCode.toUpperCase().trim(),
+      isVerifyingExisting: isAwaiting,
+    });
+    
+    triggerToast("Payment confirmed successfully!", "success");
+    setPaymentModalData(null); // Close modal
+    fetchRegistrations(); // Refresh list
+  } catch (error) {
+    triggerToast(error.response?.data?.message || "Update failed.", "error");
+  } finally {
+    setIsUpdatingId(null);
+  }
+};
+
+
   const handleDelete = (id) => {
     setAlertConfig({
       isOpen: true,
-      title: "Delete Registration?",
-      message: "This action is permanent. Delete this record?",
+      title: "Delete Record?",
+      message: "This cannot be undone.",
       type: "danger",
       onConfirm: async () => {
         setAlertConfig((prev) => ({ ...prev, isOpen: false }));
         try {
           await axiosInstance.delete(API_PATHS.REGISTRATIONS.DELETE(id));
           setRegistrations((prev) => prev.filter((r) => r.id !== id));
-          triggerToast("Record deleted successfully!", "success");
+          triggerToast("Deleted successfully!");
         } catch (err) {
-          triggerToast("Failed to delete", "error");
-        }
-      },
-    });
-  };
-
-  const handleVerifyPayment = (reg) => {
-    let finalMpesaCode = reg.mpesa_code;
-
-    if (reg.mpesa_code === "PAY_LATER") {
-      const newCode = window.prompt(
-        `Enter the M-Pesa transaction code for ${reg.child_name}:`
-      );
-
-      if (!newCode || newCode.trim() === "") {
-        triggerToast(
-          "Verification cancelled. A valid code is required.",
-          "info"
-        );
-        return;
-      }
-      finalMpesaCode = newCode.toUpperCase().trim();
-    }
-
-    setAlertConfig({
-      isOpen: true,
-      title: "Verify Payment?",
-      message: `Confirm payment for ${reg.child_name} (ID: ${reg.registration_number}) with Code: ${finalMpesaCode}?`,
-      type: "info",
-      onConfirm: async () => {
-        setAlertConfig((prev) => ({ ...prev, isOpen: false }));
-        setIsUpdatingId(reg.id);
-        try {
-          await axiosInstance.patch(
-            API_PATHS.REGISTRATIONS.UPDATE_PAYMENT(reg.id),
-            {
-              paymentStatus: "paid",
-              mpesaCode: finalMpesaCode,
-              receiptStatus: "sent",
-            }
-          );
-          triggerToast(
-            "Payment Verified, Receipt Sent & Code Updated!",
-            "success"
-          );
-          fetchRegistrations();
-        } catch (error) {
-          triggerToast("Verification failed.", "error");
-        } finally {
-          setIsUpdatingId(null);
+          triggerToast("Delete failed", "error");
         }
       },
     });
@@ -186,11 +183,10 @@ const AdminRegistrationManager = () => {
               <LayoutGrid size={20} />
             </div>
             <div className="stat-info">
-              <span className="stat-label">Total Registered</span>
+              <span className="stat-label">Total</span>
               <span className="stat-value">{stats.total}</span>
             </div>
           </div>
-
           <div
             className={`stat-card ${
               filterMode === "paid" ? "active-filter" : ""
@@ -201,23 +197,42 @@ const AdminRegistrationManager = () => {
               <CheckCircle size={20} />
             </div>
             <div className="stat-info">
-              <span className="stat-label">Paid Students</span>
+              <span className="stat-label">Fully Paid</span>
               <span className="stat-value">{stats.paid}</span>
             </div>
           </div>
-
           <div
             className={`stat-card ${
-              filterMode === "pending" ? "active-filter" : ""
+              filterMode === "partial" ? "active-filter" : ""
             }`}
-            onClick={() => setFilterMode("pending")}
+            onClick={() => setFilterMode("partial")}
           >
-            <div className="stat-icon draft">
-              <Clock size={20} />
+            <div
+              className="stat-icon draft" 
+              style={{ backgroundColor: "#E0F2F2" }}
+            >
+              <Wallet size={20} color="#008B8B"/>
             </div>
             <div className="stat-info">
-              <span className="stat-label">Unpaid / Pending</span>
-              <span className="stat-value">{stats.pending}</span>
+              <span className="stat-label">Installments</span>
+              <span className="stat-value">{stats.partial}</span>
+            </div>
+          </div>
+          <div
+            className="stat-card"
+            style={{ cursor: "default", borderLeft: "4px solid #e74c3c" }}
+          >
+            <div
+              className="stat-icon draft"
+              style={{ backgroundColor: "#fdeaea", color: "#e74c3c" }}
+            >
+              <AlertCircle size={20} />
+            </div>
+            <div className="stat-info">
+              <span className="stat-label">Total Debt</span>
+              <span className="stat-value">
+                Ksh {stats.totalDebt.toLocaleString()}
+              </span>
             </div>
           </div>
         </div>
@@ -225,16 +240,14 @@ const AdminRegistrationManager = () => {
         <div className="admin-header">
           <div>
             <h1>Student Registrations</h1>
-            <p className="subtitle">
-              Manage enrollment and payment verification
-            </p>
+            <p className="subtitle">Real-time tracking of student registrations and payment progress.</p>
           </div>
           <div className="header-actions">
             <div className="search-container">
               <Search className="search-icon" size={18} />
               <input
                 type="text"
-                placeholder="Search by name or ID..."
+                placeholder="Search students..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
@@ -245,141 +258,130 @@ const AdminRegistrationManager = () => {
         {loading ? (
           <div className="loading-full-state">
             <Loader2 className="spinner" size={40} />
-            <p>Fetching student records...</p>
+            <p>Loading records...</p>
           </div>
-        ) : filteredData.length > 0 ? (
-          <div className="category-section">
-            <div className="category-header">
-              <UserCheck size={20} className="category-icon" />
-              <h2 style={{ textTransform: "capitalize" }}>
-                {filterMode} Records
-              </h2>
-              <span className="item-count">{filteredData.length} Students</span>
-            </div>
-
-            <div className="table-wrapper">
-              <table className="admin-table">
-                <thead>
-                  <tr>
-                    <th>Reg ID</th>
-                    <th>Student Details</th>
-                    <th>Course</th>
-                    <th>M-Pesa Code</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredData.map((reg) => (
-                    <tr key={reg.id}>
-                      <td>
-                        <span
-                          className="course-title-text"
-                          style={{ fontSize: "0.85rem", fontWeight: "bold" }}
-                        >
-                          {reg.registration_number}
+        ) : (
+          <div className="table-wrapper">
+            <table className="admin-table">
+              <thead>
+                <tr>
+                  <th>Reg ID</th>
+                  <th>Student & Balance</th>
+                  <th>Course</th>
+                  <th>M-Pesa / Paid</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredData.map((reg) => (
+                  <tr key={reg.id}>
+                    <td>
+                      <span
+                        className="course-title-text"
+                        style={{ fontSize: "0.85rem", fontWeight: "bold" }}
+                      >
+                        {reg.registration_number}
+                      </span>
+                    </td>
+                    <td>
+                      <div style={{ display: "flex", flexDirection: "column" }}>
+                        <span className="course-title-text">
+                          {reg.child_name}
                         </span>
-                      </td>
-                      <td>
-                        <div
-                          className="name-cell"
-                          style={{ display: "flex", flexDirection: "column" }}
+                        <span
+                          style={{
+                            fontSize: "12px",
+                            color:
+                              parseFloat(reg.balance_due) > 0
+                                ? "#e74c3c"
+                                : "#2ecc71",
+                            fontWeight: "bold",
+                          }}
                         >
-                          <span className="course-title-text">
-                            {reg.child_name}
-                          </span>
-                          <small style={{ color: "#666" }}>
-                            {reg.parent_phone}
-                          </small>
-                        </div>
-                      </td>
-                      <td>
-                        <span className="sync-time">{reg.course_name}</span>
-                      </td>
-                      <td>
+                          Bal: Ksh{" "}
+                          {parseFloat(reg.balance_due || 0).toLocaleString()}
+                        </span>
+                      </div>
+                    </td>
+                    <td>
+                      <span className="sync-time">{reg.course_name}</span>
+                    </td>
+                    <td>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "2px",
+                        }}
+                      >
                         <div
                           style={{
                             display: "flex",
                             alignItems: "center",
                             gap: "5px",
+                            fontSize: "11px",
+                            color:
+                              reg.mpesa_code === "PAY_LATER"
+                                ? "#e74c3c"
+                                : "inherit",
                           }}
                         >
-                          <CreditCard size={14} color="#666" />
-                          <code
-                            style={{
-                              background:
-                                reg.mpesa_code === "PAY_LATER"
-                                  ? "#fff3cd"
-                                  : "#f0f0f0",
-                              color:
-                                reg.mpesa_code === "PAY_LATER"
-                                  ? "#856404"
-                                  : "#333",
-                              padding: "2px 5px",
-                              borderRadius: "4px",
-                              fontWeight:
-                                reg.mpesa_code === "PAY_LATER"
-                                  ? "bold"
-                                  : "normal",
-                              border:
-                                reg.mpesa_code === "PAY_LATER"
-                                  ? "1px solid #ffeeba"
-                                  : "none",
-                            }}
-                          >
-                            {reg.mpesa_code}
-                          </code>
+                          <CreditCard size={12} /> {reg.mpesa_code}
                         </div>
-                      </td>
-                      <td>
-                        <span
-                          className={`badge ${
-                            reg.payment_status === "paid" ? "public" : "draft"
-                          }`}
+                        <small style={{ color: "#666" }}>
+                          Paid: {parseFloat(reg.amount_paid).toLocaleString()}
+                        </small>
+                      </div>
+                    </td>
+                    <td>
+                      <span
+                        className={`badge ${
+                          reg.payment_status === "paid"
+                            ? "public"
+                            : reg.payment_status === "awaiting_verification"
+                            ? "warning"
+                            : reg.payment_status === "partial"
+                            ? "live"
+                            : "draft"
+                        }`}
+                      >
+                        {reg.payment_status.replace("_", " ")}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="action-btns">
+                        {reg.payment_status !== "paid" && (
+                          <button
+                            className="push-row-btn"
+                            onClick={() => handleVerifyPayment(reg)}
+                            disabled={isUpdatingId === reg.id}
+                          >
+                            {isUpdatingId === reg.id ? (
+                              <Loader2 size={16} className="spinner" />
+                            ) : (
+                              <CheckCircle size={16} />
+                            )}
+                          </button>
+                        )}
+                        <button
+                          className="edit-btn"
+                          onClick={() => setSelectedRegistration(reg)}
                         >
-                          {reg.payment_status.replace("_", " ")}
-                        </span>
-                      </td>
-                      <td>
-                        <div className="action-btns">
-                          {reg.payment_status !== "paid" && (
-                            <button
-                              className="push-row-btn"
-                              title="Verify Payment"
-                              onClick={() => handleVerifyPayment(reg)}
-                              disabled={isUpdatingId === reg.id}
-                            >
-                              {isUpdatingId === reg.id ? (
-                                <Loader2 size={16} className="spinner" />
-                              ) : (
-                                <CheckCircle size={16} />
-                              )}
-                            </button>
-                          )}
-                          <button
-                            className="edit-btn"
-                            title="View Details"
-                            onClick={() => setSelectedRegistration(reg)}
-                          >
-                            <FileText size={16} />
-                          </button>
-                          <button
-                            className="delete-btn"
-                            onClick={() => handleDelete(reg.id)}
-                          >
-                            <Trash2 size={16} />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        ) : (
-          <div className="empty-state-card">
-            <p>No registration records found.</p>
+                          <FileText size={16} />
+                        </button>
+                        <button
+                          className="delete-btn"
+                          onClick={() => handleDelete(reg.id)}
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
 
@@ -391,6 +393,16 @@ const AdminRegistrationManager = () => {
         )}
       </div>
 
+
+      {paymentModalData && (
+  <PaymentModal
+    registration={paymentModalData}
+    loading={isUpdatingId === paymentModalData.id}
+    onClose={() => setPaymentModalData(null)}
+    onConfirm={executePaymentUpdate}
+  />
+)}
+
       <CustomAlerts
         isOpen={alertConfig.isOpen}
         title={alertConfig.title}
@@ -399,7 +411,6 @@ const AdminRegistrationManager = () => {
         onConfirm={alertConfig.onConfirm}
         onCancel={() => setAlertConfig((prev) => ({ ...prev, isOpen: false }))}
       />
-
       {toastConfig.show && (
         <Toast
           message={toastConfig.message}

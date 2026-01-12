@@ -6,12 +6,13 @@
 .wizard-container {
   width: 100%;
   max-width: 900px;
-  margin: 140px auto 80px auto;
+  margin: 15px auto 80px auto;
   background: #ffffff;
   padding: 40px;
   border-radius: 25px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 1);
   font-family: "Poppins", sans-serif;
+  scroll-margin-top: 120px;
 }
 
 .wizard-title {
@@ -50,11 +51,45 @@
   box-shadow: 0 4px 12px rgba(10, 97, 168, 0.3);
 }
 
-.line {
-  width: 60px;
-  height: 3px;
-  background: #d1dce8;
+.step-circle.completed {
+  background: #2ecc71; /* Green for success */
+  color: white;
 }
+
+.line {
+  flex: 1;
+  height: 4px;
+  background: #cfd8e1;
+  border-radius: 4px;
+  margin: 0 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* The animated fill */
+.line::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #3b82f6, #2563eb);
+  transition: width 2s ease;
+}
+
+/* When step passes, fill grows */
+.line-active::before {
+  width: 100%;
+}
+
+/* Glow */
+.line-active {
+  box-shadow: 0 0 8px rgba(59, 130, 246, 0.5);
+}
+
+
+
 
 /* CARD */
 .wizard-card {
@@ -211,6 +246,7 @@ textarea {
   background: #084b83;
 }
 
+
 /* SUBMIT BUTTON */
 .submit-btn {
   width: 100%;
@@ -233,7 +269,7 @@ textarea {
 @keyframes fadeAnimation {
   from {
     opacity: 0;
-    transform: translateY(100%);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -312,7 +348,7 @@ textarea {
    PAYMENT MODAL STYLES
    ========================================== */
 /* 1. Backdrop with deep focus */
-.modal-overlay {
+.modal-overlay1 {
   position: fixed;
   top: 0;
   left: 0;
@@ -325,170 +361,255 @@ textarea {
   z-index: 1000;
   backdrop-filter: blur(8px);
 }
+/* ==========================================
+   PAYMENT MODAL - PREMIUM DARK THEME
+   ========================================== */
 
-/* 2. Modal Container - Dark Cyan Base */
-.modal-box {
-  background: #003d4d; /* Solid Dark Cyan */
-  padding: 30px 50px;
-  border-radius: 20px;
-  width: 90%;
-  max-width: 400px;
-  position: relative;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  color: #ffffff;
+/* 1. Backdrop with deep focus & glass effect */
+.modal-overlay1 {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 12, 15, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(12px);
+  padding: 20px;
 }
 
-/* 3. Close Button */
-.close-modal {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background-color: white;
-  border: none;
-  color: red;
-  width: 28px;
-  height: 28px;
+/* 2. Modal Container - Sleek Dark Cyan Card */
+.modal-box1 {
+  background: #001f23;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+
+  /* SCROLL LOGIC */
+  max-height: 90vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: #008b8b transparent;
+}
+
+/* Custom Scrollbar Styling */
+.modal-box1::-webkit-scrollbar {
+  width: 6px;
+}
+.modal-box1::-webkit-scrollbar-track {
+  background: transparent;
+}
+.modal-box1::-webkit-scrollbar-thumb {
+  background: rgba(0, 139, 139, 0.4);
+  border-radius: 10px;
+}
+.modal-box1::-webkit-scrollbar-thumb:hover {
+  background: #008b8b;
+}
+
+/* 3. Sticky Close Button */
+.close-modal1 {
+  position: absolute; /* Keep it relative to the box top */
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ff4d4d;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 100;
 }
 
-.close-modal:hover {
-  color: darkred;
-  transform: rotate(90deg);
+.close-modal1:hover {
+  background: #ff4d4d;
+  color: white;
+  transform: rotate(90deg) scale(1.1);
 }
 
-/* 4. Typography */
-.modal-box h2 {
-  font-size: 1.4rem;
-  font-weight: 700;
+/* 9. Divider with Gradient Lines */
+.modal-divider1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 25px 0;
+  gap: 15px;
+}
+
+/* The horizontal lines */
+.modal-divider1::before,
+.modal-divider1::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  /* Fades the line out towards the edges of the modal */
+  background: linear-gradient(
+    to var(--direction, right),
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* Adjust direction for the right-side line */
+.modal-divider1::after {
+  --direction: left;
+}
+
+/* The "OR" text in the middle */
+.modal-divider1 span {
+  color: #94a3b8; /* Muted slate/cyan */
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 4px 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  user-select: none;
+}
+
+/* 4. Typography & Headers */
+.modal-box1 h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
   text-align: center;
-  margin-bottom: 5px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
 }
 
 .step-subtitle {
   text-align: center;
-  color: #a3ced6; /* Soft cyan-white */
-  font-size: 0.85rem;
-  margin-bottom: 25px;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  margin-bottom: 30px;
 }
 
 /* 5. Choice Cards (Step 1) */
 .choice-grid {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .choice-card {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
-  padding: 16px 20px;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 18px 22px;
+  border-radius: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
   width: 100%;
   color: #ffffff;
 }
 
 .choice-card:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: #ff8c00; /* High contrast Orange border */
+  background: rgba(255, 140, 0, 0.08);
+  border-color: #ff8c00;
+  transform: translateY(-2px);
 }
 
 .choice-info {
   display: flex;
   flex-direction: column;
-  text-align: left;
+  gap: 4px;
 }
 
 .choice-title {
-  color: #a3ced6;
-  font-size: 0.7rem;
+  color: #94a3b8;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
 }
 
 .choice-amount {
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 700;
+  color: #ffffff;
 }
 
 .choice-badge {
-  background: rgba(255, 140, 0, 0.1);
+  background: rgba(255, 140, 0, 0.15);
   color: #ff8c00;
-  padding: 4px 10px;
-  border-radius: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
   font-size: 0.7rem;
-  font-weight: 700;
+  font-weight: 800;
   border: 1px solid rgba(255, 140, 0, 0.3);
 }
 
-.choice-badge.special {
-  background: rgba(255, 255, 255, 0.1);
-  color: #ffffff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-/* 6. Step 2 Specifics */
+/* 6. Step 2 - Instructions & Copy Box */
 .changePlan {
   background: transparent;
   border: none;
-  color: #a3ced6;
-  font-size: 0.85rem;
+  color: #00d2d2;
+  font-size: 0.9rem;
   cursor: pointer;
-  margin-top: 10px;
-  margin-bottom: 35px;
+  margin-bottom: 25px;
   font-weight: 600;
-  gap: 10px;
   display: flex;
-  margin-right: auto;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  transition: 0.2s;
 }
 
 .changePlan:hover {
-  color: darkblue;
+  color: #ffffff;
+  transform: translateX(-4px);
 }
 
 .instruction-card {
-  background: #002b36; /* Darker Cyan "Pit" */
-  padding: 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
+  background: #002b36;
+  padding: 24px;
+  border-radius: 16px;
+  margin-bottom: 25px;
   text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .instruction-card p {
-  color: #a3ced6;
-  font-size: 0.9rem;
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
 }
 
 .instruction-card b {
-  color: #ff8c00; /* Orange Amount */
-  font-size: 1.2rem;
+  color: #ff8c00;
+  font-size: 1.4rem;
+  font-weight: 800;
 }
 
 .copy-box {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 8px 16px;
-  border-radius: 8px;
-  margin-top: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .copy-box span {
-  font-family: monospace;
-  font-weight: bold;
-  font-size: 1.1rem;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-weight: 700;
+  font-size: 1.2rem;
   color: #ffffff;
 }
 
@@ -496,100 +617,91 @@ textarea {
   background: #ff8c00;
   color: #ffffff;
   border: none;
-  padding: 10px;
-  border-radius: 4px;
-  font-size: 0.95rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 10px;
+  gap: 6px;
+  transition: 0.2s;
+}
+
+.copy-box button:hover {
+  background: #e67e00;
+  transform: scale(1.05);
 }
 
 /* 7. Input Styling */
 .input-group label {
   display: block;
-  text-align: left;
-  font-size: 0.95rem;
-  color: #a3ced6;
-  margin-bottom: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-bottom: 10px;
   text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .mpesa-code-input {
   width: 100%;
-  background: #002b36;
-  border: 1.5px solid rgba(255, 255, 255, 0.1);
-  padding: 14px;
-  border-radius: 10px;
-  color: #ff8c00; /* Orange text as they type */
-  font-size: 1.2rem;
+  background: rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  padding: 16px;
+  border-radius: 12px;
+  color: #ff8c00;
+  font-size: 1.4rem;
   text-align: center;
-  font-weight: 700;
-  letter-spacing: 3px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  transition: all 0.3s ease;
 }
 
 .mpesa-code-input:focus {
   outline: none;
   border-color: #ff8c00;
+  background: rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 0 4px rgba(255, 140, 0, 0.15);
 }
 
 .small-text {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  font-size: 1.05rem !important;
+  margin-top: 15px;
+  font-size: 0.9rem !important;
+  color: #94a3b8;
 }
 
 /* 8. Main Action Button */
 .confirm-btn {
   width: 100%;
-  background: #ff8c00; /* Bold Orange */
+  background: #ff8c00;
   color: #ffffff;
-  padding: 16px;
+  padding: 18px;
   border: none;
-  border-radius: 10px;
+  border-radius: 14px;
   font-weight: 800;
-  font-size: 1rem;
-  margin-top: 20px;
+  font-size: 1.1rem;
+  margin-top: 25px;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(255, 140, 0, 0.2);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 20px -5px rgba(255, 140, 0, 0.4);
 }
 
-.confirm-btn:hover {
-  background: #e67e00;
-  transform: translateY(-1px);
+.confirm-btn:hover:not(:disabled) {
+  background: #ff9d26;
+  transform: translateY(-2px);
+  box-shadow: 0 15px 25px -5px rgba(255, 140, 0, 0.5);
 }
 
-/* 9. Divider and Animations */
-.modal-divider {
-  display: flex;
-  align-items: center;
-  margin: 15px 0;
-}
-.modal-divider::before,
-.modal-divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.1);
-}
-.modal-divider span {
-  padding: 0 10px;
-  color: #a3ced6;
-  font-size: 0.75rem;
+.confirm-btn:disabled {
+  background: #334155;
+  color: #64748b;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.5;
 }
 
-.animate-fade-in {
-  animation: fadeIn 0.3s ease;
-}
-.animate-slide-up {
-  animation: slideUp 0.3s ease;
-}
-
+/* 9. Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -598,15 +710,74 @@ textarea {
     opacity: 1;
   }
 }
+
 @keyframes slideUp {
   from {
-    transform: translateY(10px);
+    transform: translateY(20px);
     opacity: 0;
   }
   to {
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+.animate-slide-up {
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* --- Shake Animation --- */
+@keyframes shakeEffect {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-8px);
+  }
+  40% {
+    transform: translateX(8px);
+  }
+  60% {
+    transform: translateX(-8px);
+  }
+  80% {
+    transform: translateX(8px);
+  }
+}
+
+.shake-input {
+  animation: shakeEffect 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  border-color: #ef4444 !important; /* Vivid Red */
+  background: rgba(239, 68, 68, 0.05) !important;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1) !important;
+}
+
+/* --- Success State (When valid) --- */
+.valid-input {
+  border-color: #10b981 !important; /* Emerald Green */
+  background: rgba(16, 185, 129, 0.05) !important;
+}
+
+/* --- Improved Label Feedback --- */
+.feedback-text {
+  font-size: 0.75rem;
+  font-weight: 700;
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+}
+
+.feedback-error {
+  color: #ef4444;
+}
+.feedback-success {
+  color: #10b981;
 }
 
 /* Success Card */
@@ -656,102 +827,67 @@ textarea {
   text-align: center;
 }
 
-/* ==========================
-   MEDIA QUERIES
-========================== */
+/* ==========================================
+   RESPONSIVE DESIGN FOR REACT WIZARD
+   ========================================== */
 
-/* Extra small devices (<400px) */
-@media (max-width: 399px) {
+/* Mobile Phones (< 600px) */
+@media (max-width: 599px) {
   .wizard-container {
-    margin: 100px 10px;
-    padding: 20px;
-    width: 90%;
+    margin: 10px auto; /* Less margin on top */
+    padding: 15px;
+    width: 95%;
+    border-radius: 15px;
   }
+
   .wizard-title {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
   }
-  .wizard-progress {
-    gap: 3px;
+
+  /* Shrink progress bar to fit screen width */
+  .step-circle {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
   }
+
   .line {
-    width: 30px;
+    width: 25px; /* Shorter lines so circles don't wrap to next row */
   }
+
   .wizard-card {
-    padding: 20px;
+    padding: 15px;
+    box-shadow: none; /* Simplify for mobile performance */
   }
-  .input-container {
-    margin-bottom: 30px;
+
+  .wizard-nav {
+    flex-direction: column-reverse; /* Stack buttons on very small screens */
+    gap: 10px;
   }
-  .error-message {
-    margin-top: 0px;
-    margin-bottom: 20px;
+
+  .next-btn,
+  .back-btn {
+    width: 100%; /* Full width buttons are easier to tap on mobile */
+    justify-content: center;
   }
 }
 
-/* Small devices (400px – 599px) */
-@media (min-width: 400px) and (max-width: 599px) {
+/* Tablets (600px - 1024px) */
+@media (min-width: 600px) and (max-width: 1024px) {
   .wizard-container {
-    margin: 110px 15px;
-    padding: 25px;
-    width: 90%;
+    max-width: 80%;
+    margin-top: 30px;
   }
-  .wizard-title {
-    font-size: 1.8rem;
-  }
+
   .line {
-    width: 35px;
+    width: 45px;
   }
 }
 
-/* Medium devices (600px – 767px) */
-@media (min-width: 600px) and (max-width: 767px) {
+/* Large Screens (> 1024px) */
+@media (min-width: 1025px) {
   .wizard-container {
-    margin: 120px 15px;
-    padding: 25px;
-  }
-  .wizard-title {
-    font-size: 1.9rem;
-  }
-  .line {
-    width: 40px;
-  }
-}
-
-/* Large tablets (768px – 1023px) */
-@media (min-width: 768px) and (max-width: 1023px) {
-  .wizard-container {
-    margin: 130px 20px;
-    padding: 30px;
-  }
-  .wizard-title {
-    font-size: 2rem;
-  }
-}
-
-/* Laptops (1024px – 1279px) */
-@media (min-width: 1024px) and (max-width: 1279px) {
-  .wizard-container {
-    padding: 35px;
-  }
-}
-
-/* Desktops (1280px – 1599px) */
-@media (min-width: 1280px) and (max-width: 1599px) {
-  .wizard-container {
-    padding: 40px;
-  }
-}
-
-/* Extra large screens (1600px – 1919px) */
-@media (min-width: 1600px) and (max-width: 1919px) {
-  .wizard-container {
-    padding: 45px;
-  }
-}
-
-/* Ultra wide / 4K (>=1920px) */
-@media (min-width: 1920px) {
-  .wizard-container {
-    padding: 50px;
+    margin-top: 50px;
   }
 }

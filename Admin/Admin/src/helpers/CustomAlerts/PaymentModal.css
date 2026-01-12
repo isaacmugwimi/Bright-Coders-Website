@@ -1,0 +1,251 @@
+/* 1. Full-Screen Glassmorphism Overlay */
+.modal-overlay1 {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.15); /* Deep slate with transparency */
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* 2. Modal Container with Spring Animation */
+.modal-content1 {
+  background: #ffffff;
+  border-radius: 20px;
+  width: 95%;
+  max-width: 420px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: springUp 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* 3. Header Section */
+.modal-header1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.modal-header1 h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #008b8b; /* DarkCyan */
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.close-btn {
+  background: #f1f5f9;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover:not(:disabled) {
+  background: #fee2e2;
+  color: #ef4444;
+  transform: rotate(90deg);
+}
+
+/* 4. Body and Info Card */
+.modal-body1{
+  padding: 1.5rem;
+}
+
+.registration-summary {
+  background: #f0fdfd; /* Very light cyan */
+  padding: 16px;
+  border-radius: 12px;
+  border-left: 5px solid #008b8b;
+  margin-bottom: 24px;
+}
+
+.registration-summary strong {
+  color: #0f172a;
+}
+
+/* 5. Form Groups and Icons */
+.form-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Icon specific colors */
+.icon-cyan {
+  color: #008b8b;
+}
+.icon-orange {
+  color: red;
+}
+
+/* 6. Premium Input Styling */
+.admin-input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #f8fafc;
+}
+
+.admin-input:focus {
+  background-color: #ffffff;
+  border-color: #008b8b;
+  box-shadow: 0 0 0 4px rgba(0, 139, 139, 0.15);
+  outline: none;
+}
+
+.admin-input::placeholder {
+  color: #94a3b8;
+  font-weight: 400;
+}
+
+/* 7. Footer and Action Buttons */
+.modal-footer1 {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.cancel-btn,
+.confirm-btn {
+  flex: 1;
+  padding: 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.cancel-btn {
+  background: #ffffff;
+  border: 2px solid #e2e8f0;
+  color: #64748b;
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.confirm-btn {
+  background: #008b8b;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 139, 139, 0.25);
+}
+
+.confirm-btn:hover:not(:disabled) {
+  background: #007a7a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 139, 139, 0.35);
+}
+
+.confirm-btn:disabled {
+  background: #cbd5e1;
+  color: #94a3b8;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* 8. Validation and Error States */
+.input-error {
+  border-color: #ef4444 !important;
+  background-color: #fffafb !important;
+  animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+.error-text {
+  color: #ef4444;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* 9. Keyframe Animations */
+@keyframes springUp {
+  0% {
+    transform: translateY(50px) scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes shake {
+  10%,
+  90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+  40%,
+  60% {
+    transform: translate3d(4px, 0, 0);
+  }
+}
+
+.valid-hint {
+  color: #059669; /* A clean forest green */
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  animation: fadeIn 0.2s ease-in;
+}
+
+/* Optional: Make the input border green when valid */
+.admin-input.valid-border {
+  border-color: #059669 !important;
+  box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1);
+}

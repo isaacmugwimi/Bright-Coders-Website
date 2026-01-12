@@ -14,7 +14,6 @@ import {
   FaClipboardList,
   FaCopy,
 } from "react-icons/fa";
-// import programData from "../Utils/programData";
 import "../Css/Register.css";
 import { validateStep } from "../helper/validateStep";
 import axios from "axios";
@@ -35,6 +34,8 @@ export default function Register() {
   const [paymentMode, setPaymentMode] = useState("full"); // "full" or "deposit"
   const DEPOSIT_AMOUNT = "Any amount"; // Define your fixed deposit amount here
   const [paymentStep, setPaymentStep] = useState(1); // 1 = Choice, 2 = Instructions
+  const [shake, setShake] = useState(false);
+  const formTopRef = React.useRef(null);
   const [error, setError] = useState({
     field: "",
     message: "",
@@ -93,6 +94,12 @@ export default function Register() {
     fetchAndInitialize();
   }, [location.state]); // Refetch/Re-sync if location state changes
 
+  useEffect(() => {
+    if (formTopRef.current) {
+      formTopRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [step]);
+
   // Update course price when user selects a different course manually
   useEffect(() => {
     if (dbCourses.length > 0 && formData.course) {
@@ -134,7 +141,7 @@ export default function Register() {
     setIsLoading(true);
 
     const numericCoursePrice =
-      Number(coursePrice.toString().replace(/[^0-9.-]+/g, "")) || 0;
+      Number((coursePrice || "0").toString().replace(/[^0-9.-]+/g, "")) || 0;
 
     let finalCode = mpesaCode;
     let amountToPay = 0;
@@ -181,8 +188,8 @@ export default function Register() {
           regNumber: response.data.registration_number,
         }));
         setIsLoading(false);
-        setIsFinished(true);
         setShowModal(false);
+        setIsFinished(true);
       }
     } catch (error) {
       setIsLoading(false);
@@ -199,7 +206,7 @@ export default function Register() {
   };
 
   return (
-    <div className="wizard-container">
+    <div className="wizard-container" ref={formTopRef}>
       <h1 className="wizard-title">Course Registration Wizard</h1>
 
       {isLoading ? (
@@ -219,19 +226,26 @@ export default function Register() {
             <div className={`step-circle ${step >= 1 ? "active" : ""}`}>
               <FaUser />
             </div>
-            <div className="line" />
+
+            <div className={`line ${step >= 2 ? "line-active" : ""}`} />
+
             <div className={`step-circle ${step >= 2 ? "active" : ""}`}>
               <FaChild />
             </div>
-            <div className="line" />
+
+            <div className={`line ${step >= 3 ? "line-active" : ""}`} />
+
             <div className={`step-circle ${step >= 3 ? "active" : ""}`}>
               <FaClipboardList />
             </div>
-            <div className="line" />
-            <div className={`step-circle ${step === 4 ? "active" : ""}`}>
+
+            <div className={`line ${step >= 4 ? "line-active" : ""}`} />
+
+            <div className={`step-circle ${step >= 4 ? "active" : ""}`}>
               <FaCheck />
             </div>
           </div>
+
           <form onSubmit={handleSubmit} className="wizard-form">
             {/* ================= STEP 1: PARENT DETAILS ================ */}
             {step === 1 && (
@@ -266,6 +280,8 @@ export default function Register() {
                     inputProps={{
                       name: "parentPhone",
                       required: true,
+                      autoFocus: false,
+
                       title: "Enter Mobile Phone Number",
                     }}
                     inputStyle={{
@@ -273,7 +289,9 @@ export default function Register() {
                       padding: "12px 50px",
                       borderRadius: "10px",
                       border:
-                        error.field === "parentPhone"
+                        error.field === "parentPhone" ||
+                        (formData.parentPhone.length > 0 &&
+                          formData.parentPhone.length < 12)
                           ? "1px solid red"
                           : "1px solid #cfd8e1",
                     }}
@@ -582,200 +600,242 @@ export default function Register() {
 
       {/* PAYMENT MODAL */}
       {showModal && (
-        <div className="modal-overlay">
-          <div className="modal-box">
-            <button
-              className="close-modal"
-              onClick={() => {
-                setShowModal(false);
-                setPaymentStep(1);
-                setDepositPaid("");
-              }}
-            >
-              ✕
-            </button>
-
-            {paymentStep === 1 ? (
-              <div className="step-container animate-fade-in">
-                <h2>Secure Your Spot</h2>
-                <p className="step-subtitle">
-                  Select a payment plan to continue
-                </p>
-                <div className="choice-grid">
-                  <button
-                    className="choice-card"
-                    onClick={() => {
-                      setPaymentMode("full");
-                      setPaymentStep(2);
-                    }}
-                  >
-                    <div className="choice-info">
-                      <span className="choice-title">Full Payment</span>
-                      <span className="choice-amount">
-                        Ksh{" "}
-                        {Number(
-                          coursePrice.toString().replace(/[^0-9.-]+/g, "")
-                        ).toLocaleString()}
-                      </span>
-                    </div>
-                    <div className="choice-badge">Recommended</div>
-                  </button>
-                  <button
-                    className="choice-card"
-                    onClick={() => {
-                      setPaymentMode("deposit");
-                      setPaymentStep(2);
-                    }}
-                  >
-                    <div className="choice-info">
-                      <span className="choice-title">Lipa Mdogo Mdogo</span>
-                      <span className="choice-amount">Flexible Deposit</span>
-                    </div>
-                    <div className="choice-badge">Deposit</div>
-                  </button>
-                  <div className="modal-divider">
-                    <span>OR</span>
-                  </div>
-                  <button
-                    className="choice-card pay-later"
-                    onClick={() => handleRegistrationSubmit("Pay Later")}
-                  >
-                    <div className="choice-info">
-                      <span className="choice-title">Registration Only</span>
-                      <span className="choice-amount">Pay Later</span>
-                    </div>
-                    <div className="choice-badge special">Reserve</div>
-                  </button>
-                </div>
+        <div className="modal-overlay1">
+          <div className="modal-box1">
+            {isLoading ? (
+              <div className="loading-container modal-loader">
+                <div className="spinner"></div>
+                <p>Verifying your registration...</p>
               </div>
             ) : (
-              <div className="animate-slide-up">
+              <>
                 <button
-                  className="back-btn changePlan"
+                  className="close-modal1"
                   onClick={() => {
+                    setShowModal(false);
                     setPaymentStep(1);
                     setDepositPaid("");
                   }}
                 >
-                  ← <span>Change Plan</span>
+                  ✕
                 </button>
-                <h2>M-Pesa Payment</h2>
-                <div className="instruction-card"  style={{ marginBottom: "60px" }}>
-                 
-                  <p>
-                    {paymentMode === "full"
-                      ? "Send Full Amount to:"
-                      : "Send your Deposit to:"}
-                  </p>
-                  <div className="copy-box">
-                    <span>0712345678</span>
-                    <button type="button" onClick={handleCopy}>
-                      <FaCopy /> Copy
-                    </button>
-                  </div>
-                  <p className="small-text">
-                    Recipient Name: <b>Floyed Muchiri</b>
-                  </p>
-                </div>
-                <div className="payment-inputs">
-                  {paymentMode === "deposit" && (
-                    <div
-                      className="input-group fade-in"
-                      style={{ marginBottom: "45px" }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                         
+                {paymentStep === 1 ? (
+                  <div className="step-container animate-fade-in">
+                    <h2>Secure Your Spot</h2>
+                    <p className="step-subtitle">
+                      Select a payment plan to continue
+                    </p>
+                    <div className="choice-grid">
+                      <button
+                        className="choice-card"
+                        onClick={() => {
+                          setPaymentMode("full");
+                          setPaymentStep(2);
                         }}
                       >
-                        <label>Amount Paid (Ksh)</label>
-                        <span
-                          style={{
-                            fontSize: "15px",
-                            fontWeight: "bold",
-                            color: "#2ecc71",
-                          }}
-                        >
-                          Balance: Ksh{" "}
-                          {(
-                            Number(
-                              coursePrice.toString().replace(/[^0-9.-]+/g, "")
-                            ) - (Number(depositPaid) || 0)
-                          ).toLocaleString()}
-                        </span>
+                        <div className="choice-info">
+                          <span className="choice-title">Full Payment</span>
+                          <span className="choice-amount">
+                            Ksh{" "}
+                            {Number(
+                              (coursePrice || "0")
+                                .toString()
+                                .replace(/[^0-9.-]+/g, "")
+                            ).toLocaleString()}
+                          </span>
+                        </div>
+                        <div className="choice-badge">Recommended</div>
+                      </button>
+                      <button
+                        className="choice-card"
+                        onClick={() => {
+                          setPaymentMode("deposit");
+                          setPaymentStep(2);
+                        }}
+                      >
+                        <div className="choice-info">
+                          <span className="choice-title">Lipa Mdogo Mdogo</span>
+                          <span className="choice-amount">
+                            Flexible Deposit
+                          </span>
+                        </div>
+                        <div className="choice-badge">Deposit</div>
+                      </button>
+                      <div className="modal-divider1">
+                        <span>OR</span>
                       </div>
-
-                      <input
-                        type="number"
-                        className="mpesa-code-input"
-                        placeholder="Enter amount sent"
-                        min="1"
-                        max={Number(
-                          coursePrice.toString().replace(/[^0-9.-]+/g, "")
-                        )}
-                        value={depositPaid}
-                        onKeyDown={(e) =>
-                          ["e", "E", "+", "-"].includes(e.key) &&
-                          e.preventDefault()
-                        }
-                        onChange={(e) => {
-                          const maxLimit = Number(
-                            coursePrice.toString().replace(/[^0-9.-]+/g, "")
-                          );
-                          const val = e.target.value;
-
-                          // Prevent typing leading zeros or values higher than course price
-                          if (Number(val) <= maxLimit) {
-                            setDepositPaid(val);
-                          } else {
-                            setDepositPaid(maxLimit.toString());
-                          }
-                        }}
-                        required
-                      />
-                      <p
-                        style={{
-                          fontSize: "13px",
-                          color: "#666",
-                          marginTop: "5px",
-                          marginBottom: "20px",
-                        }}
+                      <button
+                        className="choice-card pay-later"
+                        onClick={() => handleRegistrationSubmit("Pay Later")}
                       >
-                        Enter any amount between 1 and{" "}
-                        {Number(
-                          coursePrice.toString().replace(/[^0-9.-]+/g, "")
-                        ).toLocaleString()}
+                        <div className="choice-info">
+                          <span className="choice-title">
+                            Registration Only
+                          </span>
+                          <span className="choice-amount">Pay Later</span>
+                        </div>
+                        <div className="choice-badge special">Reserve</div>
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="animate-slide-up">
+                    <button
+                      className="back-btn changePlan"
+                      onClick={() => {
+                        setPaymentStep(1);
+                        setDepositPaid("");
+                      }}
+                    >
+                      ← <span>Change Plan</span>
+                    </button>
+                    <h2>M-Pesa Payment</h2>
+                    <div
+                      className="instruction-card"
+                      style={{ marginBottom: "60px" }}
+                    >
+                      <p>
+                        {paymentMode === "full"
+                          ? "Send Full Amount to:"
+                          : "Send your Deposit to:"}
+                      </p>
+                      <div className="copy-box">
+                        <span>0712345678</span>
+                        <button type="button" onClick={handleCopy}>
+                          <FaCopy /> Copy
+                        </button>
+                      </div>
+                      <p className="small-text">
+                        Recipient Name: <b>Floyed Muchiri</b>
                       </p>
                     </div>
-                  )}
+                    <div className="payment-inputs">
+                      {paymentMode === "deposit" && (
+                        <div
+                          className="input-group fade-in"
+                          style={{ marginBottom: "45px" }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                            }}
+                          >
+                            <label>Amount Paid (Ksh)</label>
+                            <span
+                              style={{
+                                fontSize: "15px",
+                                fontWeight: "bold",
+                                color: "#2ecc71",
+                              }}
+                            >
+                              Balance: Ksh{" "}
+                              {(
+                                Number(
+                                  coursePrice
+                                    .toString()
+                                    .replace(/[^0-9.-]+/g, "")
+                                ) - (Number(depositPaid) || 0)
+                              ).toLocaleString()}
+                            </span>
+                          </div>
 
-                  <div className="input-group">
-                    <label>M-Pesa Transaction Code</label>
-                    <input
-                      type="text"
-                      className="mpesa-code-input"
-                      placeholder="e.g. SFG7H92J..."
-                      value={mpesaCode}
-                      onChange={(e) =>
-                        setMpesaCode(e.target.value.toUpperCase())
+                          <input
+                            type="number"
+                            // Added dynamic shake class here
+                            className={`mpesa-code-input ${
+                              shake ? "shake-input" : ""
+                            }`}
+                            placeholder="Enter amount sent"
+                            min="1"
+                            max={Number(
+                              (coursePrice || "0")
+                                .toString()
+                                .replace(/[^0-9.-]+/g, "")
+                            )}
+                            value={depositPaid}
+                            onKeyDown={(e) =>
+                              ["e", "E", "+", "-"].includes(e.key) &&
+                              e.preventDefault()
+                            }
+                            onChange={(e) => {
+                              const maxLimit = Number(
+                                (coursePrice || "0")
+                                  .toString()
+                                  .replace(/[^0-9.-]+/g, "")
+                              );
+                              const val = e.target.value;
+
+                              // Allow clear/backspace
+                              if (val === "") {
+                                setDepositPaid("");
+                                return;
+                              }
+
+                              const numericVal = Number(val);
+
+                              // TRIGGER SHAKE: If zero, negative, or over max
+                              if (numericVal <= 0 || numericVal > maxLimit) {
+                                setShake(true);
+                                setTimeout(() => setShake(false), 300); // Reset after animation
+
+                                if (numericVal > maxLimit) {
+                                  setDepositPaid(maxLimit.toString()); // Snap to max
+                                }
+                                return; // Stop execution (prevents setting value to 0)
+                              }
+
+                              setDepositPaid(val);
+                            }}
+                            required
+                          />
+                          <p
+                            style={{
+                              fontSize: "13px",
+                              color: "#666",
+                              marginTop: "5px",
+                              marginBottom: "20px",
+                            }}
+                          >
+                            Enter any amount between 1 and{" "}
+                            {Number(
+                              (coursePrice || "0")
+                                .toString()
+                                .replace(/[^0-9.-]+/g, "")
+                            ).toLocaleString()}
+                          </p>
+                        </div>
+                      )}
+
+                      <div className="input-group">
+                        <label>M-Pesa Transaction Code</label>
+                        <input
+                          type="text"
+                          className="mpesa-code-input"
+                          placeholder="e.g. SFG7H92J..."
+                          value={mpesaCode}
+                          onChange={(e) =>
+                            setMpesaCode(e.target.value.toUpperCase())
+                          }
+                          maxLength={10}
+                        />
+                      </div>
+                    </div>
+                    <button
+                      className="confirm-btn"
+                      disabled={
+                        !mpesaCode ||
+                        (paymentMode === "deposit" &&
+                          (Number(depositPaid) <= 0 || !depositPaid))
                       }
-                      maxLength={10}
-                    />
+                      onClick={() => handleRegistrationSubmit("M-Pesa")}
+                    >
+                      Confirm Registration
+                    </button>
                   </div>
-                </div>
-                <button
-                  className="confirm-btn"
-                  disabled={
-                    !mpesaCode || (paymentMode === "deposit" && !depositPaid)
-                  }
-                  onClick={() => handleRegistrationSubmit("M-Pesa")}
-                >
-                  Confirm Registration
-                </button>
-              </div>
+                )}
+              </>
             )}
           </div>
         </div>

@@ -124,12 +124,17 @@ const ProgramManagement = () => {
       const matchesSearch = course.title
         .toLowerCase()
         .includes(searchTerm.toLowerCase());
+
       const matchesFilter =
         filterMode === "total"
           ? true
           : filterMode === "live"
           ? course.is_public
-          : !course.is_public;
+          : filterMode === "draft"
+          ? !course.is_public
+          : filterMode === "featured"
+          ? course.is_featured
+          : true;
 
       return matchesSearch && matchesFilter;
     });
@@ -261,15 +266,26 @@ const ProgramManagement = () => {
               <span className="stat-value">{stats.live}</span>
             </div>
           </div>
-          <div className="stat-card featured-stat">
+          <div
+            className={`stat-card featured-stat ${
+              filterMode === "featured" ? "active-filter" : ""
+            }`}
+            onClick={() => setFilterMode("featured")}
+          >
             <div className="stat-icon featured">
-              <Star size={20} fill="#f59e0b" color="#f59e0b" />
+              <Star
+                size={20}
+                fill="#f59e0b"
+                stroke="#f59e0b"
+                strokeWidth={1.5}
+              />
             </div>
             <div className="stat-info">
               <span className="stat-label">Featured</span>
               <span className="stat-value">{stats.featured}</span>
             </div>
           </div>
+
           <div
             className={`stat-card ${
               filterMode === "draft" ? "active-filter" : ""
@@ -385,7 +401,10 @@ const ProgramManagement = () => {
                   <thead>
                     <tr>
                       <th className="image-head">Image</th>
+
+                      <th className="course-code-head">Code</th>
                       <th className="course-title-head">Course Title</th>
+
                       <th>Price</th>
                       <th className="status-head">Status</th>
                       <th className="featured-head">
@@ -409,6 +428,13 @@ const ProgramManagement = () => {
                             />
                           </div>
                         </td>
+
+                        <td className="course-code-cell">
+                          <span className="course-code-badge">
+                            {course.code || "—"}
+                          </span>
+                        </td>
+
                         <td>
                           <span className="course-title-text">
                             {course.title}
@@ -438,7 +464,10 @@ const ProgramManagement = () => {
                                 ? "Remove from Featured"
                                 : "Mark as Featured"
                             }
-                            style={{ border: "none", background: "transparent" }}
+                            style={{
+                              border: "none",
+                              background: "transparent",
+                            }}
                           >
                             <Star
                               size={20}

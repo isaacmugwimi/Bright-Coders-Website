@@ -4,6 +4,7 @@ import { sql } from "./config.db.js";
 export const courseTableSchema = `
 CREATE TABLE IF NOT EXISTS courses (
     id SERIAL PRIMARY KEY,
+    code VARCHAR(10) UNIQUE NOT NULL,
     title VARCHAR(255) NOT NULL,
     category VARCHAR(100) NOT NULL,
     duration VARCHAR(50),
@@ -23,30 +24,34 @@ CREATE TABLE IF NOT EXISTS courses (
 export const getCourseTitles = async () => {
   try {
     const result = await sql`SELECT title FROM courses`;
-    return result.map((row) => row.title);
+    // ensure we only map valid rows
+    return Array.isArray(result)
+      ? result.filter((r) => r && r.title).map((r) => r.title)
+      : [];
   } catch (err) {
     console.error("GET_COURSE_TITLES_ERROR:", err);
     return [];
   }
 };
 
+
 // ➤ CREATE: Add new course
 export async function createCourse(data) {
   const result = await sql`
     INSERT INTO courses (
-      title, category, duration, price, focus, level, 
+      code, title, category, duration, price, focus, level,
       image_url, description, requirements, is_public, is_featured
     )
     VALUES (
-      ${data.title}, ${data.category}, ${data.duration}, ${data.price}, 
-      ${data.focus}, ${data.level}, ${data.imageUrl}, ${data.description}, 
-      ${data.requirements}, ${data.isPublic || false}, ${
-    data.isFeatured || false
-  }
+      ${data.code}, ${data.title}, ${data.category}, ${data.duration}, ${data.price},
+      ${data.focus}, ${data.level}, ${data.imageUrl}, ${data.description},
+      ${data.requirements}, ${data.isPublic || false}, ${data.isFeatured || false}
     )
-    RETURNING *;`;
+    RETURNING *;
+  `;
   return result[0];
 }
+
 
 // ➤ READ: Get all courses for management
 export const getAllCourses = async () => {
@@ -55,23 +60,26 @@ export const getAllCourses = async () => {
 
 // 🔹 UPDATE: Update course including featured status
 export const updateCourseById = async (id, data) => {
-  const result = await sql`UPDATE courses 
-    SET 
-      title=${data.title}, 
-      category=${data.category}, 
-      duration=${data.duration}, 
-      price=${data.price}, 
-      focus=${data.focus}, 
-      level=${data.level}, 
-      image_url=${data.imageUrl}, 
-      description=${data.description}, 
-      requirements=${data.requirements}, 
+  const result = await sql`
+    UPDATE courses SET
+      code=${data.code},
+      title=${data.title},
+      category=${data.category},
+      duration=${data.duration},
+      price=${data.price},
+      focus=${data.focus},
+      level=${data.level},
+      image_url=${data.imageUrl},
+      description=${data.description},
+      requirements=${data.requirements},
       is_public=${data.isPublic},
       is_featured=${data.isFeatured}
     WHERE id=${id}
-    RETURNING *;`;
+    RETURNING *;
+  `;
   return result[0];
 };
+
 
 // 🔹 DELETE: dalete data from the database
 export const deleteCourseById = async (id) => {

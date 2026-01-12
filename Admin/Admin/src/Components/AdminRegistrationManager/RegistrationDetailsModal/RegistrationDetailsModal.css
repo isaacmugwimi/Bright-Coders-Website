@@ -258,6 +258,28 @@
   gap: 8px;
 }
 
+/* --- Financial Summary Section --- */
+.financial-summary {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0 !important;
+  border-left: 5px solid #2563eb !important;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 25px;
+}
+
+.financial-summary .detail-item label {
+  color: #64748b;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.financial-summary .detail-item span {
+  font-size: 1.1rem;
+  display: block;
+  margin-top: 4px;
+}
 /* --- Print Styles --- */
 @media print {
   .modal-overlay {
