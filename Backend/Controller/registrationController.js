@@ -1,7 +1,11 @@
 import { registrationValidationSchema } from "../Middleware/Validators/registrationValidator.js";
 import * as Queries from "../Database/Config/registrationQueries.js";
-import { sendPaymentConfirmation } from "../Utils/mailer.js";
+import {
+  sendAdminNotification,
+  sendPaymentConfirmation,
+} from "../Utils/mailer.js";
 import { generateAndSaveReceipt } from "../Utils/receiptsGenerator.js";
+import {  generateAdminEmailHtml } from "../Utils/mailhelper.js";
 
 // ==========================
 // 1. ADD NEW REGISTRATION
@@ -44,6 +48,12 @@ export const handleAddRegistration = async (req, res) => {
     // Insert into DB
     const newRegistration = await Queries.createRegistration(registrationData);
 
+    // ==========================================
+    // 🔔 TRIGGER ADMIN NOTIFICATION HERE
+    // ==========================================
+// 1. Generate the HTML by passing the new record
+    const emailHtml = generateAdminEmailHtml(newRegistration);
+    sendAdminNotification("🎓 New Student Alert: " + newRegistration.child_name, emailHtml);
     // NEVER trust frontend-shaped data for receipts
     if (paymentStatus === "paid") {
       try {
@@ -113,7 +123,7 @@ export const handleUpdatePayment = async (req, res) => {
       newStatus,
       newTotalPaid,
       newBalance,
-      safeMpesa
+      safeMpesa,
     );
 
     // GENERATE RECEIPT
@@ -147,7 +157,7 @@ export const handleIssueCertificate = async (req, res) => {
 
     const updatedRegistration = await Queries.issueCertificate(
       id,
-      certificateUrl
+      certificateUrl,
     );
 
     if (!updatedRegistration)

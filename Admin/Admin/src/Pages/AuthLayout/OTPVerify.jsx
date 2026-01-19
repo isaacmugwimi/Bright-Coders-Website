@@ -1,64 +1,130 @@
 import { useState, useRef, useEffect } from "react";
 import "./OTPVerify.css";
 import axios from "axios";
-import { API_PATHS } from "../../utils/apiPaths";
-import axiosInstance from "../../utils/axiosInstance";
 
-export default function OTPVerify({ tempToken, onSuccess,onCancel  }) {
-  const [otp, setOtp] = useState(new Array(6).fill(""));
+export default function OTPVerify({ tempToken, onSuccess, onCancel,initialResendAvailableIn }) {
+  const [otp, setOtp] = useState(Array(6).fill(""));
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Resend OTP state
+ const [resendCooldown, setResendCooldown] = useState(
+  initialResendAvailableIn
+);
+
+  const [canResend, setCanResend] = useState(false);
+
   const inputRefs = useRef([]);
 
-  // Focus the first input on load
+  /* -------------------- */
+  /* Focus first input */
+  /* -------------------- */
   useEffect(() => {
-    if (inputRefs.current[0]) {
-      inputRefs.current[0].focus();
-    }
+    inputRefs.current[0]?.focus();
   }, []);
 
-  const handleChange = (element, index) => {
-    if (isNaN(element.value)) return false;
+  /* -------------------- */
+  /* Resend countdown */
+  /* -------------------- */
+  useEffect(() => {
+    if (!canResend && resendCooldown > 0) {
+      const timer = setTimeout(() => {
+        setResendCooldown((prev) => prev - 1);
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
 
-    setOtp([...otp.map((d, idx) => (idx === index ? element.value : d))]);
+    if (resendCooldown === 0) {
+      setCanResend(true);
+    }
+  }, [resendCooldown, canResend]);
 
-    // Move to next input if value is entered
-    if (element.value !== "" && index < 5) {
-      inputRefs.current[index + 1].focus();
+  /* -------------------- */
+  /* OTP input handling */
+  /* -------------------- */
+  const handleChange = (e, index) => {
+    if (isNaN(e.target.value)) return;
+
+    const newOtp = [...otp];
+    newOtp[index] = e.target.value;
+    setOtp(newOtp);
+
+    if (e.target.value && index < 5) {
+      inputRefs.current[index + 1]?.focus();
     }
   };
 
   const handleKeyDown = (e, index) => {
-    // Move to previous input on backspace if current is empty
     if (e.key === "Backspace" && !otp[index] && index > 0) {
-      inputRefs.current[index - 1].focus();
+      inputRefs.current[index - 1]?.focus();
     }
   };
 
+  /* -------------------- */
+  /* Verify OTP */
+  /* -------------------- */
   const handleVerify = async () => {
     const otpCode = otp.join("");
-    if (otpCode.length < 6) return setError("Please enter all 6 digits");
+
+    if (otpCode.length !== 6) {
+      return setError("Please enter all 6 digits.");
+    }
 
     try {
       setLoading(true);
       setError("");
+
       const res = await axios.post(
-  "http://localhost:8000/api/auth/verify-otp",
-  { otp: otpCode },
-  {
-    headers: {
-      Authorization: `Bearer ${tempToken}`,
-    },
-  }
-);
+        "http://localhost:8000/api/auth/verify-otp",
+        { otp: otpCode },
+        {
+          headers: {
+            Authorization: `Bearer ${tempToken}`,
+          },
+        },
+      );
+
       onSuccess(res.data.token, res.data.user);
     } catch (err) {
-      setError("Invalid or expired code. Please try again.");
+      if (err.response?.status === 401) {
+        setError("Invalid or expired OTP.");
+      } else if (err.response?.status === 429) {
+        setError("Too many attempts. Please login again.");
+      } else {
+        setError("Verification failed. Try again.");
+      }
     } finally {
       setLoading(false);
     }
   };
 
+  /* -------------------- */
+  /* Resend OTP */
+  /* -------------------- */
+  const handleResendOTP = async () => {
+    try {
+    setError("");
+    setCanResend(false);
+    setOtp(Array(6).fill(""));
+
+    const res = await axios.post(
+      "http://localhost:8000/api/auth/resend-otp",
+      {},
+      { headers: { Authorization: `Bearer ${tempToken}` } }
+    );
+
+    // <-- use backend cooldown
+    setResendCooldown(res.data.resendAvailableIn || 90);
+
+    setError("A new OTP has been sent to your email.");
+  } catch (err) {
+    setError(err.response?.data?.message || "Please wait before requesting another OTP.");
+  }
+  };
+
+  /* -------------------- */
+  /* UI */
+  /* -------------------- */
   return (
     <div className="otp-container">
       <div className="otp-card">
@@ -66,38 +132,54 @@ export default function OTPVerify({ tempToken, onSuccess,onCancel  }) {
         <p>Enter the 6-digit code sent to your email.</p>
 
         <div className="otp-inputs-row">
-          {otp.map((data, index) => (
+          {otp.map((digit, index) => (
             <input
               key={index}
               type="text"
               maxLength="1"
               ref={(el) => (inputRefs.current[index] = el)}
-              value={data}
-              onChange={(e) => handleChange(e.target, index)}
+              value={digit}
+              onChange={(e) => handleChange(e, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
               className="otp-digit-input"
+              disabled={loading}
             />
           ))}
         </div>
 
         {error && <div className="otp-error-msg">{error}</div>}
 
-<button
-  className="otp-cancel-btn"
-  onClick={onCancel}
-  disabled={loading}
->
-  Cancel
-</button>
+        <div className="otp-actions">
+          <button
+            className="otp-cancel-btn"
+            onClick={onCancel}
+            disabled={loading}
+          >
+            Cancel
+          </button>
 
+          <button
+            className="otp-verify-btn"
+            onClick={handleVerify}
+            disabled={loading || otp.join("").length !== 6}
+          >
+            {loading ? "Verifying..." : "Verify & Continue"}
+          </button>
+        </div>
 
-        <button
-          className="otp-verify-btn"
-          onClick={handleVerify}
-          disabled={loading || otp.join("").length < 6}
-        >
-          {loading ? <div className="otp-spinner"></div> : "Verify & Continue"}
-        </button>
+        <div className="otp-resend">
+          {canResend ? (
+            <button
+              onClick={handleResendOTP}
+              className="otp-resend-btn"
+              disabled={loading}
+            >
+              Resend OTP
+            </button>
+          ) : (
+            <span>Resend available in {resendCooldown}s</span>
+          )}
+        </div>
       </div>
     </div>
   );

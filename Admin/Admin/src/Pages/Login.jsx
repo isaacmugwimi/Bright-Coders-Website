@@ -16,6 +16,7 @@ const Login = ({ onToggle }) => {
   const [loading, setLoading] = useState(false);
   const [requires2FA, setRequires2FA] = useState(false);
   const [tempToken, setTempToken] = useState("");
+  const [resendAvailableIn, setResendAvailableIn] = useState(60);
 
   const [error, setError] = useState({
     field: "",
@@ -58,6 +59,8 @@ const Login = ({ onToggle }) => {
 
         // ✅ Persist temp token for refresh safety
         sessionStorage.setItem("2fa_temp", data.tempToken);
+        // 🔹 Set initial resend cooldown from backend
+        setResendAvailableIn(data.resendAvailableIn );
       } else if (data.token) {
         localStorage.setItem("token", data.token);
         updateUser(data.user);
@@ -97,13 +100,12 @@ const Login = ({ onToggle }) => {
           updateUser(user);
           navigate("/home");
         }}
-
-              onCancel={() => {
-        setRequires2FA(false);
-        setTempToken("");
-        sessionStorage.removeItem("2fa_temp"); 
-      }}
-
+        onCancel={() => {
+          setRequires2FA(false);
+          setTempToken("");
+          sessionStorage.removeItem("2fa_temp");
+        }}
+        initialResendAvailableIn={resendAvailableIn}
       />
     );
   }

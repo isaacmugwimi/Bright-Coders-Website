@@ -65,20 +65,17 @@ export const sendPaymentConfirmation = async (studentData, fileInfo) => {
   return transporter.sendMail(mailOptions);
 };
 
-
 export const sendOTPEmail = async (email, otp) => {
-
-
-  if (process.env.NODE_ENV !== "production") {
-    console.log(`[DEV OTP] ${email}: ${otp}`);
-    return;
-  }
-
-  const mailOptions = {
-    from: '"Developer Isaac" <developerisaac92@gmail.com>',
-    to: email,
-    subject: "Your Login Verification Code",
-    html: `
+  try {
+    // if (process.env.NODE_ENV !== "production") {
+    //   console.log(`[DEV OTP] ${email}: ${otp}`);
+    //   return;
+    // }
+    const mailOptions = {
+      from: '"Developer Isaac" <developerisaac92@gmail.com>',
+      to: email,
+      subject: "Your Login Verification Code",
+      html: `
       <div style="max-width: 500px; margin: auto; padding: 20px; font-family: Arial, sans-serif; border: 1px solid #e5e7eb; border-radius: 8px;">
         <h2 style="color: #2563eb; text-align: center;">Two-Factor Authentication</h2>
 
@@ -102,7 +99,28 @@ export const sendOTPEmail = async (email, otp) => {
         </p>
       </div>
     `,
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log("OTP sent:", info.messageId);
+  } catch (error) {
+    console.error("[OTP Email Error]:", err);
+  }
+};
+
+
+export const sendAdminNotification = async (subject, htmlContent) => {
+  const mailOptions = {
+    from: `"Academy Alerts" <${process.env.EMAIL_USER}>`,
+    to: process.env.ADMIN_EMAIL, // Your email address
+    subject: subject,
+    html: htmlContent,
   };
 
-  await transporter.sendMail(mailOptions);
+  try {
+    await transporter.sendMail(mailOptions);
+    console.log("Admin notification sent!");
+  } catch (error) {
+    console.error("Email failed to send:", error);
+  }
 };

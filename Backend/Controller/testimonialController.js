@@ -1,17 +1,15 @@
 import { testimonialValidationSchema } from "../Middleware/Validators/testimonialValidator.js";
 import * as Queries from "../Database/Config/testimonialsQueries.js";
+import { sendAdminNotification } from "../Utils/mailer.js";
+import { generateTestimonialAdminEmail } from "../Utils/mailhelper.js";
 
 // 1. ADD NEW TESTIMONIAL (Public Submission)
 export const handleAddTestimonial = async (request, response) => {
-  // Log both to verify Multer is working
-  console.log("Body Data:", request.body);
-  console.log("File Data:", request.file);
-
   try {
     // 1. Validate the text fields from the body
     const { error, value } = testimonialValidationSchema.validate(
       request.body,
-      { abortEarly: false }
+      { abortEarly: false },
     );
 
     if (error) {
@@ -33,6 +31,14 @@ export const handleAddTestimonial = async (request, response) => {
 
     // 4. Pass the combined object to your Query
     const newTestimonial = await Queries.createTestimonial(testimonialData);
+
+    // ✅ SEND EMAIL
+    const email = generateTestimonialAdminEmail({
+      userName: value.userName,
+      message: value.message,
+    });
+
+    await sendAdminNotification(email.subject, email.html);
 
     return response.status(201).json({
       message: "Thank you! Your testimonial has been submitted for review.",
