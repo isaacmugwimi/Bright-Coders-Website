@@ -4,11 +4,10 @@ import { useTypewriter, Cursor } from "react-simple-typewriter";
 import heroIllustration from "../assets/gemini2.png";
 import NumberCounter from "number-counter";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion } from "framer-motion"; // 1. Import Framer Motion
 
 const Home = () => {
   const navigate = useNavigate();
-
   const [text] = useTypewriter({
     words: ["Future.", "Games.", "Ideas.", "Success.", "Magic."],
     loop: 0,
@@ -17,7 +16,7 @@ const Home = () => {
     delaySpeed: 1500,
   });
 
-  // Animation Variants
+  // Animation Variants for staggering the text entrance
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -32,33 +31,25 @@ const Home = () => {
   };
 
   return (
-    <section className="hero-wrapper">
+    <div className="hero-wrapper">
       <div className="hero-container">
-        {/* LEFT CONTENT */}
+        {/* Left Content */}
         <motion.div
           className="hero-text-section"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
         >
-          {/* Badge */}
           <motion.div variants={itemVariants} className="hero-badge">
-            <span aria-hidden="true">🚀</span> Master the Art of Shipping Code
+            <span>🚀</span> Master the Art of Shipping Code
           </motion.div>
 
-          {/* Brand name */}
           <motion.div variants={itemVariants} className="wavy-text">
-            <h2 className="brand-name">Bright Coders</h2>
+            <h1>Bright Coders</h1>
           </motion.div>
 
-          {/* ✅ SINGLE SEO H1 */}
-          <motion.h1
-            variants={itemVariants}
-            className="hero-main-title"
-          >
-            Learn Programming & Tech Skills in Kenya <br />
-            Build the{" "}
-            <span className="text-highlight">{text}</span>
+          <motion.h1 variants={itemVariants} className="hero-main-title">
+            Build the <span className="text-highlight">{text}</span>
             <span className="cursor-style">
               <Cursor cursorStyle="✏️" />
             </span>
@@ -66,13 +57,11 @@ const Home = () => {
             One Line at a Time.
           </motion.h1>
 
-          {/* Description */}
           <motion.p variants={itemVariants} className="hero-description">
-            Fun, friendly coding classes for Grades 1–3, 4–6 & 7–9.
-            No prior experience required.
+            Fun, friendly coding classes for Grades 1–3, 4–6 & 7–9. No prior
+            experience required.
           </motion.p>
 
-          {/* CTA Buttons */}
           <motion.div variants={itemVariants} className="hero-action-btns">
             <motion.button
               whileHover={{ scale: 1.05 }}
@@ -82,7 +71,6 @@ const Home = () => {
             >
               Get Started
             </motion.button>
-
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -93,7 +81,6 @@ const Home = () => {
             </motion.button>
           </motion.div>
 
-          {/* Mini Stats */}
           <motion.div variants={itemVariants} className="hero-mini-stats">
             <div className="stat-box">
               <h3>
@@ -101,14 +88,12 @@ const Home = () => {
               </h3>
               <p>Students</p>
             </div>
-
             <div className="stat-box">
               <h3>
                 <NumberCounter postFix="+" start={10} delay={2} end={50} />
               </h3>
               <p>Expert Mentors</p>
             </div>
-
             <div className="stat-box">
               <h3>
                 <NumberCounter postFix="+" start={10} delay={2} end={75} />
@@ -118,14 +103,14 @@ const Home = () => {
           </motion.div>
         </motion.div>
 
-        {/* RIGHT IMAGE */}
+        {/* Right Image with Floating Animation */}
         <motion.div
           className="hero-image"
           initial={{ opacity: 0, x: 50 }}
           animate={{
             opacity: 1,
             x: 0,
-            y: [0, -20, 0],
+            y: [0, -20, 0], // Floating effect
           }}
           transition={{
             x: { duration: 0.8 },
@@ -133,26 +118,24 @@ const Home = () => {
             opacity: { duration: 0.8 },
           }}
         >
-          <img
-            src={heroIllustration}
-            alt="Students learning programming and technology skills at Bright Coders"
-          />
+          <img src={heroIllustration} alt="Bright Coders Illustration" />
         </motion.div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll Indicator with fade-in */}
+
       <motion.div
         className="scroll-indicator"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
       >
-        <div className="mouse" aria-hidden="true">
+        <div className="mouse">
           <div className="wheel"></div>
         </div>
         <p>Scroll Down</p>
       </motion.div>
-    </section>
+    </div>
   );
 };
 

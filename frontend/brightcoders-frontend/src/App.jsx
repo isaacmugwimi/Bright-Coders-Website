@@ -1,4 +1,5 @@
 import React from "react";
+import { HelmetProvider } from "react-helmet-async";
 import {
   BrowserRouter as Router,
   Routes,
@@ -35,9 +36,9 @@ function AppRoutes() {
       <Route path="/blogs" element={<Blog />} />
       <Route path="/founder" element={<Founder />} />
       <Route path="/testimonials" element={<TestimonialPage />} />
-   {/* 1. This handles clicking "Verify" from the Navbar (Search Mode) */}
+      {/* 1. This handles clicking "Verify" from the Navbar (Search Mode) */}
       <Route path="/verify" element={<CertificateVerify />} />
-      
+
       {/* 2. This handles the QR Code scan (Direct Verification Mode) */}
       <Route path="/verify/:regNumber" element={<CertificateVerify />} />
     </Routes>
@@ -46,17 +47,20 @@ function AppRoutes() {
 
 function App() {
   return (
-    <Router>
-      <ScrollToTop />
-      <Navbar />
+    <HelmetProvider>
+      {" "}
+      <Router>
+        <ScrollToTop />
+        <Navbar />
 
-      {/* Main content wrapper ensures proper scroll */}
-      <div className="main-content">
-        <AppRoutes />
-      </div>
+        {/* Main content wrapper ensures proper scroll */}
+        <div className="main-content">
+          <AppRoutes />
+        </div>
 
-      <Footer />
-    </Router>
+        <Footer />
+      </Router>
+    </HelmetProvider>
   );
 }
 

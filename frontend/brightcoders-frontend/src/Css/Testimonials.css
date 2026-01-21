@@ -13,9 +13,8 @@
 }
 
 .header-paragraph {
-  margin: 0 auto 40px auto;
+  margin: 0 auto 0 auto;
   color: #1e3a8a;
-  font-size: 3.1rem; /* Note: This is quite large for a paragraph */
 }
 
 .horizontal-line {

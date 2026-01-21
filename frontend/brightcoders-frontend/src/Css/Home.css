@@ -10,7 +10,7 @@
 ========================= */
 .hero-wrapper {
   background: linear-gradient(135deg, #fdfbf7 0%, #e2d9f3 100%);
-  min-height: 95vh;
+  /* min-height: 95vh; */
   margin-top: 0;
   display: flex;
   align-items: center;
@@ -55,11 +55,11 @@
 
 /* Wavy Title */
 .wavy-text {
-  margin: 20px 0 45px;
+  margin: 20px 0 20px;
 }
 
-.wavy-text h1 {
-  font-size: 4.5rem;
+.brand-name {
+  font-size: 3rem;
   font-weight: 900;
   background: repeating-linear-gradient(
     -45deg,
@@ -85,7 +85,7 @@
 
 /* Main Title */
 .hero-main-title {
-  font-size: 2.8rem;
+  font-size: 1.8rem;
   line-height: 1.1;
   font-weight: 800;
   color: var(--dark-slate);
@@ -180,12 +180,13 @@
 }
 
 .hero-image img {
-  width: 120%;
-  max-width: 950px; /* REAL size */
+  width: 100%;
+  max-width: 800px; /* REAL size */
   height: auto;
   transform: rotateY(-12deg) rotateX(4deg);
   filter: drop-shadow(0 30px 50px rgba(0, 0, 0, 0.12));
   transition: transform 0.4s ease;
+  margin-top: -20%;
 }
 
 .hero-image img:hover {
@@ -269,7 +270,7 @@
     flex-direction: column;
     text-align: center;
   }
-  .wavy-text h1 {
+  .brand-name {
     font-size: 2.8rem;
   }
 
@@ -298,7 +299,7 @@
     /* background: red; */
   }
 
-  .wavy-text h1 {
+  .brand-name {
     font-size: 2.2rem; /* Force a smaller size for long words */
     letter-spacing: 0.5px;
   }

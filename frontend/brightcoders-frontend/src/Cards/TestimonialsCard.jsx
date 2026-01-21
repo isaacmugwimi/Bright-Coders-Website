@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
@@ -35,7 +33,7 @@ const TestimonialsCard = () => {
     const fetchLiveReviews = async () => {
       try {
         const response = await axios.get(
-          `${API_URL.replace(/\/$/, "")}/testimonials/live`
+          `${API_URL.replace(/\/$/, "")}/testimonials/live`,
         );
 
         setLiveTestimonials(response.data.slice(0, 15));
@@ -85,20 +83,28 @@ const TestimonialsCard = () => {
       >
         {liveTestimonials.map((item) => (
           <SwiperSlide key={item.id} style={{ width: "300px" }}>
-            {" "}
-            {/* Fix slide width for 3D */}
-            <div className="corousel-item">
-              <p className="testimonial-feedback">"{item.message}"</p>
-              <h4 className="courousel-name">{item.user_name}</h4>
-              <span>{item.user_role}</span>
+            <article
+              className="corousel-item"
+              aria-label={`Testimonial by ${item.user_name}`}
+            >
+              <blockquote className="testimonial-feedback">
+                "{item.message}"
+              </blockquote>
+              <footer>
+                <h4 className="courousel-name">{item.user_name}</h4>
+                <span>{item.user_role}</span>
+              </footer>
 
-              <div className="testimonial-stars">
+              <div
+                className="testimonial-stars"
+                aria-label={`Rating: ${item.rating} out of 5`}
+              >
                 {[...Array(5)].map((_, index) =>
                   index < item.rating ? (
-                    <FaStar key={index} color="#FFD700" />
+                    <FaStar key={index} color="#FFD700" aria-hidden="true" />
                   ) : (
-                    <FaRegStar key={index} color="#FFD700" />
-                  )
+                    <FaRegStar key={index} color="#FFD700" aria-hidden="true" />
+                  ),
                 )}
               </div>
 
@@ -108,36 +114,32 @@ const TestimonialsCard = () => {
                     src={
                       item.image_url.startsWith("http")
                         ? item.image_url
-                        : // Ensure we don't end up with // in the URL
-                          `${API_URL.replace(
-                            /\/api$/,
-                            ""
-                          )}/${item.image_url.replace(/^\/+/, "")}`
+                        : `${API_URL.replace(/\/api$/, "")}/${item.image_url.replace(/^\/+/, "")}`
                     }
-                    alt={item.user_name}
+                    alt={`Photo of ${item.user_name}`}
                     onError={(e) => {
-                      // Fallback if the image path is valid but the file is missing
                       e.target.style.display = "none";
                       e.target.nextSibling.style.display = "flex";
                     }}
                   />
                 ) : null}
 
-                {/* Always keep the icon as a fallback if image is missing or errors out */}
                 <div
                   className="placeholder-icon"
                   style={{ display: item.image_url ? "none" : "flex" }}
+                  aria-hidden="true"
                 >
                   <FaUserAlt />
                 </div>
               </div>
 
-              <div className="quotes-mark">
+              <div className="quotes-mark" aria-hidden="true">
                 <RiDoubleQuotesR size={150} />
               </div>
-            </div>
+            </article>
           </SwiperSlide>
         ))}
+
         <div className="button-prev-custom">
           <FaChevronLeft />
         </div>

@@ -1,17 +1,73 @@
 import "../Css/Testimonials.css";
 import TestimonialsCard from "../Cards/TestimonialsCard";
 import { motion } from "framer-motion";
+import { Helmet } from "react-helmet-async";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Testimonials = () => {
+  const [testimonials, setTestimonials] = useState([]);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_BASE_URL}/testimonials/live`,
+        );
+        setTestimonials(response.data.slice(0, 15));
+      } catch (err) {
+        console.error("Failed to fetch testimonials:", err);
+      }
+    };
+    fetchTestimonials();
+  }, []);
+
+  // Generate JSON-LD structured data for Google
+  const generateJSONLD = () => {
+    if (!testimonials.length) return null;
+    return {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      name: "Bright Coders Testimonials",
+      itemListElement: testimonials.map((item, index) => ({
+        "@type": "Review",
+        author: {
+          "@type": "Person",
+          name: item.user_name,
+        },
+        reviewBody: item.message,
+        reviewRating: {
+          "@type": "Rating",
+          ratingValue: item.rating,
+          bestRating: 5,
+          worstRating: 1,
+        },
+        position: index + 1,
+      })),
+    };
+  };
+
   return (
-    <motion.div
+    <motion.section
       className="testimonials-wrapper"
       id="testimonials-wrapper"
+      aria-labelledby="testimonials-heading"
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.3 }}
       transition={{ duration: 0.6 }}
     >
+      <Helmet>
+        <title>Testimonials | Bright Coders</title>
+        <meta
+          name="description"
+          content="Read real stories and reviews from students and parents at Bright Coders. Discover how our coding programs help young learners in Kenya succeed."
+        />
+        <script type="application/ld+json">
+          {JSON.stringify(generateJSONLD())}
+        </script>
+      </Helmet>
+
       <div className="custom-shape-divider-top-1764543608">
         <svg
           data-name="Layer 1"
@@ -25,7 +81,10 @@ const Testimonials = () => {
           ></path>
         </svg>
       </div>
-      <h1 className="header">Testimonials</h1>
+
+      <h2 id="testimonials-heading" className="header">
+        Testimonials
+      </h2>
 
       <div className="horizontal-line">
         <div className="actual-line"></div>
@@ -35,11 +94,10 @@ const Testimonials = () => {
         Stories from our growing community of young coders and supportive
         parents.
       </p>
+
       {/* Carousel Container */}
-      <div className="carousel">
-        <TestimonialsCard />
-      </div>
-    </motion.div>
+      <TestimonialsCard />
+    </motion.section>
   );
 };
 

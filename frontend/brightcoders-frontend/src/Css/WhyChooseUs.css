@@ -1,20 +1,31 @@
+/* ===============================
+   WHY CHOOSE US SECTION
+================================ */
+
 .why-choose-us {
   padding: 60px 20px;
-  background-color: #ecfeffb7; /* light gray background */
+  background-color: #ecfeffb7;
   text-align: center;
-  scroll-margin-top: 100px; /*height of the navbar*/
+  scroll-margin-top: 100px; /* navbar offset */
 }
 
+/* Divider */
 .horizontal-line {
   width: 100%;
   margin-bottom: 30px;
 }
+
 .actual-line {
   height: 2px;
   width: 10%;
   background-color: green;
-  justify-self: center;
+  margin: 0 auto;
 }
+
+/* ===============================
+   HEADINGS & TEXT
+================================ */
+
 .section-header {
   font-size: 2rem;
   font-weight: 700;
@@ -22,13 +33,21 @@
   margin-bottom: 10px;
 }
 
+/* Better readability + responsive SEO text */
 .section-subheader {
   margin-bottom: 40px;
-  font-size: 50px;
-  text-align: center;
-  font-family: "Agraham", serif;
+  font-size: clamp(18px, 4vw, 24PX);
+  font-family: "mv boli", serif !important;
   color: #1e3a8a;
+  line-height: 1.25;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
 }
+
+/* ===============================
+   FEATURES GRID
+================================ */
 
 .features-container {
   display: grid;
@@ -37,18 +56,28 @@
   justify-items: center;
 }
 
+/* ===============================
+   FEATURE CARD (article)
+================================ */
+
 .feature-card {
   background-color: #fff;
   border-radius: 12px;
   padding: 30px 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s, box-shadow 0.3s;
   width: 100%;
   max-width: 280px;
   border: 1px solid #e5e7eb;
   position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+  /* Smooth animation without CLS */
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  will-change: transform;
 }
 
+/* Decorative accent */
 .feature-card::before {
   content: "";
   position: absolute;
@@ -57,16 +86,27 @@
   transform: translateX(-50%);
   width: 60px;
   height: 4px;
-  background-color: #10b981; /* green accent */
+  background-color: #10b981;
   border-radius: 2px;
 }
 
-.feature-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+/* Hover effects only on devices that support hover */
+@media (hover: hover) {
+  .feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
 }
 
+/* Keyboard accessibility (SEO + a11y boost) */
+.feature-card:focus-within {
+  outline: 3px solid #10b981;
+  outline-offset: 4px;
+}
 
+/* ===============================
+   CARD CONTENT
+================================ */
 
 .feature-icon {
   font-size: 2.5rem;
@@ -81,18 +121,17 @@
 }
 
 .feature-description {
-  font-size: 1.1rem;
-  color: #6b7280; /* gray text */
-  line-height: 1.4;
+  font-size: 1.05rem;
+  color: #6b7280;
+  line-height: 1.5;
 }
 
+/* ===============================
+   MOBILE TWEAKS
+================================ */
 
-@media (max-width: 399px) {
+@media (max-width: 599px) {
   .section-subheader {
     font-size: 35px;
   }
 }
-@media (min-width: 400px) and (max-width: 599px) {
-.section-subheader {
-    font-size: 35px;
-  }}

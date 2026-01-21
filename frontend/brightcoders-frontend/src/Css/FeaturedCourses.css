@@ -10,11 +10,12 @@
 }
 
 .header-paragraph {
-  font-size: 50px;
+  font-size: 25px !important;
   text-align: center;
-  font-family: "Agraham", serif;
+  font-family: "mv boli", serif !important;
   color: #1e3a8a;
   margin-bottom: 33px;
+  width: 70%;
 }
 
 .featured-cards-container {
@@ -63,8 +64,9 @@
   }
 
   .header-paragraph {
-    font-size: 32px !important;
+    font-size: 20px !important;
     padding: 10px 0;
+    width: 100%;
   }
 
   .featured-cards-container {
@@ -95,7 +97,8 @@
   }
 
   .header-paragraph {
-    font-size: 37px !important;
+    font-size: 22px !important;
+    width: 100%;
   }
 
   .featured-cards-container {
@@ -127,7 +130,8 @@
   }
 
   .header-paragraph {
-    font-size: 30px;
+    font-size: 25px;
+    width: 100%;
   }
 
   .featured-cards-container {
@@ -147,7 +151,8 @@
   }
 
   .header-paragraph {
-    font-size: 32px;
+    font-size: 26px;
+    width: 100%;
   }
 
   .featured-cards-container {
@@ -188,7 +193,8 @@
 /* Extra large screens 1600–1919px */
 @media (min-width: 1600px) and (max-width: 1919px) {
   .header-paragraph {
-    font-size: 42px;
+    font-size: 27px;
+    width: 80%;
   }
 
   .featured-cards-container {
@@ -212,7 +218,8 @@
   }
 
   .header-paragraph {
-    font-size: 55px;
+    font-size: 29%;
+    width: 70%;
   }
 
   .featured-cards-container {
