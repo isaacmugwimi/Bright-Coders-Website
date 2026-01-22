@@ -29,16 +29,20 @@ app.use(
         ], // Allow images from your backend
       },
     },
-  })
+  }),
 );
 
 //Midleware to handle CORS
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "*",
+    origin: process.env.CLIENT_URL?.split(",") || [
+      "http://localhost:5173",
+      "http://localhost:3000",
+    ],
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  }),
 );
 
 const __filename = fileURLToPath(import.meta.url); //Gets the absolute path of the current file
@@ -49,7 +53,6 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/courses", courseRouter);
 app.use("/api/blogs", blogRouter);
-app.use("/api/blogs", blogRouter);
 app.use("/api/testimonials", testimonialRouter);
 app.use("/api/registration", registrationRouter);
 
@@ -57,10 +60,10 @@ app.use("/api/registration", registrationRouter);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // uploads: name of the subfolder in the backend you want to reach
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 8000;
 
 initDb().then(() =>
-  app.listen(PORT, () => console.log("Server running on port: ", PORT))
+  app.listen(PORT, () => console.log("Server running on port: ", PORT)),
 );
 
 // {
