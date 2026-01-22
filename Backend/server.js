@@ -60,6 +60,11 @@ app.use("/api/registration", registrationRouter);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 // uploads: name of the subfolder in the backend you want to reach
 
+app.get("/", (req, res) => {
+  res.send("API is running ✅");
+});
+
+
 const PORT = process.env.PORT || 8000;
 
 initDb().then(() =>
