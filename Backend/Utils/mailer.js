@@ -2,20 +2,22 @@ import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
-  port: 465, // Port 465 is for SSL - much more stable on cloud platforms like Render
-  secure: true, // Use true for port 465, false for port 587
+  port: 465,
+  secure: true,
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS, // Ensure this is a 16-character App Password
+    pass: process.env.EMAIL_PASS,
   },
   tls: {
-    // This allows the connection to succeed even if the server's 
-    // certificate handshake is slightly different in a cloud environment
     rejectUnauthorized: false,
+    minVersion: "TLSv1.2", // Ensures compatibility with modern Google standards
   },
-  connectionTimeout: 10000, // 10 seconds timeout
+  connectionTimeout: 20000, // Increase to 20 seconds for slow cloud starts
+  greetingTimeout: 20000,
+  socketTimeout: 20000,
+  debug: true, // This will show detailed SMTP traffic in your Render logs
+  logger: true, // This logs every step of the connection
 });
-
 // Verify the connection configuration immediately on startup
 transporter.verify(function (error, success) {
   if (error) {
