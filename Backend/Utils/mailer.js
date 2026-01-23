@@ -1,11 +1,28 @@
 import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: "smtp.gmail.com",
+  port: 465, // Port 465 is for SSL - much more stable on cloud platforms like Render
+  secure: true, // Use true for port 465, false for port 587
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS, // Use an "App Password," not your login password
+    pass: process.env.EMAIL_PASS, // Ensure this is a 16-character App Password
   },
+  tls: {
+    // This allows the connection to succeed even if the server's 
+    // certificate handshake is slightly different in a cloud environment
+    rejectUnauthorized: false,
+  },
+  connectionTimeout: 10000, // 10 seconds timeout
+});
+
+// Verify the connection configuration immediately on startup
+transporter.verify(function (error, success) {
+  if (error) {
+    console.log("Mail Transporter Error:", error);
+  } else {
+    console.log("Mail Server is ready to send messages ✅");
+  }
 });
 
 export const sendPaymentConfirmation = async (studentData, fileInfo) => {
