@@ -33,27 +33,28 @@ app.use(
 );
 
 //Midleware to handle CORS
-const allowedOrigins = process.env.CLIENT_URL
-  ? process.env.CLIENT_URL.split(",")
-  : ["http://localhost:5173", "http://localhost:3000"];
+const allowedOrigins = [
+  "http://localhost:3000", // For local testing
+  "http://localhost:5173", // For Vite local testing
+  "https://bright-coders-live-website.vercel.app",
+  "https://bright-coders-website-nu.vercel.app"
+];
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      // Allow Postman / server-to-server
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
-
-      return callback(new Error("CORS blocked"));
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  }),
-);
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS blocked"));
+    }
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 
 const __filename = fileURLToPath(import.meta.url); //Gets the absolute path of the current file
 const __dirname = path.dirname(__filename);

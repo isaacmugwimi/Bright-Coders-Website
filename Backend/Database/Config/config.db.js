@@ -41,11 +41,10 @@ export async function initDb() {
 );
 `;
 
-await sql(courseTableSchema);
-await sql(blogTableSchema);
-await sql(registrationTableSchema);
-await sql(testimonialTableSchema);
-
+    await sql.query(courseTableSchema);
+    await sql.query(blogTableSchema);
+    await sql.query(registrationTableSchema);
+    await sql.query(testimonialTableSchema);
 
     // await sql({ raw: [registrationTableSchema] });
 
