@@ -33,17 +33,29 @@ app.use(
 );
 
 //Midleware to handle CORS
+const allowedOrigins = process.env.CLIENT_URL
+  ? process.env.CLIENT_URL.split(",")
+  : ["http://localhost:5173", "http://localhost:3000"];
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL?.split(",") || [
-      "http://localhost:5173",
-      "http://localhost:3000",
-    ],
+    origin: (origin, callback) => {
+      // Allow Postman / server-to-server
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("CORS blocked"));
+    },
     credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
+
+app.options("*", cors());
 
 const __filename = fileURLToPath(import.meta.url); //Gets the absolute path of the current file
 const __dirname = path.dirname(__filename);
@@ -63,7 +75,6 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.get("/", (req, res) => {
   res.send("API is running ✅");
 });
-
 
 const PORT = process.env.PORT || 8000;
 
