@@ -33,27 +33,31 @@ app.use(
 );
 
 //Midleware to handle CORS
+// Robust Middleware to handle CORS
 const allowedOrigins = [
-  "http://localhost:3000", // For local testing
-  "http://localhost:5173", // For Vite local testing
+  "http://localhost:3000",
+  "http://localhost:5173",
   "https://bright-coders-live-website.vercel.app",
   "https://bright-coders-website-nu.vercel.app"
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
+    // 1. Allow internal requests or tools like Postman/Insomnia (no origin)
     if (!origin) return callback(null, true);
     
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    // 2. Check if the origin is in our whitelist
+    if (allowedOrigins.indexOf(origin) !== -1 || origin.includes("vercel.app")) {
       callback(null, true);
     } else {
+      // 3. Log exactly WHAT was blocked so we can fix it
+      console.error(`🛑 CORS blocked for origin: ${origin}`);
       callback(new Error("CORS blocked"));
     }
   },
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
 }));
 
 const __filename = fileURLToPath(import.meta.url); //Gets the absolute path of the current file
