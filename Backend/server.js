@@ -95,10 +95,19 @@ app.use(cookieParser());
 // ==========================================
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 mins
-  max: 10, // login / otp attempts
+  max: 500, // login / otp attempts
   message: "Too many atempts. Please try again later.",
 });
+
+// 📊 Relaxed limiter for general data fetching
+const generalLimiter = rateLimit({
+  windowMs: 1*60, 
+  max: 50, // Allows for dashboard refreshes without blocking
+  message: "Slow down! You are refreshing too fast.",
+});
 app.use("/api/auth", authLimiter);
+
+app.use("/api/", generalLimiter);
 
 // ==========================================
 // 6. CSRF PROTECTION (COOKIE-BASED)

@@ -16,26 +16,19 @@ export default function OTPVerify({
   const [otp, setOtp] = useState(Array(6).fill(""));
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-
-  // Resend OTP state
   const [resendCooldown, setResendCooldown] = useState(
     initialResendAvailableIn,
   );
-
   const [canResend, setCanResend] = useState(false);
 
   const inputRefs = useRef([]);
 
-  /* -------------------- */
-  /* Focus first input */
-  /* -------------------- */
+  // Auto-focus the first input on mount
   useEffect(() => {
     inputRefs.current[0]?.focus();
   }, []);
 
-  /* -------------------- */
-  /* Resend countdown */
-  /* -------------------- */
+  // Handle countdown for resend button
   useEffect(() => {
     if (!canResend && resendCooldown > 0) {
       const timer = setTimeout(() => {
@@ -43,23 +36,49 @@ export default function OTPVerify({
       }, 1000);
       return () => clearTimeout(timer);
     }
-
     if (resendCooldown === 0) {
       setCanResend(true);
     }
   }, [resendCooldown, canResend]);
 
-  /* -------------------- */
-  /* OTP input handling */
-  /* -------------------- */
-  const handleChange = (e, index) => {
-    if (isNaN(e.target.value)) return;
+  /* =========================
+     Paste Handling Logic
+  ========================= */
+  const handlePaste = (e) => {
+    e.preventDefault();
+    const data = e.clipboardData.getData("text").trim();
 
+    // Check if the pasted content is numeric
+    if (!/^\d+$/.test(data)) return;
+
+    const pasteData = data.slice(0, 6).split("");
     const newOtp = [...otp];
-    newOtp[index] = e.target.value;
+
+    pasteData.forEach((char, index) => {
+      newOtp[index] = char;
+    });
+
     setOtp(newOtp);
 
-    if (e.target.value && index < 5) {
+    // Focus the next logical input
+    const lastFilledIndex = Math.min(pasteData.length, 5);
+    inputRefs.current[lastFilledIndex]?.focus();
+  };
+
+  /* =========================
+     Input Change Logic
+  ========================= */
+  const handleChange = (e, index) => {
+    const value = e.target.value;
+    if (!/^\d*$/.test(value)) return; // Numeric only
+
+    const newOtp = [...otp];
+    // Take the last character (handles browser autofill and manual typing)
+    newOtp[index] = value.slice(-1);
+    setOtp(newOtp);
+
+    // Move to next input if digit entered
+    if (value && index < 5) {
       inputRefs.current[index + 1]?.focus();
     }
   };
@@ -70,12 +89,8 @@ export default function OTPVerify({
     }
   };
 
-  /* -------------------- */
-  /* Verify OTP */
-  /* -------------------- */
   const handleVerify = async () => {
     const otpCode = otp.join("");
-
     if (otpCode.length !== 6) {
       return setError("Please enter all 6 digits.");
     }
@@ -88,30 +103,23 @@ export default function OTPVerify({
         API_PATHS.AUTH.VERIFY_OTP,
         { otp: otpCode },
         {
-          headers: {
-            Authorization: `Bearer ${tempToken}`,
-          },
+          headers: { Authorization: `Bearer ${tempToken}` },
         },
       );
 
       await fetchCsrfToken();
       onSuccess(res.data.token, res.data.user);
     } catch (err) {
-      if (err.response?.status === 401) {
-        setError("Invalid or expired OTP.");
-      } else if (err.response?.status === 429) {
+      const status = err.response?.status;
+      if (status === 401) setError("Invalid or expired OTP.");
+      else if (status === 429)
         setError("Too many attempts. Please login again.");
-      } else {
-        setError("Verification failed. Try again.");
-      }
+      else setError("Verification failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  /* -------------------- */
-  /* Resend OTP */
-  /* -------------------- */
   const handleResendOTP = async () => {
     try {
       setError("");
@@ -124,35 +132,36 @@ export default function OTPVerify({
         { headers: { Authorization: `Bearer ${tempToken}` } },
       );
 
-      // <-- use backend cooldown
       setResendCooldown(res.data.resendAvailableIn || 90);
-
-      setError("A new OTP has been sent to your email.");
+      setError("A fresh code has been sent to your email.");
+      inputRefs.current[0]?.focus();
     } catch (err) {
       setError(
         err.response?.data?.message ||
           "Please wait before requesting another OTP.",
       );
+      setCanResend(false);
     }
   };
 
-  /* -------------------- */
-  /* UI */
-  /* -------------------- */
   return (
     <div className="otp-container">
       <div className="otp-card">
         <h2>Verify Account</h2>
-        <p>Enter the 6-digit code sent to your email.</p>
+        <p>A 6-digit verification code was sent to your email address.</p>
 
         <div className="otp-inputs-row">
           {otp.map((digit, index) => (
             <input
               key={index}
               type="text"
+              inputMode="numeric" // Opens number pad on mobile
+              autoComplete="one-time-code" // Suggests code from SMS/Email on mobile
+              pattern="\d*"
               maxLength="1"
               ref={(el) => (inputRefs.current[index] = el)}
               value={digit}
+              onPaste={handlePaste}
               onChange={(e) => handleChange(e, index)}
               onKeyDown={(e) => handleKeyDown(e, index)}
               className="otp-digit-input"
@@ -171,7 +180,6 @@ export default function OTPVerify({
           >
             Cancel
           </button>
-
           <button
             className="otp-verify-btn"
             onClick={handleVerify}
@@ -185,13 +193,15 @@ export default function OTPVerify({
           {canResend ? (
             <button
               onClick={handleResendOTP}
-              className="otp-resend-btn"
+              className="otp-resend-link"
               disabled={loading}
             >
-              Resend OTP
+              Resend Code
             </button>
           ) : (
-            <span>Resend available in {resendCooldown}s</span>
+            <p>
+              Resend code in <span>{resendCooldown}s</span>
+            </p>
           )}
         </div>
       </div>
