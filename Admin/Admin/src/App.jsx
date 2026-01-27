@@ -17,12 +17,8 @@ import AdminBlogManager from "./Components/AdminBlogManager/AdminBlogManager";
 import AdminTestimonialManager from "./Components/AdminTestimonialManager/AdminTestimonialManager";
 import AdminRegistrationManager from "./Components/AdminRegistrationManager/AdminRegistrationManager";
 import ProtectedRoute from "./Pages/ProtectedRoute";
-import { useState } from "react";
-import { useEffect } from "react";
-import axiosInstance from "./utils/axiosInstance";
-import { API_PATHS } from "./utils/apiPaths";
+
 import UserContext from "./Components/Context/UserContext";
-import { fetchCsrfToken } from "./utils/csrf";
 
 // =====================
 // ROOT COMPONENT
@@ -39,7 +35,7 @@ const Root = () => {
   ) : (
     <Navigate to="/authentication" replace />
   );
-}
+};
 
 // =====================
 // ROUTES COMPONENT
@@ -75,8 +71,6 @@ function AppRoutes() {
 // APP COMPONENT
 // =====================
 function App() {
-
-
   return (
     <UserProvider>
       <Router>
