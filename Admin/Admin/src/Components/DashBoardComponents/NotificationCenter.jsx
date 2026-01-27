@@ -1,15 +1,15 @@
 import React, { useState, useRef, useEffect, useMemo } from "react";
-import { Bell, UserPlus, MessageSquare, Newspaper } from "lucide-react";
+import { Bell, UserPlus, MessageSquare } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import "./Notification.css";
 
-const NotificationCenter = ({
-  enrolments = [],
-
-  testimonials = [],
-}) => {
+const NotificationCenter = ({ enrolments = [], testimonials = [] }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const [activeId, setActiveId] = useState(null);
+
+  const navigate = useNavigate();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -22,11 +22,12 @@ const NotificationCenter = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // 1. Convert your raw data into a "Notification" format
+  // Convert raw data into notifications
   const notifications = useMemo(() => {
     const list = [];
-const fallbackDate = new Date();
-    // Map recent enrolments
+    const fallbackDate = new Date();
+
+    // Enrolments
     enrolments.slice(0, 3).forEach((item) => {
       list.push({
         id: `enrol-${item.id}`,
@@ -35,11 +36,12 @@ const fallbackDate = new Date();
         }`,
         time: "Recent",
         type: "enrolment",
-      date: item.created_at ? new Date(item.created_at) : fallbackDate,
+        date: item.created_at ? new Date(item.created_at) : fallbackDate,
+        link: `/studentRegistration`, // ✅ click target
       });
     });
 
-    // Map pending testimonials
+    // Testimonials
     testimonials
       .filter((t) => !t.is_approved)
       .forEach((item) => {
@@ -49,30 +51,48 @@ const fallbackDate = new Date();
           time: "Pending",
           type: "testimonial",
           date: item.created_at ? new Date(item.created_at) : fallbackDate,
+          link: `/testimonials`, // ✅ click target
         });
       });
 
-    // Sort by most recent first
     return list.sort((a, b) => b.date - a.date);
   }, [enrolments, testimonials]);
 
   return (
     <div className="notification-container" ref={dropdownRef}>
-      <button className="action-icon-btn" onClick={() => setIsOpen(!isOpen)}>
+      <button
+        className="action-icon-btn"
+        onClick={() => setIsOpen((prev) => !prev)}
+      >
         <Bell size={20} />
         {notifications.length > 0 && <span className="notification-dot"></span>}
       </button>
 
       <AnimatePresence>
         {isOpen && (
-          <motion.div className="notifications-dropdown">
+          <motion.div
+            className="notifications-dropdown"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+          >
             <div className="dropdown-header">
               <h3>Recent Activity</h3>
             </div>
+
             <div className="notifications-list">
               {notifications.length > 0 ? (
                 notifications.map((n) => (
-                  <div key={n.id} className="notification-item">
+                  <div
+                    key={n.id}
+                    className="notification-item clickable"
+                    onClick={() => {
+                      navigate(n.link, {
+                        state: { highlightId: n.id, type: n.type },
+                      });
+                      setIsOpen(false);
+                    }}
+                  >
                     <div className="notif-icon">
                       {n.type === "enrolment" ? (
                         <UserPlus size={14} />
@@ -80,14 +100,14 @@ const fallbackDate = new Date();
                         <MessageSquare size={14} />
                       )}
                     </div>
+
                     <div className="notif-details">
                       <p>
-                        {n.type === "enrolment" && (
-                          <strong>New Student: </strong>
-                        )}
-                        {n.type === "testimonial" && (
-                          <strong>New Testimonial: </strong>
-                        )}
+                        <strong>
+                          {n.type === "enrolment"
+                            ? "New Student: "
+                            : "New Testimonial: "}
+                        </strong>
                         {n.text
                           .replace("New student: ", "")
                           .replace("New testimonial pending from ", "")}

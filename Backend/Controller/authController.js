@@ -20,6 +20,7 @@ import {
   getResendRemainingSeconds,
 } from "../Utils/otp.js";
 import { SECURITY_LIMITS } from "../Utils/securityLimits.js";
+import cloudinary from "../Utils/cloudinary.js";
 
 // Generate JWT token
 const generateToken = (id) => {
@@ -36,9 +37,9 @@ const generateTempToken = (id) => {
 // Defining cookies
 const COOKIE_OPTIONS = {
   httpOnly: true,
-  // secure: process.env.NODE_ENV === "production",
-  secure: false,
-  sameSite: "lax", // REQUIRED for Vercel + Render
+  secure: process.env.NODE_ENV === "production",
+  // secure: false,
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // REQUIRED for Vercel + Render
   maxAge: 60 * 60 * 1000, // 1 hour
 };
 
@@ -193,24 +194,57 @@ export const getUserInfo = async (request, response) => {
 // ========================================
 // 🔹 Image Upload
 // ========================================
-export const imageUpload = async (request, response) => {
-  upload.single("image")(request, response, (error) => {
-    if (error) {
-      console.error("[Upload Error]:", error);
-      return response.status(400).json({
-        message:
-          "Unable to upload image. Please check the 'uploads' directory.",
+// export const imageUpload = async (request, response) => {
+//   upload.single("image")(request, response, (error) => {
+//     if (error) {
+//       console.error("[Upload Error]:", error);
+//       return response.status(400).json({
+//         message:
+//           "Unable to upload image. Please check the 'uploads' directory.",
+//       });
+//     }
+
+//     if (!request.file) {
+//       return response.status(400).json({ message: "No file provided." });
+//     }
+
+//     const imageUrl = `${request.protocol}://${request.get("host")}/uploads/${
+//       request.file.filename
+//     }`;
+//     return response.status(200).json({ imageUrl });
+//   });
+// };
+
+export const imageUpload = (req, res) => {
+  upload.single("image")(req, res, async (err) => {
+    try {
+      if (err) {
+        return res.status(400).json({ message: err.message });
+      }
+
+      if (!req.file) {
+        return res.status(400).json({ message: "No image provided" });
+      }
+
+      // Convert buffer → base64 for Cloudinary
+      const base64Image = `data:${req.file.mimetype};base64,${req.file.buffer.toString(
+        "base64"
+      )}`;
+
+      const result = await cloudinary.uploader.upload(base64Image, {
+        folder: "profile-images",
+        resource_type: "image",
+      });
+
+      return res.status(200).json({
+        imageUrl: result.secure_url,
+      });
+    } catch (error) {
+      console.error("[Cloudinary Upload Error]", error);
+      return res.status(500).json({
+        message: "Image upload failed",
       });
     }
-
-    if (!request.file) {
-      return response.status(400).json({ message: "No file provided." });
-    }
-
-    const imageUrl = `${request.protocol}://${request.get("host")}/uploads/${
-      request.file.filename
-    }`;
-    return response.status(200).json({ imageUrl });
   });
 };
 
@@ -266,7 +300,7 @@ export const verifyOTP = async (req, res) => {
     return res.status(200).json({
       message: "Login successful.",
       user: userWithoutPassword,
-      token: finalToken
+      token: finalToken,
     });
   } catch (error) {
     console.error("[OTP Error]", error);

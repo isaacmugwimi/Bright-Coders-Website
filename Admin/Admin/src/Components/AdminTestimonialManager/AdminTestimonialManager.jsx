@@ -19,6 +19,7 @@ import { API_PATHS } from "../../utils/apiPaths.js";
 import "../AdminBlogManager/AdminBlogManager.css";
 import "./AdminTestimonialManager.css";
 import TestimonialViewModal from "./TestimonialViewModal.jsx";
+import { useLocation } from "react-router-dom";
 
 const AdminTestimonialManager = () => {
   const API_URL = import.meta.env.VITE_API_BASE_URL;
@@ -27,6 +28,8 @@ const AdminTestimonialManager = () => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterMode, setFilterMode] = useState("total"); // 'total', 'approved', 'pending'
+  const location = useLocation();
+  const [highlightId, setHighlightId] = useState(null);
 
   const [isProcessingId, setIsProcessingId] = useState(null);
 
@@ -48,13 +51,30 @@ const AdminTestimonialManager = () => {
     setToastConfig({ show: true, message, type });
     setTimeout(
       () => setToastConfig((prev) => ({ ...prev, show: false })),
-      4000
+      4000,
     );
   };
 
   useEffect(() => {
     fetchTestimonials();
   }, []);
+
+  useEffect(() => {
+    if (location.state?.highlightId && location.state?.type === "testimonial") {
+      setHighlightId(location.state.highlightId);
+
+      // optional: scroll into view
+      setTimeout(() => {
+        const row = document.getElementById(location.state.highlightId);
+        if (row) {
+          row.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+      }, 300);
+    }
+  }, [location.state]);
 
   const fetchTestimonials = async () => {
     try {
@@ -83,7 +103,7 @@ const AdminTestimonialManager = () => {
     let result = testimonials.filter(
       (t) =>
         t.user_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        t.message.toLowerCase().includes(searchTerm.toLowerCase())
+        t.message.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
     if (filterMode === "approved") return result.filter((t) => t.is_approved);
@@ -230,8 +250,14 @@ const AdminTestimonialManager = () => {
                 {filteredData.map((t) => (
                   <tr
                     key={t.id}
-                    onClick={() => setViewingTestimonial(t)}
-                    className="clickable-row"
+                    id={`test-${t.id}`}
+                    className={`clickable-row ${
+                      highlightId === `test-${t.id}` ? "highlight-row" : ""
+                    }`}
+                    onClick={() => {
+                      setViewingTestimonial(t);
+                      setHighlightId(`test-${t.id}`);
+                    }}
                   >
                     <td>
                       <div className="user-profile-cell">
@@ -243,10 +269,10 @@ const AdminTestimonialManager = () => {
                                   ? t.image_url
                                   : `${API_URL.replace(
                                       /\/$/,
-                                      ""
+                                      "",
                                     )}/${t.image_url.replace(/^\//, "")}`
                                 : `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                                    t.user_name
+                                    t.user_name,
                                   )}`
                             }
                             className="avatar-sm"

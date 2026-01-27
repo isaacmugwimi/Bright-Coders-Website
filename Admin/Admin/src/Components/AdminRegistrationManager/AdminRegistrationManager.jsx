@@ -21,6 +21,7 @@ import "../AdminBlogManager/AdminBlogManager.css";
 import { RegistrationDetailsModal } from "./RegistrationDetailsModal/RegistrationDetailsModal.jsx";
 import { getAllRegistrations } from "../../services/generalServices.js";
 import { PaymentModal } from "../../helpers/CustomAlerts/PaymentModal.jsx";
+import { useLocation } from "react-router-dom";
 
 const AdminRegistrationManager = () => {
   const [registrations, setRegistrations] = useState([]);
@@ -30,6 +31,8 @@ const AdminRegistrationManager = () => {
   const [filterMode, setFilterMode] = useState("total");
   const [isUpdatingId, setIsUpdatingId] = useState(null);
   const [paymentModalData, setPaymentModalData] = useState(null);
+  const [highlightId, setHighlightId] = useState(null);
+  const location = useLocation();
 
   const [alertConfig, setAlertConfig] = useState({
     isOpen: false,
@@ -49,13 +52,31 @@ const AdminRegistrationManager = () => {
     setToastConfig({ show: true, message, type });
     setTimeout(
       () => setToastConfig((prev) => ({ ...prev, show: false })),
-      4000
+      4000,
     );
   };
 
   useEffect(() => {
     fetchRegistrations();
   }, []);
+
+  useEffect(() => {
+    if (location.state?.highlightId) {
+      const id = location.state.highlightId;
+      setHighlightId(id);
+
+      // scroll into view after render
+      setTimeout(() => {
+        const row = document.getElementById(id);
+        if (row) {
+          row.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        }
+      }, 300);
+    }
+  }, [location.state]);
 
   const fetchRegistrations = async () => {
     try {
@@ -72,24 +93,24 @@ const AdminRegistrationManager = () => {
   // --- STATS LOGIC ---
   const stats = useMemo(() => {
     const paid = registrations.filter(
-      (r) => r.payment_status === "paid"
+      (r) => r.payment_status === "paid",
     ).length;
     const partial = registrations.filter(
-      (r) => r.payment_status === "partial"
+      (r) => r.payment_status === "partial",
     ).length;
     const pending = registrations.filter(
       (r) =>
         r.payment_status === "pending" ||
-        r.payment_status === "awaiting_verification"
+        r.payment_status === "awaiting_verification",
     ).length;
 
     const totalCollected = registrations.reduce(
       (acc, r) => acc + (parseFloat(r.amount_paid) || 0),
-      0
+      0,
     );
     const totalDebt = registrations.reduce(
       (acc, r) => acc + (parseFloat(r.balance_due) || 0),
-      0
+      0,
     );
 
     return {
@@ -107,7 +128,9 @@ const AdminRegistrationManager = () => {
     let result = registrations.filter(
       (reg) =>
         reg.child_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        reg.registration_number.toLowerCase().includes(searchTerm.toLowerCase())
+        reg.registration_number
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()),
     );
 
     if (filterMode === "paid")
@@ -121,33 +144,35 @@ const AdminRegistrationManager = () => {
   }, [registrations, searchTerm, filterMode]);
 
   // --- CORE PAYMENT VERIFICATION LOGIC ---
-const handleVerifyPayment = (reg) => {
-  setPaymentModalData(reg); // This opens the modal
-};
+  const handleVerifyPayment = (reg) => {
+    setPaymentModalData(reg); // This opens the modal
+  };
 
-// This function is called by the Modal when the user clicks "Confirm"
-const executePaymentUpdate = async (finalMpesaCode, confirmedAmount) => {
-  const reg = paymentModalData;
-  const isAwaiting = reg.payment_status === "awaiting_verification";
+  // This function is called by the Modal when the user clicks "Confirm"
+  const executePaymentUpdate = async (finalMpesaCode, confirmedAmount) => {
+    const reg = paymentModalData;
+    const isAwaiting = reg.payment_status === "awaiting_verification";
 
-  setIsUpdatingId(reg.id);
-  try {
-    await axiosInstance.patch(API_PATHS.REGISTRATIONS.UPDATE_PAYMENT(reg.id), {
-      confirmedAmount: parseFloat(confirmedAmount),
-      mpesaCode: finalMpesaCode.toUpperCase().trim(),
-      isVerifyingExisting: isAwaiting,
-    });
-    
-    triggerToast("Payment confirmed successfully!", "success");
-    setPaymentModalData(null); // Close modal
-    fetchRegistrations(); // Refresh list
-  } catch (error) {
-    triggerToast(error.response?.data?.message || "Update failed.", "error");
-  } finally {
-    setIsUpdatingId(null);
-  }
-};
+    setIsUpdatingId(reg.id);
+    try {
+      await axiosInstance.patch(
+        API_PATHS.REGISTRATIONS.UPDATE_PAYMENT(reg.id),
+        {
+          confirmedAmount: parseFloat(confirmedAmount),
+          mpesaCode: finalMpesaCode.toUpperCase().trim(),
+          isVerifyingExisting: isAwaiting,
+        },
+      );
 
+      triggerToast("Payment confirmed successfully!", "success");
+      setPaymentModalData(null); // Close modal
+      fetchRegistrations(); // Refresh list
+    } catch (error) {
+      triggerToast(error.response?.data?.message || "Update failed.", "error");
+    } finally {
+      setIsUpdatingId(null);
+    }
+  };
 
   const handleDelete = (id) => {
     setAlertConfig({
@@ -208,10 +233,10 @@ const executePaymentUpdate = async (finalMpesaCode, confirmedAmount) => {
             onClick={() => setFilterMode("partial")}
           >
             <div
-              className="stat-icon draft" 
+              className="stat-icon draft"
               style={{ backgroundColor: "#E0F2F2" }}
             >
-              <Wallet size={20} color="#008B8B"/>
+              <Wallet size={20} color="#008B8B" />
             </div>
             <div className="stat-info">
               <span className="stat-label">Installments</span>
@@ -240,7 +265,9 @@ const executePaymentUpdate = async (finalMpesaCode, confirmedAmount) => {
         <div className="admin-header">
           <div>
             <h1>Student Registrations</h1>
-            <p className="subtitle">Real-time tracking of student registrations and payment progress.</p>
+            <p className="subtitle">
+              Real-time tracking of student registrations and payment progress.
+            </p>
           </div>
           <div className="header-actions">
             <div className="search-container">
@@ -275,7 +302,13 @@ const executePaymentUpdate = async (finalMpesaCode, confirmedAmount) => {
               </thead>
               <tbody>
                 {filteredData.map((reg) => (
-                  <tr key={reg.id}>
+                  <tr
+                    key={reg.id}
+                    id={`enrol-${reg.id}`}
+                    className={
+                      highlightId === `enrol-${reg.id}` ? "highlight-row" : ""
+                    }
+                  >
                     <td>
                       <span
                         className="course-title-text"
@@ -340,10 +373,10 @@ const executePaymentUpdate = async (finalMpesaCode, confirmedAmount) => {
                           reg.payment_status === "paid"
                             ? "public"
                             : reg.payment_status === "awaiting_verification"
-                            ? "warning"
-                            : reg.payment_status === "partial"
-                            ? "live"
-                            : "draft"
+                              ? "warning"
+                              : reg.payment_status === "partial"
+                                ? "live"
+                                : "draft"
                         }`}
                       >
                         {reg.payment_status.replace("_", " ")}
@@ -393,15 +426,14 @@ const executePaymentUpdate = async (finalMpesaCode, confirmedAmount) => {
         )}
       </div>
 
-
       {paymentModalData && (
-  <PaymentModal
-    registration={paymentModalData}
-    loading={isUpdatingId === paymentModalData.id}
-    onClose={() => setPaymentModalData(null)}
-    onConfirm={executePaymentUpdate}
-  />
-)}
+        <PaymentModal
+          registration={paymentModalData}
+          loading={isUpdatingId === paymentModalData.id}
+          onClose={() => setPaymentModalData(null)}
+          onConfirm={executePaymentUpdate}
+        />
+      )}
 
       <CustomAlerts
         isOpen={alertConfig.isOpen}

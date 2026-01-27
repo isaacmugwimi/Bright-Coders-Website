@@ -141,15 +141,15 @@ app.use("/api/registration", registrationRouter);
 // ==========================================
 // 8. STATIC FILES (SAFE)
 // ==========================================
-app.use(
-  "/uploads",
-  express.static(path.join(__dirname, "uploads"), {
-    maxAge: "1d",
-    setHeaders: (res) => {
-      res.set("X-Content-Type-Options", "nosniff");
-    },
-  }),
-);
+// app.use(
+//   "/uploads",
+//   express.static(path.join(__dirname, "uploads"), {
+//     maxAge: "1d",
+//     setHeaders: (res) => {
+//       res.set("X-Content-Type-Options", "nosniff");
+//     },
+//   }),
+// );
 
 // ==========================================
 // 9. HEALTH CHECK
