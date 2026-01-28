@@ -300,7 +300,7 @@ export const verifyOTP = async (req, res) => {
     return res.status(200).json({
       message: "Login successful.",
       user: userWithoutPassword,
-      token: finalToken,
+      // token: finalToken,
     });
   } catch (error) {
     console.error("[OTP Error]", error);
