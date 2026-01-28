@@ -17,7 +17,7 @@ const router = express.Router();
 
 // --- PUBLIC ROUTES ---
 // Anyone can see approved testimonials on the landing page
-router.get("/live", handleGetLiveTestimonials);
+router.get("/testimonials/live", handleGetLiveTestimonials);
 
 // Anyone can submit a new testimonial (Validation is handled inside the controller)
 router.post("/submit", upload.single("image"), handleAddTestimonial);

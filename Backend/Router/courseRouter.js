@@ -42,6 +42,6 @@ router.post("/:id/withdraw", protect,csrfProtection, withdrawCourse);
 
 // --- PUBLIC ROUTES (Website) ---
 // This route is used by the student-facing homepage
-router.get("/live", handleGetLiveCourses);
+router.get("/courses/live", handleGetLiveCourses);
 
 export default router;

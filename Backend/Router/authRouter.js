@@ -20,10 +20,10 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/verify-otp", verifyOTP);
 router.post("/resend-otp",resendOTP)
-router.post("/upload-image", imageUpload);
+router.post("/upload-image", imageUpload); //public image route
 
 // PROTECTED + CSRF
 router.get("/getUser", protect, csrfProtection, getUserInfo);
-// router.post("/upload-image", protect, csrfProtection, imageUpload);
+router.post("/upload-image", protect, csrfProtection, imageUpload);
 
 export default router;

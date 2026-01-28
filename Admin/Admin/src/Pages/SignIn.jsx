@@ -98,6 +98,8 @@ const SignIn = ({ onToggle }) => {
         email,
         password,
         profileImageUrl,
+        
+        
       });
 
       // Backend returns: { newUser, token, message, id }
