@@ -21,7 +21,7 @@ import {
 } from "../Utils/otp.js";
 import { SECURITY_LIMITS } from "../Utils/securityLimits.js";
 import cloudinary from "../Utils/cloudinary.js";
-import { COOKIE_OPTIONS } from "../server.js";
+import { COOKIE_OPTIONS } from "../Middleware/csrfMiddleware.js";
 
 // Generate JWT token
 const generateToken = (id) => {
