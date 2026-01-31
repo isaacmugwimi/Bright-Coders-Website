@@ -50,4 +50,20 @@ export const API_PATHS = {
   IMAGE: {
     UPLOAD_IMAGE: "/api/auth/upload-image",
   },
+
+
+PASSWORD_RESET: {
+    AUTH_RESET: "/api/auth-reset", // Base path
+    REQUEST: "/api/auth-reset/request", // The one for sending the email
+    CONFIRM: "/api/auth-reset/confirm", // The one for the new password
+},
+ADMIN_ACCOUNT: {
+    REQUEST_OTP: "/api/admin/step-up/request",   // To send the code
+    VERIFY_OTP: "/api/admin/step-up/verify",     // To lift the "security curtain"
+    GET_PROFILE: "/api/admin/profile",           // Fetch basic info
+    UPDATE_PROFILE: "/api/admin/profile-update", // PUT request for name/image
+    CHANGE_PASSWORD: "/api/admin/change-password",
+    DELETE_ACCOUNT: "/api/admin/delete-account",
+  }
+
 };

@@ -19,6 +19,9 @@ import AdminRegistrationManager from "./Components/AdminRegistrationManager/Admi
 import ProtectedRoute from "./Pages/ProtectedRoute";
 
 import UserContext from "./Components/Context/UserContext";
+import ResetPassword from "./Pages/ResetPassword/ResetPassword";
+import AccountSettings from "./Components/AccountSettings/AccountSettings";
+import SignupSuccess from "./Pages/SignupSuccess/SignupSuccess";
 
 // =====================
 // ROOT COMPONENT
@@ -48,6 +51,8 @@ function AppRoutes() {
       <Route path="/" element={<Root />} />
       <Route path="/authentication" element={<AuthLayout />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
+      <Route path="/signup-success" element={<SignupSuccess />} />
       <Route path="/signIn" element={<SignIn />} />
 
       {/* ================= PROTECTED ROUTES ================= */}
@@ -57,6 +62,7 @@ function AppRoutes() {
           <Route path="/programs" element={<ProgramManagement />} />
           <Route path="/blogs" element={<AdminBlogManager />} />
           <Route path="/testimonials" element={<AdminTestimonialManager />} />
+          <Route path="/account-settings" element={<AccountSettings />} />
           <Route
             path="/studentRegistration"
             element={<AdminRegistrationManager />}

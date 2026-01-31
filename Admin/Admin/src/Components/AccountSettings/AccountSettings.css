@@ -1,0 +1,455 @@
+/* ==========================================
+   CONTAINER & LAYOUT
+   ========================================== */
+.admin-account-container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+    color: #1e293b;
+}
+
+.admin-account-header {
+    margin-bottom: 2.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 1.5rem;
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.admin-account-title {
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: #0f172a;
+    margin: 0;
+}
+
+.admin-account-subtitle {
+    color: #64748b;
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.security-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #f0fdf4;
+    color: #166534;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: 1px solid #bbf7d0;
+}
+
+/* ==========================================
+   GRID & PANELS
+   ========================================== */
+.admin-account-main-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.admin-account-panel {
+    background: white;
+    border-radius: 16px;
+    padding: 2rem;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+}
+
+.admin-account-panel:hover {
+    transform: translateY(-2px);
+}
+
+.admin-account-panel-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #334155;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* ==========================================
+   AVATAR STYLING
+   ========================================== */
+.admin-account-avatar-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.admin-account-avatar-circle {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #f1f5f9;
+    cursor: pointer;
+    overflow: hidden;
+    border: 4px solid white;
+    box-shadow: 0 0 0 2px #e2e8f0;
+}
+
+.admin-account-avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #94a3b8;
+    background: #f8fafc;
+}
+
+.admin-account-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.admin-account-avatar-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.admin-account-avatar-circle:hover .admin-account-avatar-overlay {
+    opacity: 1;
+}
+
+/* ==========================================
+   FORMS & INPUTS
+   ========================================== */
+.admin-account-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.admin-account-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.admin-account-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.admin-account-input {
+    padding: 0.75rem 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+    width: 100%;
+}
+
+.admin-account-input:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+/* --- Password Visibility Styles --- */
+.password-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-input-wrapper .admin-account-input {
+    padding-right: 3rem; /* Space for the eye icon */
+}
+
+.password-toggle-icon {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    transition: color 0.2s;
+}
+
+.password-toggle-icon:hover {
+    color: #2563eb;
+}
+
+/* ==========================================
+   BUTTONS
+   ========================================== */
+.admin-account-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+}
+
+.admin-account-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.admin-account-btn-primary {
+    background: #2563eb;
+    color: white;
+}
+
+.admin-account-btn-primary:hover:not(:disabled) {
+    background: #1d4ed8;
+}
+
+.admin-account-btn-outline {
+    background: white;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+}
+
+.admin-account-btn-outline:hover:not(:disabled) {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+}
+
+.admin-account-btn-ghost {
+    background: transparent;
+    color: #64748b;
+    border: 1px solid transparent;
+}
+
+.admin-account-btn-ghost:hover:not(:disabled) {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+/* ==========================================
+   DANGER ZONE
+   ========================================== */
+.admin-account-panel-danger {
+    border: 1px solid #fee2e2;
+    background: #fffafb;
+    grid-column: 1 / -1; 
+}
+
+.admin-account-warning-text {
+    color: #991b1b;
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.admin-account-btn-danger {
+    background: #dc2626;
+    color: white;
+    width: fit-content;
+}
+
+.admin-account-btn-danger:hover:not(:disabled) {
+    background: #b91c1c;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+}
+
+/* ==========================================
+   STEP-UP OVERLAY (OTP)
+   ========================================== */
+.admin-stepup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.9);
+    backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 1.5rem;
+}
+
+.admin-stepup-card {
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    padding: 2.5rem;
+    border-radius: 24px;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.admin-stepup-icon {
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.admin-stepup-input {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.5rem;
+    padding: 1rem;
+    margin: 1.5rem 0;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+}
+
+.admin-stepup-input.has-error {
+    border-color: #ef4444;
+    background: #fef2f2;
+}
+
+.admin-stepup-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.otp-feedback {
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.otp-feedback.is-error { color: #dc2626; }
+.otp-feedback.is-success { color: #16a34a; }
+
+/* ==========================================
+   ALERTS & LOADERS
+   ========================================== */
+.admin-account-alert {
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    font-weight: 500;
+}
+
+.admin-account-alert.is-success {
+    background: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.admin-account-alert.is-error {
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.admin-account-loader {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #64748b;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    animation: pulse 2s infinite;
+}
+
+.avatar-initials {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2563eb; /* Your primary blue */
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+    border-radius: 50%;
+    text-transform: uppercase;
+}
+
+.placeholder-circle {
+    position: relative;
+    display: block;
+    width: 120px; /* Adjust size as needed */
+    height: 120px;
+    cursor: pointer;
+}
+
+.profile-pic-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* ==========================================
+   ANIMATIONS
+   ========================================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ==========================================
+   RESPONSIVE
+   ========================================== */
+@media (min-width: 480px) {
+    .admin-stepup-actions {
+        flex-direction: row-reverse; 
+    }
+    
+    .admin-stepup-actions button {
+        flex: 1;
+    }
+}
+
+@media (max-width: 640px) {
+    .admin-account-main-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .header-flex {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .admin-account-title {
+        font-size: 1.5rem;
+    }
+}

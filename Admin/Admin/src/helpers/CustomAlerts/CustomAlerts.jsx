@@ -1,4 +1,4 @@
-import { AlertCircle, CheckCircle, CheckCircle2, X } from "lucide-react";
+import { AlertCircle, CheckCircle2, X } from "lucide-react";
 import React from "react";
 import "./CustomAlerts.css";
 
@@ -10,8 +10,10 @@ export const CustomAlerts = ({
   onConfirm,
   onCancel,
   type = "danger",
+  children, 
 }) => {
   if (!isOpen) return null;
+
   return (
     <div className="modal-custom-overlay custom-alert-overlay">
       <div className="alert-box">
@@ -20,8 +22,17 @@ export const CustomAlerts = ({
             size={40}
             color={type === "danger" ? "#ef4444" : "#3b82f6"}
           />
+
           <h3>{title}</h3>
           <p>{message}</p>
+
+          {/* 🔥 INJECT CUSTOM CONTENT */}
+          {children && (
+            <div className="alert-custom-body">
+              {children}
+            </div>
+          )}
+
           <div className="alert-actions">
             <button className="cancel-btn" onClick={onCancel}>
               Cancel

@@ -6,11 +6,56 @@ import {
 } from "../Utils/mailer.js";
 import { generateAndSaveReceipt } from "../Utils/receiptsGenerator.js";
 import {  generateAdminEmailHtml } from "../Utils/mailhelper.js";
+import cloudinary from "../Utils/cloudinary.js";
+import fs from "fs";
+
+
+const processReceiptUpload = async (registration) => {
+  try {
+    // 1. Generate the local PDF
+    const fileInfo = await generateAndSaveReceipt(registration);
+    
+    // 2. Upload to Cloudinary
+    const uploadResponse = await cloudinary.uploader.upload(fileInfo.filePath, {
+      folder: "receipts",
+      public_id: `Receipt_${registration.registration_number}`,
+      resource_type: "raw",
+      flags: "attachment"
+    });
+
+    // 3. Save the Cloudinary URL to your Database
+    await Queries.updateReceiptUrl(registration.id, uploadResponse.secure_url);
+
+    // 4. Send email (DO THIS BEFORE DELETING)
+    // We pass the Cloudinary link so the email can have a "Download" button too
+    await sendPaymentConfirmation(registration, { 
+      ...fileInfo, 
+      downloadUrl: uploadResponse.secure_url 
+    });
+
+    // 5. Clean up: NOW delete local file safely
+    if (fs.existsSync(fileInfo.filePath)) {
+      fs.unlinkSync(fileInfo.filePath);
+      console.log("📂 Local receipt cleaned up.");
+    }
+
+    return uploadResponse.secure_url;
+  } catch (err) {
+    console.error("Receipt Processing Error:", err);
+    // Even if it fails, try to clean up the file if it exists to avoid filling up disk space
+    if (fileInfo?.filePath && fs.existsSync(fileInfo.filePath)) {
+      fs.unlinkSync(fileInfo.filePath);
+    }
+  }
+};
+
 
 // ==========================
 // 1. ADD NEW REGISTRATION
 // =========================
 // registrationController.js
+
+
 
 export const handleAddRegistration = async (req, res) => {
   try {
@@ -54,7 +99,7 @@ export const handleAddRegistration = async (req, res) => {
 // 1. Generate the HTML by passing the new record
     const emailHtml = generateAdminEmailHtml(newRegistration);
     sendAdminNotification("🎓 New Student Alert: " + newRegistration.child_name, emailHtml);
-    // NEVER trust frontend-shaped data for receipts
+    
     if (paymentStatus === "paid") {
       try {
         // Pull the fresh DB row with snake_case fields

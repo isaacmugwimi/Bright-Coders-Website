@@ -65,7 +65,7 @@ export const registerUser = async (request, response) => {
       fullName,
       email,
       password,
-      profileImageUrl,
+      // profileImageUrl,
     );
 
     // SECURITY: Remove password from the user object before sending to frontend

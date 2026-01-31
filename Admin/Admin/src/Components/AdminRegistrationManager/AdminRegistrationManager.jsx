@@ -384,6 +384,18 @@ const AdminRegistrationManager = () => {
                     </td>
                     <td>
                       <div className="action-btns">
+
+                        {/* 🔹 NEW: Cloudinary Receipt Download Button */}
+    {reg.receipt_url && (
+      <button
+        className="push-row-btn"
+        style={{ backgroundColor: "#10b981", color: "white", border: "none" }}
+        onClick={() => window.open(reg.receipt_url, "_blank")}
+        title="Download Official Receipt"
+      >
+        <Download size={16} />
+      </button>
+    )}
                         {reg.payment_status !== "paid" && (
                           <button
                             className="push-row-btn"

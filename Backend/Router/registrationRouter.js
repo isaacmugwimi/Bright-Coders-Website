@@ -13,6 +13,7 @@ import path from "path";
 import fs from "fs";
 import rateLimit from "express-rate-limit";
 import csrf from "csurf";
+import cloudinary from "../Utils/cloudinary.js";
 
 const csrfProtection = csrf({ cookie: true });
 
@@ -58,17 +59,27 @@ router.get("/download-receipt/:regNumber", async (req, res) => {
     const { regNumber } = req.params;
     const filePath = path.resolve(`./receipts/Receipt_${regNumber}.pdf`);
 
-    // Check if the file actually exists on the disk
-    if (fs.existsSync(filePath)) {
-      return res.download(filePath, `Receipt_${regNumber}.pdf`);
-    } else {
-      // If the file is missing, we could trigger the generator here as a fallback
-      return res
-        .status(404)
-        .json({ message: "Receipt file not found on server." });
+    // 1. Check if the file exists locally
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ message: "Receipt file not found on server." });
     }
+
+    // 2. Upload to Cloudinary 
+    // We use the regNumber as the public_id so we don't duplicate files
+    const uploadResponse = await cloudinary.uploader.upload(filePath, {
+      folder: "receipts",
+      public_id: `Receipt_${regNumber}`,
+      resource_type: "raw", // CRITICAL: Must be "raw" for PDFs
+      flags: "attachment"   // Tells Cloudinary to force download instead of viewing
+    });
+
+    // 3. Redirect the user to the Cloudinary URL
+    // This triggers the download in the browser
+    return res.redirect(uploadResponse.secure_url);
+
   } catch (error) {
-    res.status(500).json({ message: "Error downloading file." });
+    console.error("[Cloudinary Receipt Error]:", error);
+    res.status(500).json({ message: "Error processing receipt download." });
   }
 });
 

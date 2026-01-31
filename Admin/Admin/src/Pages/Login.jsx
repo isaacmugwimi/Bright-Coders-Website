@@ -8,6 +8,7 @@ import OTPVerify from "./AuthLayout/OTPVerify";
 import axiosInstance from "../utils/axiosInstance";
 import { API_PATHS } from "../utils/apiPaths";
 import { fetchCsrfToken } from "../utils/csrf";
+import ForgotPassword from "./ForgotPassword/ForgotPassword";
 
 const Login = ({ onToggle }) => {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ const Login = ({ onToggle }) => {
   const [requires2FA, setRequires2FA] = useState(false);
   const [tempToken, setTempToken] = useState("");
   const [resendAvailableIn, setResendAvailableIn] = useState(60);
+const [showForgot, setShowForgot] = useState(false);
 
   const [error, setError] = useState({ field: "", message: "" });
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -100,7 +102,8 @@ const Login = ({ onToggle }) => {
 
   // Main login form
   return (
-    <div className="login_page">
+    <>
+        <div className="login_page">
       <form onSubmit={handleLogin}>
         <div className="login_title">
           <h2>Login In</h2>
@@ -156,7 +159,17 @@ const Login = ({ onToggle }) => {
           </p>
         )}
 
-        <Link to="#">Forget Your Password?</Link>
+        <p
+
+role="button" 
+ tabIndex={0}
+
+  className="forgot-link"
+  onClick={() => setShowForgot(true)}
+>
+  Forget Your Password?
+</p>
+
 
         <button type="submit" disabled={loading}>
           {loading ? <span className="spinner"></span> : "Login In"}
@@ -165,6 +178,14 @@ const Login = ({ onToggle }) => {
 
       <PopupScreen onToggle={onToggle} />
     </div>
+
+    {showForgot && (
+  <ForgotPassword onClose={() => setShowForgot(false)} />
+)}
+    
+    </>
+
+
   );
 };
 

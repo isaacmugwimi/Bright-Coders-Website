@@ -154,66 +154,68 @@ export const RegistrationDetailsModal = ({ registration, onClose }) => {
             </div>
           </div>
 
-          {/* SECTION 4: STATUS & DOCUMENTS */}
-          <div className="detail-section document-section">
-            <h3>
-              <Receipt size={18} /> Status & Documents
-            </h3>
-            <div className="document-grid">
-              <div className={`status-box ${paymentStatus}`}>
-                <label>Payment Status</label>
-                <div className="status-value">
-                  {isFullyPaid
-                    ? "✅ Fully Paid"
-                    : paymentStatus === "partial"
-                    ? "🟠 Partial Payment"
-                    : "⏳ Pending"}
-                </div>
-              </div>
+         {/* SECTION 4: STATUS & DOCUMENTS */}
+<div className="detail-section document-section">
+  <h3>
+    <Receipt size={18} /> Status & Documents
+  </h3>
+  <div className="document-grid">
+    <div className={`status-box ${paymentStatus}`}>
+      <label>Payment Status</label>
+      <div className="status-value">
+        {isFullyPaid
+          ? "✅ Fully Paid"
+          : paymentStatus === "partial"
+          ? "🟠 Partial Payment"
+          : "⏳ Pending"}
+      </div>
+    </div>
 
-              <div className="doc-actions">
-                <div className="button-group">
-                  {/* Allow receipts for partial OR full payments */}
-                  {hasPaidSomething ? (
-                    <button
-                      className="doc-btn receipt"
-                      onClick={() => {
-                        const downloadUrl = `http://localhost:8000/api/registration/download-receipt/${registration.registration_number}`;
-                        window.open(downloadUrl, "_blank");
-                      }}
-                    >
-                      <Download size={16} />{" "}
-                      {isFullyPaid
-                        ? "Download Receipt"
-                        : "Download Partial Receipt"}
-                    </button>
-                  ) : (
-                    <p className="locked-msg">
-                      Receipt locked until first payment.
-                    </p>
-                  )}
+    <div className="doc-actions">
+      <div className="button-group">
+        {/* 🔹 UPDATED: Use Cloudinary URL instead of Local Backend Route */}
+        {registration.receipt_url ? (
+          <button
+            className="doc-btn receipt"
+            onClick={() => window.open(registration.receipt_url, "_blank")}
+          >
+            <Download size={16} />{" "}
+            {isFullyPaid
+              ? "Download Receipt"
+              : "Download Partial Receipt"}
+          </button>
+        ) : hasPaidSomething ? (
+          // This handles cases where payment is recorded but the background 
+          // processing/upload to Cloudinary hasn't finished yet.
+          <p className="doc-pending" style={{ color: "#f39c12" }}>
+            <Loader2 size={14} className="spinner" /> Generating Receipt...
+          </p>
+        ) : (
+          <p className="locked-msg">
+            Receipt locked until first payment.
+          </p>
+        )}
 
-                  {/* ONLY allow certificates for FULLY paid students */}
-                  {isFullyPaid ? (
-                    <button
-                      className="doc-btn cert"
-                      onClick={() => setShowCertPreview(true)}
-                    >
-                      <Award size={16} /> View Certificate
-                    </button>
-                  ) : (
-                    <span
-                      className="doc-pending"
-                      style={{ color: "#666", fontSize: "12px" }}
-                    >
-                      <ShieldCheck size={14} /> Certificate requires full
-                      payment.
-                    </span>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
+        {/* ONLY allow certificates for FULLY paid students */}
+        {isFullyPaid ? (
+          <button
+            className="doc-btn cert"
+            onClick={() => setShowCertPreview(true)}
+          >
+            <Award size={16} /> View Certificate
+          </button>
+        ) : (
+          <span
+            className="doc-pending"
+            style={{ color: "#666", fontSize: "12px" }}
+          >
+            <ShieldCheck size={14} /> Certificate requires full payment.
+          </span>
+        )}
+      </div>
+    </div>
+  </div>
+</div>
 
           {/* SIGNATORY SETTINGS (Only if fully paid) */}
           {isFullyPaid && (

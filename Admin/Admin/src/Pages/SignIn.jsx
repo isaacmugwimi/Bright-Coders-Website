@@ -17,9 +17,6 @@ const SignIn = ({ onToggle }) => {
   const navigate = useNavigate();
   const { updateUser } = useContext(UserContext);
 
-  // State to store the uploaded image
-  const [profilePicFile, setProfilePicFile] = useState(null);
-  const [profilePicPreview, setProfilePicPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState({
     field: "",
@@ -32,11 +29,7 @@ const SignIn = ({ onToggle }) => {
     password: "",
   });
 
-  const handleDeleteProfilePic = (e) => {
-    e.preventDefault();
-    setProfilePicFile(null);
-    setProfilePicPreview(null);
-  };
+
 
   const handleProfilePicChange = (e) => {
     const file = e.target.files[0];
@@ -54,7 +47,7 @@ const SignIn = ({ onToggle }) => {
     e.preventDefault();
 
     setError({ field: "", message: "" }); // Reset error at start
-    let profileImageUrl = "";
+  
     const { fullName, email, password } = formData;
 
     // form validation
@@ -86,26 +79,25 @@ const SignIn = ({ onToggle }) => {
     // ========================================
     try {
       setLoading(true);
-      // upload image if present
-      if (profilePicFile) {
-        const imageUploadResponse = await uploadImage(profilePicFile);
-        profileImageUrl = imageUploadResponse.imageUrl || "";
-      }
+     
 
       // Register User
       const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, {
         fullName,
         email,
         password,
-        profileImageUrl,
+        // profileImageUrl,
+        
+        
       });
 
       // Backend returns: { newUser, token, message, id }
-      const {  newUser } = response.data;
+      // const {  newUser } = response.data;
      
-        updateUser(newUser);
+        // updateUser(newUser);
         setFormData({ fullName: "", email: "", password: "" });
-        navigate("/authentication");
+        navigate("/signup-success");
+
      
     } catch (error) {
       // 1. Extract the message regardless of where it came from (Axios or Upload Util)
@@ -158,38 +150,7 @@ const SignIn = ({ onToggle }) => {
           <p className="signIn-p">
             Join us today by entering your details below.
           </p>
-          <div className="profile-pic-section">
-            <label htmlFor="profile-pic-upload" className="placeholder-circle">
-              {profilePicPreview ? (
-                <img
-                  src={profilePicPreview}
-                  alt="Profile Preview"
-                  className="profile-pic-preview"
-                />
-              ) : (
-                <div className="placeholder-circle">
-                  <img src={user_pic} alt="" />
-                </div>
-              )}
-              <div
-                className="upload-icon"
-                onClick={profilePicPreview ? handleDeleteProfilePic : undefined}
-                style={{ background: profilePicPreview ? "#ff4d4d" : "" }}
-              >
-                <img
-                  src={profilePicPreview ? delete_icon : upload}
-                  alt={profilePicPreview ? "Delete" : "Upload"}
-                />
-              </div>
-            </label>
-            <input
-              id="profile-pic-upload"
-              type="file"
-              accept="image/*"
-              className="profile-pic-input"
-              onChange={handleProfilePicChange}
-            />
-          </div>
+          
 
           <div className="form-row">
             <div className="form-group">

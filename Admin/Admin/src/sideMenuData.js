@@ -4,7 +4,8 @@ import {
   Newspaper,
   BookOpen,
   MessageSquareQuote,
-  Users, // Better icon for student registrations
+  Users,
+  Settings,
 } from "lucide-react";
 
 export const SIDE_MENU_DATA = [
@@ -38,8 +39,16 @@ export const SIDE_MENU_DATA = [
     icon: Users,      
     path: "/studentRegistration",
   },
-  {
+{
     id: "06",
+    label: "Account Settings", // Added the new menu item
+    icon: Settings,      
+    path: "/account-settings",
+  },
+
+
+  {
+    id: "07",
     label: "Logout",
     icon: LogOut,
     path: "/logout",

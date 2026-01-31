@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS registrations (
   payment_plan VARCHAR(50),
   payment_status VARCHAR(50) DEFAULT 'pending',
   receipt_status VARCHAR(50) DEFAULT 'pending',
+  receipt_url TEXT,
 
   -- Certificate
   completion_status VARCHAR(50) DEFAULT 'enrolled',
@@ -225,5 +226,24 @@ export const verifyCertificate = async (regNumber) => {
     `,
     [regNumber],
   );
+  return rows[0];
+};
+
+
+/* =========================
+   UPDATE RECEIPT URL
+========================= */
+export const updateReceiptUrl = async (id, receiptUrl) => {
+  const rows = await query(
+    `
+    UPDATE registrations
+    SET receipt_url = $1,
+        receipt_status = 'generated'
+    WHERE id = $2
+    RETURNING *
+    `,
+    [receiptUrl, id]
+  );
+
   return rows[0];
 };

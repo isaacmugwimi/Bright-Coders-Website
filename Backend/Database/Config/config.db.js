@@ -66,29 +66,45 @@ export const initDb = async () => {
   try {
     // Admin Users
     await query(`
-      CREATE TABLE IF NOT EXISTS admin_users (
-        id SERIAL PRIMARY KEY,
-        full_name VARCHAR(100) NOT NULL,
-        email VARCHAR(150) UNIQUE NOT NULL,
-        password_hash VARCHAR(255) NOT NULL,
-        is_active BOOLEAN DEFAULT TRUE,
-        profile_image_url TEXT,
-        two_factor_enabled BOOLEAN DEFAULT false,
-        two_factor_code VARCHAR(6),
-        two_factor_expires TIMESTAMP,
-        otp_attempts INTEGER DEFAULT 0,
-        otp_last_sent TIMESTAMP,
-        last_login TIMESTAMP,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      );
+          CREATE TABLE IF NOT EXISTS admin_users (
+      id SERIAL PRIMARY KEY,
+      full_name VARCHAR(100) NOT NULL,
+      email VARCHAR(150) UNIQUE NOT NULL,
+      password_hash VARCHAR(255) NOT NULL,
+
+      is_active BOOLEAN DEFAULT TRUE,
+      profile_image_url TEXT,
+
+      -- LOGIN 2FA
+      two_factor_enabled BOOLEAN DEFAULT false,
+      two_factor_code VARCHAR(6),
+      two_factor_expires TIMESTAMP,
+
+      -- STEP-UP VERIFICATION
+      otp_code VARCHAR(6),
+      otp_expires TIMESTAMP,
+      otp_attempts INTEGER DEFAULT 0,
+      otp_last_sent TIMESTAMP,
+      last_verified TIMESTAMP,
+
+      -- Reset options
+       reset_token VARCHAR(255),
+       reset_expires TIMESTAMP,
+
+      last_login TIMESTAMP,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+
     `);
 
     // Other tables
+    
     await query(courseTableSchema);
     await query(blogTableSchema);
     await query(registrationTableSchema);
     await query(testimonialTableSchema);
+    
 
     console.log("✅ All Tables Initialized Successfully");
   } catch (error) {

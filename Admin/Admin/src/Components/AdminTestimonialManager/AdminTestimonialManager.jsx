@@ -23,6 +23,8 @@ import { useLocation } from "react-router-dom";
 
 const AdminTestimonialManager = () => {
   const API_URL = import.meta.env.VITE_API_BASE_URL;
+  // console.log("API_URL:", API_URL);
+
   const [viewingTestimonial, setViewingTestimonial] = useState(null);
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
