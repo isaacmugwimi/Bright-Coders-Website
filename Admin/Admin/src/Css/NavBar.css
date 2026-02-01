@@ -43,3 +43,42 @@
 .side-menu-left-section {
   color: red;
 }
+
+
+/* --- Mobile Queries --- */
+
+@media (max-width: 768px) {
+  .navbar {
+  
+    padding: 15px 20px; 
+    gap: 0;
+  }
+
+  .nav-title {
+    font-size: 1.1rem; /* Shrinking title so it doesn't wrap awkwardly */
+    display: flex;
+    align-items: center;
+    white-space: nowrap; 
+  }
+
+  .navBarMain {
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  .toggleSideMenu {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin-right: 10px; /* Space between burger and text */
+  }
+}
+
+/* Extra Small Devices */
+@media (max-width: 480px) {
+  .nav-title {
+    font-size: 0.95rem; /* Even smaller for tiny phones */
+    letter-spacing: -0.02em;
+  }
+}
