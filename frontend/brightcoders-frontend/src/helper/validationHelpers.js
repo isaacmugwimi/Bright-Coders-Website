@@ -1,8 +1,16 @@
 // Validate email format
 export const validateEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email) ? true : "Invalid email address.";
+  if (!email) return "Email is required.";
+
+  const trimmedEmail = email.trim();
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  return emailRegex.test(trimmedEmail)
+    ? true
+    : "Invalid email address.";
 };
+
 
 // Validate names (letters only, min 4 chars)
 export const validateName = (fullName) => {
