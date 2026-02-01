@@ -65,7 +65,7 @@ export default function Register() {
     const fetchAndInitialize = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/live`
+          `${import.meta.env.VITE_API_BASE_URL}api/courses/live`
         );
         const courses = response.data;
         setDbCourses(courses);
@@ -177,7 +177,7 @@ export default function Register() {
 
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_API_BASE_URL}/registration`,
+        `${import.meta.env.VITE_API_BASE_URL}api/registration`,
         submissionData
       );
 
