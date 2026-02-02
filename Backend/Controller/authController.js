@@ -21,7 +21,7 @@ import {
 } from "../Utils/otp.js";
 import { SECURITY_LIMITS } from "../Utils/securityLimits.js";
 import cloudinary from "../Utils/cloudinary.js";
-import { COOKIE_OPTIONS } from "../Middleware/csrfMiddleware.js";
+import { AUTH_COOKIE_OPTIONS } from "../Middleware/cookieOptions.js";
 
 // Generate JWT token
 const generateToken = (id) => {
@@ -152,7 +152,7 @@ export const loginUser = async (request, response) => {
 
     const token = generateToken(user.id);
 
-    response.cookie("access_token", token, COOKIE_OPTIONS);
+    response.cookie("access_token", token, AUTH_COOKIE_OPTIONS);
 
     return response.status(200).json({
       message: "Login successful.",
@@ -288,7 +288,7 @@ export const verifyOTP = async (req, res) => {
 
     const finalToken = generateToken(user.id);
 
-    res.cookie("access_token", finalToken, COOKIE_OPTIONS);
+    res.cookie("access_token", finalToken, AUTH_COOKIE_OPTIONS);
 
     return res.status(200).json({
       message: "Login successful.",

@@ -174,6 +174,14 @@ export default function Register() {
       amountPaid: amountToPay,
       totalCoursePrice: numericCoursePrice,
     };
+
+    console.group("📦 FINAL REGISTRATION PAYLOAD");
+Object.entries(submissionData).forEach(([key, value]) => {
+  console.log(`${key}:`, value, typeof value);
+});
+console.groupEnd();
+
+
     console.log(
   "🚀 Sending to backend:",
   JSON.stringify(submissionData, null, 2)

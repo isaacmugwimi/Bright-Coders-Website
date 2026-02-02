@@ -1,16 +1,6 @@
 import csrf from "csurf";
-
-export const COOKIE_OPTIONS = {
-  httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  // secure: false,
-  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // REQUIRED for Vercel + Render
-  maxAge: 60 * 60 * 1000, // 1 hour
-};
+import { CSRF_COOKIE_OPTIONS } from "./cookieOptions.js";
 
 export const csrfProtection = csrf({
-     // csrf - Cross-Site Request Forgery
-      //  CSRF protects cookie-based, authenticated, state-changing actions.
-      // We should NEVER protect public routes, login, OTP, or file downloads.
-  cookie: COOKIE_OPTIONS,
+  cookie: CSRF_COOKIE_OPTIONS,
 });

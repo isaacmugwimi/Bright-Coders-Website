@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 import path from "path";
 import rateLimit from "express-rate-limit";
 import cookieParser from "cookie-parser";
-import csrf from "csurf";
+// import csrf from "csurf";
 import { fileURLToPath } from "url";
 
 // Route Imports
