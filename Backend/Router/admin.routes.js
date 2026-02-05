@@ -11,25 +11,23 @@ import csrf from "csurf";
 // } from "../Controller/adminController.js";
 
 import { requireStepUp } from "../Middleware/requireStepUp.js";
-import { changeAdminPassword, handleDeleteAdminAccount, handleGetAdminProfile, handleUpdateAdminProfile, requestStepUpOTP, verifyStepUpOTP } from "../Controller/adminController.js";
+import {
+  changeAdminPassword,
+  handleDeleteAdminAccount,
+  handleGetAdminProfile,
+  handleUpdateAdminProfile,
+} from "../Controller/adminController.js";
 // import { getAdminProfile, requestStepUpOTP,  verifyStepUpOTP } from "../Controller/adminController.js";
-import { csrfProtection } from "../Middleware/csrfMiddleware.js"
+import { csrfProtection } from "../Middleware/csrfMiddleware.js";
 // const csrfProtection = csrf({ cookie: true });
 const router = express.Router();
-
-
 
 /* =========================
    ADMIN PROFILE (SINGLE ADMIN)
 ========================= */
 
 // Get admin details
-router.get(
-  "/profile",
-  protect,
-   requireStepUp,
-  handleGetAdminProfile
-);
+router.get("/profile", protect, requireStepUp, handleGetAdminProfile);
 
 // Update username / image
 router.put(
@@ -37,7 +35,7 @@ router.put(
   protect,
   // requireStepUp,
   csrfProtection,
-  handleUpdateAdminProfile
+  handleUpdateAdminProfile,
 );
 
 // Change password
@@ -46,7 +44,7 @@ router.put(
   protect,
   // requireStepUp,
   csrfProtection,
-  changeAdminPassword
+  changeAdminPassword,
 );
 
 // Permanently delete admin account
@@ -55,7 +53,7 @@ router.delete(
   protect,
   // requireStepUp,
   csrfProtection,
-  handleDeleteAdminAccount
+  handleDeleteAdminAccount,
 );
 
 export default router;
