@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from "react";
 import "./OTPVerify.css";
-import axios from "axios";
 import { fetchCsrfToken } from "../../utils/csrf";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
@@ -126,8 +125,8 @@ export default function OTPVerify({
       setCanResend(false);
       setOtp(Array(6).fill(""));
 
-      const res = await axios.post(
-        `${API_BASE}/api/auth/resend-otp`,
+      const res = await axiosInstance.post(
+        `${API_PATHS.AUTH}/resend-otp`,
         {},
         { headers: { Authorization: `Bearer ${tempToken}` } },
       );

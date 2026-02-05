@@ -22,6 +22,8 @@ import UserContext from "./Components/Context/UserContext";
 import ResetPassword from "./Pages/ResetPassword/ResetPassword";
 import AccountSettings from "./Components/AccountSettings/AccountSettings";
 import SignupSuccess from "./Pages/SignupSuccess/SignupSuccess";
+import { useEffect } from "react";
+import { fetchCsrfToken } from "./utils/csrf";
 
 // =====================
 // ROOT COMPONENT
@@ -77,6 +79,11 @@ function AppRoutes() {
 // APP COMPONENT
 // =====================
 function App() {
+
+  // 🔑 CALL IT HERE
+  useEffect(() => {
+    fetchCsrfToken();
+  }, []);
   return (
     <UserProvider>
       <Router>

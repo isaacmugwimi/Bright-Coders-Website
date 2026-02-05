@@ -13,11 +13,22 @@ const axiosInstance = axios.create({
 
 // 1. Request Interceptor: Automatically attach the CSRF token
 
+
 axiosInstance.interceptors.request.use((config) => {
-  const token = document.cookie.split('; ').find(row => row.startsWith('XSRF-TOKEN'))?.split('=')[1];
+  // 1. Finding the cookie. 
+  // NOTE: Check your browser to see if the name is 'XSRF-TOKEN' or '_csrf'
+  const cookieName = '_csrf'; 
+  
+  const token = document.cookie
+    .split('; ')
+    .find(row => row.trim().startsWith(`${cookieName}=`))
+    ?.split('=')[1];
+
   if (token) {
-    config.headers['X-XSRF-TOKEN'] = decodeURIComponent(token);
+    // 2. Use the header name you whitelisted in your Express CORS
+    config.headers['X-CSRF-Token'] = decodeURIComponent(token);
   }
+  
   return config;
 });
 
