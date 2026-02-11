@@ -285,17 +285,17 @@ export const downloadReceipt = async (req, res) => {
       return res.status(404).json({ message: "Receipt not found" });
     }
 
-    // Generate a signed URL for a PUBLIC asset that forces download
-    const downloadUrl = cloudinary.url(registration.receipt_url, {
-      resource_type: "raw",
-      flags: "attachment", // This forces the "Save As" dialog
-      sign_url: true,      // Adds security
-      type: "upload"       // Matches your upload type
+    // Since files are 'upload' type, use the standard url generator with signing
+    const signedUrl = cloudinary.url(registration.receipt_url, {
+      resource_type: "raw", // Must match the upload resource_type
+      sign_url: true,      // Required because your 'Strict Transformations' might be on
+      flags: "attachment", // This forces the browser to download the file
+      secure: true         // Use HTTPS
     });
 
-    return res.json({ url: downloadUrl });
+    return res.json({ url: signedUrl });
   } catch (err) {
     console.error("DOWNLOAD_RECEIPT_ERROR:", err);
-    return res.status(500).json({ message: "Failed to generate download link" });
+    return res.status(500).json({ message: "Failed to generate receipt" });
   }
 };
