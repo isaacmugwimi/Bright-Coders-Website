@@ -298,6 +298,11 @@ export const downloadReceipt = async (req, res) => {
       }
     );
 
+    
+
+    console.log("SIGNED DOWNLOAD URL:", signedUrl);
+
+
     // 3. Send URL
     return res.json({ url: signedUrl });
 
