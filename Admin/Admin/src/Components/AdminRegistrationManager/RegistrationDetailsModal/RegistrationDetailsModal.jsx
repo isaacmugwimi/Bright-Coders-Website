@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   FileText,
@@ -15,6 +16,8 @@ import {
 } from "lucide-react";
 import "./RegistrationDetailsModal.css";
 import { CertificateTemplate } from "./CertificateTemplate";
+import axiosInstance from "../../../utils/axiosInstance";
+import { API_PATHS } from "../../../utils/apiPaths";
 
 export const RegistrationDetailsModal = ({ registration, onClose }) => {
   const [directorName, setDirectorName] = useState("Dr. Floyed Muchiri");
@@ -31,6 +34,21 @@ export const RegistrationDetailsModal = ({ registration, onClose }) => {
   const hasPaidSomething =
     paymentStatus === "paid" || paymentStatus === "partial";
   const balance = parseFloat(registration.balance_due) || 0;
+
+const handleDownloadReceipt = async (id) => {
+  try {
+    const res = await axiosInstance.get(
+      API_PATHS.REGISTRATIONS.DOWNLOAD_RECEIPT(id)
+    );
+
+    // Force browser download
+    window.location.href = res.data.url;
+  } catch (err) {
+    console.error( "Failed to download receipt")
+  }
+};
+
+  
 
   if (showCertPreview) {
     return (
@@ -178,7 +196,7 @@ export const RegistrationDetailsModal = ({ registration, onClose }) => {
         {registration.receipt_url==="generated" ? (
           <button
             className="doc-btn receipt"
-            onClick={() => window.open(registration.receipt_url, "_blank")}
+            onClick={() => handleDownloadReceipt(registration.id)}
           >
             <DownloadCloud size={16} />{" "}
             {isFullyPaid

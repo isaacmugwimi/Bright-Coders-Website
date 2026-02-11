@@ -406,7 +406,7 @@ const handleDownloadReceipt = async (id) => {
                       <div className="action-btns">
 
                         {/* 🔹 NEW: Cloudinary Receipt Download Button */}
-    {reg.receipt_url && (
+    {reg.receipt_url==="generated" && (
       <button
         className="push-row-btn"
         style={{ backgroundColor: "#10b981", color: "white", border: "none" }}
