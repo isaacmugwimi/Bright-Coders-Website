@@ -44,7 +44,7 @@ export const API_PATHS = {
   REGISTRATIONS: {
     GET_ALL: "/api/registration/StudentsRegistration",
     UPDATE_PAYMENT: (id) => `/api/registration/payment/${id}`,
-    DOWNLOAD_RECEIPT: (id) => `/api/registrations/download-receipt/${id}`,
+    DOWNLOAD_RECEIPT: (id) => `/api/registration/download-receipt/${id}`,
 
     ISSUE_CERTIFICATE: (id) => `/api/registration/certificate/${id}`,
     DELETE: (id) => `/api/registration/${id}`,
