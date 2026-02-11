@@ -11,11 +11,13 @@ import fs from "fs";
 
 
 const processReceiptUpload = async (registration) => {
+  let fileInfo = null; // 1. Declare outside try so catch can see it
+
   try {
-    // 1. Generate the local PDF
-    const fileInfo = await generateAndSaveReceipt(registration);
+    // 2. Generate the local PDF
+    fileInfo = await generateAndSaveReceipt(registration);
     
-    // 2. Upload to Cloudinary
+    // 3. Upload to Cloudinary
     const uploadResponse = await cloudinary.uploader.upload(fileInfo.filePath, {
       folder: "receipts",
       public_id: `Receipt_${registration.registration_number}`,
@@ -23,28 +25,33 @@ const processReceiptUpload = async (registration) => {
       flags: "attachment"
     });
 
-    // 3. Save the Cloudinary URL to your Database
+    // 4. Update DB FIRST (This stops the "forever loader" on the frontend)
     await Queries.updateReceiptUrl(registration.id, uploadResponse.secure_url);
 
-    // 4. Send email (DO THIS BEFORE DELETING)
-    // We pass the Cloudinary link so the email can have a "Download" button too
-    await sendPaymentConfirmation(registration, { 
-      ...fileInfo, 
-      downloadUrl: uploadResponse.secure_url 
-    });
-
-    // 5. Clean up: NOW delete local file safely
-    if (fs.existsSync(fileInfo.filePath)) {
-      fs.unlinkSync(fileInfo.filePath);
-      console.log("📂 Local receipt cleaned up.");
+    // 5. Attempt to send email
+    try {
+      await sendPaymentConfirmation(registration, { 
+        ...fileInfo, 
+        downloadUrl: uploadResponse.secure_url 
+      });
+    } catch (mailErr) {
+      // If email fails (like the Resend 403 error), we log it but DON'T stop the process
+      console.error("📧 Mailer failed but receipt is saved:", mailErr.message);
     }
 
     return uploadResponse.secure_url;
+
   } catch (err) {
-    console.error("Receipt Processing Error:", err);
-    // Even if it fails, try to clean up the file if it exists to avoid filling up disk space
+    console.error("❌ Receipt Processing Error:", err);
+  } finally {
+    // 6. ALWAYS clean up the file if it exists, whether we succeeded or failed
     if (fileInfo?.filePath && fs.existsSync(fileInfo.filePath)) {
-      fs.unlinkSync(fileInfo.filePath);
+      try {
+        fs.unlinkSync(fileInfo.filePath);
+        console.log("📂 Local receipt cleaned up.");
+      } catch (unlinkErr) {
+        console.error("Cleanup error:", unlinkErr);
+      }
     }
   }
 };
