@@ -5,7 +5,7 @@ import {
   UserCheck,
   Award,
   CreditCard,
-  Download,
+  DownloadCloud,
   ShieldCheck,
   Phone,
   Settings,
@@ -180,7 +180,7 @@ export const RegistrationDetailsModal = ({ registration, onClose }) => {
             className="doc-btn receipt"
             onClick={() => window.open(registration.receipt_url, "_blank")}
           >
-            <Download size={16} />{" "}
+            <DownloadCloud size={16} />{" "}
             {isFullyPaid
               ? "Download Receipt"
               : "Download Partial Receipt"}

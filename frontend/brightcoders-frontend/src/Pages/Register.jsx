@@ -213,7 +213,7 @@ console.groupEnd();
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText("0712345678");
+    navigator.clipboard.writeText("2055543405");
     alert("Number copied!");
   };
 
@@ -712,7 +712,8 @@ console.groupEnd();
                           : "Send your Deposit to:"}
                       </p>
                       <div className="copy-box">
-                        <span>0712345678</span>
+                        <span>Pay Bill: 303030</span>
+                        <span>Account: 2055543405</span>
                         <button type="button" onClick={handleCopy}>
                           <FaCopy /> Copy
                         </button>
