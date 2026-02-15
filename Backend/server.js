@@ -37,25 +37,24 @@ if (process.env.NODE_ENV === "production") {
 // ==========================================
 // 2. STRICT CORS (HARDENED)
 // ==========================================
-const allowedOrigins = [
-  "http://localhost:3000",
-  "http://localhost:5173",
-  "https://bright-coders-live-website.vercel.app",
-  "https://bright-coders-website-nu.vercel.app",
-];
+
+const allowedOrigins = process.env.ALLOWED_ORIGINS 
+  ? process.env.ALLOWED_ORIGINS.split(",") 
+  : [];
+
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      // !origin means server to server
+      // 1. Allow server-to-server requests (Postman/Mobile)
       if (!origin) {
         return callback(null, true); //postman, mobile
       }
-
+// 2. Check if the origin is in our allowed list
       if (allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
-
+// 3. Log and block if not found
       console.error("🛑 Blocked by CORS:", origin);
       return callback(new Error("CORS not allowed"));
     },
