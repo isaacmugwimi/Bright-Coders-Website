@@ -1,6 +1,6 @@
 import { Resend } from "resend";
 import fs from "fs";
-import { EMAIL_SENDERS } from "./emailSenders";
+import { EMAIL_SENDERS } from "./emailSenders.js";
 
 // Initialize Resend with your API Key from Render Environment Variables
 const resend = new Resend(process.env.RESEND_API_KEY);
