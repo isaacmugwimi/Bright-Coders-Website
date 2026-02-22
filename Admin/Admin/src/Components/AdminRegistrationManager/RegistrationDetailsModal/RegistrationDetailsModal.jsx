@@ -170,8 +170,13 @@ const handleDownloadReceipt = async (id) => {
                   {registration.emergency_phone})
                 </span>
               </div>
+              <div className="detail-item">
+                <label>Email:</label> <span>{registration.parent_email}</span>
+              </div>
             </div>
           </div>
+
+          
 
          {/* SECTION 4: STATUS & DOCUMENTS */}
 <div className="detail-section document-section">
@@ -193,7 +198,7 @@ const handleDownloadReceipt = async (id) => {
     <div className="doc-actions">
       <div className="button-group">
         {/* 🔹 UPDATED: Use Cloudinary URL instead of Local Backend Route */}
-        {registration.receipt_url==="generated" ? (
+        {registration.receipt_status==="generated" ? (
           <button
             className="doc-btn receipt"
             onClick={() => handleDownloadReceipt(registration.id)}
