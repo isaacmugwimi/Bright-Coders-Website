@@ -2,13 +2,21 @@ import { jsPDF } from "jspdf";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import sharp from "sharp";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export const generateAndSaveReceipt = async (studentData) => {
-  const doc = new jsPDF();
-  const date = new Date().toLocaleDateString("en-GB");
+  const doc = new jsPDF({
+    orientation: "p",
+    unit: "mm",
+    format: "a4",
+    compress: true,
+  });
+  const date = studentData.last_payment_at
+  ? new Date(studentData.last_payment_at).toLocaleDateString("en-GB")
+  : new Date().toLocaleDateString("en-GB");
   const pageWidth = 210;
 
   // --- 1. DATA MAPPING (Matches Queries.js Schema) ---
@@ -52,8 +60,21 @@ export const generateAndSaveReceipt = async (studentData) => {
   try {
     const logoPath = path.join(__dirname, "../assets/logo2.png");
     if (fs.existsSync(logoPath)) {
-      const logoBuffer = fs.readFileSync(logoPath);
-      doc.addImage(logoBuffer, "PNG", (pageWidth - 40) / 2, 8, 40, 40);
+      const optimizedLogoBuffer = await sharp(logoPath)
+        .resize(300)
+        .jpeg({ quality: 70 }) // JPEG is much smaller than PNG for PDFs
+        .toBuffer();
+
+      doc.addImage(
+        optimizedLogoBuffer,
+        "JPEG",
+        (pageWidth - 40) / 2,
+        8,
+        40,
+        40,
+        undefined,
+        "FAST",
+      );
     }
   } catch (err) {
     console.error("Logo missing:", err.message);
@@ -130,7 +151,7 @@ export const generateAndSaveReceipt = async (studentData) => {
     "Proof of payment for Bright Coders Academy. Non-refundable after course commencement.",
     pageWidth / 2,
     210,
-    { align: "center" }
+    { align: "center" },
   );
   doc
     .setFont("helvetica", "bold")
@@ -138,7 +159,7 @@ export const generateAndSaveReceipt = async (studentData) => {
       "Empowering the next generation of tech leaders.",
       pageWidth / 2,
       216,
-      { align: "center" }
+      { align: "center" },
     );
 
   // --- 10. SAVE ---

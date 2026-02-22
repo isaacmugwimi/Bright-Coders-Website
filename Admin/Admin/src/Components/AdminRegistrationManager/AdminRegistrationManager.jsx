@@ -166,37 +166,39 @@ const AdminRegistrationManager = () => {
         },
       );
 
-      triggerToast("Payment confirmed successfully! Generating receipt...", "success");
+      triggerToast(
+        "Payment confirmed successfully! Generating receipt...",
+        "success",
+      );
       setPaymentModalData(null); // Close modal
 
       // Refresh immediately to show the "Paid" badge
-    await fetchRegistrations();
-     setTimeout(() => {
+      await fetchRegistrations();
+      setTimeout(() => {
         fetchRegistrations();
-      },5000)
+      }, 5000);
     } catch (error) {
-      triggerToast( "Update failed.", "error");
+      triggerToast("Update failed.", "error");
     } finally {
       setIsUpdatingId(null);
     }
   };
 
-const handleDownloadReceipt = async (id) => {
-  try {
-    const res = await axiosInstance.get(
-      API_PATHS.REGISTRATIONS.DOWNLOAD_RECEIPT(id)
-    );
+  const handleDownloadReceipt = async (id) => {
+    try {
+      const res = await axiosInstance.get(
+        API_PATHS.REGISTRATIONS.DOWNLOAD_RECEIPT(id),
+      );
 
-    // Force browser download
-    window.location.href = res.data.url;
-  } catch (err) {
-    triggerToast(
-      err.response?.data?.message || "Failed to download receipt",
-      "error"
-    );
-  }
-};
-
+      // Force browser download
+      window.location.href = res.data.url;
+    } catch (err) {
+      triggerToast(
+        err.response?.data?.message || "Failed to download receipt",
+        "error",
+      );
+    }
+  };
 
   const handleDelete = (id) => {
     setAlertConfig({
@@ -387,8 +389,17 @@ const handleDownloadReceipt = async (id) => {
                           <CreditCard size={12} /> {reg.mpesa_code}
                         </div>
                         <small style={{ color: "#666" }}>
-                          Paid: {parseFloat(reg.amount_paid).toLocaleString()}
+                          Paid:{" "}
+                          <b>{parseFloat(reg.amount_paid).toLocaleString()}</b>
                         </small>
+                        {reg.last_payment_at && (
+                          <small style={{ fontSize: "11px", color: "#888" }}>
+                            On:
+                            {new Date(reg.last_payment_at).toLocaleDateString(
+                              "en-GB",
+                            )}
+                          </small>
+                        )}
                       </div>
                     </td>
                     <td>
@@ -408,19 +419,21 @@ const handleDownloadReceipt = async (id) => {
                     </td>
                     <td>
                       <div className="action-btns">
-
                         {/* 🔹 NEW: Cloudinary Receipt Download Button */}
-    {reg.receipt_status==="generated" && (
-      <button
-        className="push-row-btn"
-        style={{ backgroundColor: "#10b981", color: "white", border: "none" }}
-        onClick={() => handleDownloadReceipt(reg.id)}
-
-        title="Download Official Receipt"
-      >
-        <Download size={16} />
-      </button>
-    )}
+                        {reg.receipt_status === "generated" && (
+                          <button
+                            className="push-row-btn"
+                            style={{
+                              backgroundColor: "#10b981",
+                              color: "white",
+                              border: "none",
+                            }}
+                            onClick={() => handleDownloadReceipt(reg.id)}
+                            title="Download Official Receipt"
+                          >
+                            <Download size={16} />
+                          </button>
+                        )}
                         {reg.payment_status !== "paid" && (
                           <button
                             className="push-row-btn"

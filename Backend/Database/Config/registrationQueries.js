@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS registrations (
   balance_due DECIMAL(10,2) DEFAULT 0.00,
   payment_plan VARCHAR(50),
   payment_status VARCHAR(50) DEFAULT 'pending',
+  last_payment_at TIMESTAMP,
   receipt_status VARCHAR(50) DEFAULT 'pending',
   receipt_url TEXT,
 
@@ -173,7 +174,8 @@ export const updatePaymentStatus = async (
     SET payment_status = $1,
         amount_paid = $2,
         balance_due = $3,
-        mpesa_code = $4
+        mpesa_code = $4,
+        last_payment_at = CURRENT_TIMESTAMP
     WHERE id = $5
     RETURNING *
     `,
