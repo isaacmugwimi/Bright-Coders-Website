@@ -17,7 +17,6 @@ export const handleAddBlog = async (request, response) => {
     const newBlog = await Queries.createBlog(value);
     return response.status(201).json(newBlog);
   } catch (error) {
-    console.error("ADD_BLOG_ERROR:", error); // Log real error for developer
     return response
       .status(500)
       .json({ message: "An internal error occurred while creating the blog." });
