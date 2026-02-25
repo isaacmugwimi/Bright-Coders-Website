@@ -394,10 +394,10 @@ const AdminRegistrationManager = () => {
                         </small>
                         {reg.last_payment_at && (
                           <small style={{ fontSize: "11px", color: "#888" }}>
-                            On:
-                            {new Date(reg.last_payment_at).toLocaleDateString(
+                            On: <b>{new Date(reg.last_payment_at).toLocaleDateString(
                               "en-GB",
-                            )}
+                            )}</b>
+                            
                           </small>
                         )}
                       </div>

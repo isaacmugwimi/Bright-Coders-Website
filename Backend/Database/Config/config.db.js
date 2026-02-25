@@ -11,6 +11,7 @@ import { courseTableSchema } from "./courseQueries.js";
 import { blogTableSchema } from "./blogQueries.js";
 import { testimonialTableSchema } from "./testimonialsQueries.js";
 import { registrationTableSchema } from "./registrationQueries.js";
+import { contactTableSchema } from "./contactQuries.js";
 
 // ========================================
 // 🔹 Environment Variables
@@ -66,7 +67,7 @@ export const initDb = async () => {
   try {
     // Admin Users
     await query(`
-          CREATE TABLE IF NOT EXISTS admin_users (
+      CREATE TABLE IF NOT EXISTS admin_users (
       id SERIAL PRIMARY KEY,
       full_name VARCHAR(100) NOT NULL,
       email VARCHAR(150) UNIQUE NOT NULL,
@@ -99,12 +100,12 @@ export const initDb = async () => {
     `);
 
     // Other tables
-    
+
     await query(courseTableSchema);
     await query(blogTableSchema);
     await query(registrationTableSchema);
     await query(testimonialTableSchema);
-    
+    await query(contactTableSchema);
 
     console.log("✅ All Tables Initialized Successfully");
   } catch (error) {
