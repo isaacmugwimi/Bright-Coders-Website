@@ -11,10 +11,8 @@ import {
   handleUpdateBlog,
   handleWithdrawBlog,
 } from "../Controller/blogController.js";
+import { csrfProtection } from "../Middleware/csrfMiddleware.js";
 
-import csrf from "csurf";
-
-const csrfProtection = csrf({ cookie: true });
 
 const router = express.Router();
 

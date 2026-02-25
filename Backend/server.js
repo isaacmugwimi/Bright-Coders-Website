@@ -14,6 +14,7 @@ import courseRouter from "./Router/courseRouter.js";
 import blogRouter from "./Router/blogRouter.js";
 import testimonialRouter from "./Router/testimonialRouter.js";
 import registrationRouter from "./Router/registrationRouter.js";
+import contactRouter from "./Router/contactRouter.js";
 import adminRouter from "./Router/admin.routes.js"
 import stepUpRouter from "./Router/stepUp.routes.js"
 import forgotPasswordRouter from "./Router/authResetRoutes.js"
@@ -128,6 +129,7 @@ app.use("/api/courses", courseRouter);
 app.use("/api/blogs", blogRouter);
 app.use("/api/testimonials", testimonialRouter);
 app.use("/api/registration", registrationRouter);
+app.use("/api/contact", contactRouter);
 app.use("/api/admin/",adminRouter)
 app.use("/api/step-up", stepUpRouter)
 app.use("/api/auth-reset", forgotPasswordRouter);
