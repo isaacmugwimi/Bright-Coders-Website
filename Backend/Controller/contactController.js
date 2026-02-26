@@ -1,4 +1,4 @@
-import { contactValidationSchema } from "../Middleware/Validators/contactValidator"
+import { contactValidationSchema } from "../Middleware/Validators/contactValidator.js"
 import * as Queries from "../Database/Config/contactQuries.js"
 
 // 1. ADD NEW CONTACT (PUBLIC)
