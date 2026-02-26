@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { FaPhoneVolume, FaDonate, FaUsers, FaBullhorn, FaPhoneAlt } from "react-icons/fa";
+import {
+  FaPhoneVolume,
+  FaDonate,
+  FaUsers,
+  FaBullhorn,
+  FaPhoneAlt,
+} from "react-icons/fa";
 import { MdLocalPhone, MdMarkEmailUnread } from "react-icons/md";
 import { Helmet } from "react-helmet-async";
 import "../Css/Contact.css";
@@ -11,8 +17,8 @@ const Contact = () => {
   const [results, setResults] = useState("");
   const [popupText, setPopupText] = useState("");
   const [activeContact, setActiveContact] = useState("");
-const [errors, setErrors] = useState({});
-const [showModal, setShowModal] = useState(false);
+  const [errors, setErrors] = useState({});
+  const [showModal, setShowModal] = useState(false);
   const siteUrl = import.meta.env.VITE_SITE_URL; // Use env for canonical & og URLs
 
   // Function for Hovering (Visual Only)
@@ -50,45 +56,40 @@ const [showModal, setShowModal] = useState(false);
 
   // --- SUBMISSION LOGIC ---
   const handleOnSubmit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
     setErrors({}); // Clear previous errors
 
-    const formElement = event.target
+    const formElement = event.target;
     const dataToValidate = {
       fullName: formElement.Name.value,
-      email:formElement.Email.value,
-      message:formElement.Message.value
+      email: formElement.Email.value,
+      message: formElement.Message.value,
+    };
+
+    // 2. Validate the plain object
+    const { isValid, errors: validationErrors } =
+      validateContact(dataToValidate);
+
+    if (!isValid) {
+      setErrors(validationErrors);
+      return;
     }
 
-// 2. Validate the plain object
-    const {isValid, errors:validationErrors}=validateContact(dataToValidate);
-
-    if(!isValid){
-      setErrors(validationErrors)
-      return
-    }
-
-   
     setResults("Sending...");
 
-   
-
-    
-
-
     try {
-      const submitPath =`${API_URL.replace(/\/$/, "")}/contact/submit`;
+      const submitPath = `${API_URL.replace(/\/$/, "")}/contact/submit`;
       const response = await axios.post(submitPath, dataToValidate);
 
       if (response.status === 200 || response.status === 201) {
-        setShowModal(true)
+        setShowModal(true);
         setResults("");
         formElement.reset();
       } else {
-        setResults( "Something Went Wrong!");
+        setResults("Something Went Wrong!");
       }
     } catch (err) {
-      console.error("Submission Error:",err);
+      console.error("Submission Error:", err);
       setResults("Something Went Wrong!");
     }
     setTimeout(() => setResults(""), 3000);
@@ -202,7 +203,14 @@ const [showModal, setShowModal] = useState(false);
                   name="Name"
                   required
                 />
-                {errors.fullName && <small className="error-text" style={{color: 'red', fontSize: '12px'}}>{errors.fullName}</small>}
+                {errors.fullName && (
+                  <small
+                    className="error-text"
+                    style={{ color: "red", fontSize: "12px" }}
+                  >
+                    {errors.fullName}
+                  </small>
+                )}
               </div>
               <div className="contact-email input-section">
                 <p>Email</p>
@@ -212,8 +220,14 @@ const [showModal, setShowModal] = useState(false);
                   name="Email"
                   required
                 />
-                                {errors.email && <small className="error-text" style={{color: 'red', fontSize: '12px'}}>{errors.fullName}</small>}
-
+                {errors.email && (
+                  <small
+                    className="error-text"
+                    style={{ color: "red", fontSize: "12px" }}
+                  >
+                    {errors.email}
+                  </small>
+                )}
               </div>
               <div className="contact-address">
                 <p>Message</p>
@@ -223,8 +237,14 @@ const [showModal, setShowModal] = useState(false);
                   maxLength={240}
                   required
                 ></textarea>
-                                {errors.message && <small className="error-text" style={{color: 'red', fontSize: '12px'}}>{errors.fullName}</small>}
-
+                {errors.message && (
+                  <small
+                    className="error-text"
+                    style={{ color: "red", fontSize: "12px" }}
+                  >
+                    {errors.message}
+                  </small>
+                )}
               </div>
               <div className="btn-div">
                 <button type="submit">Send Message</button>
@@ -288,21 +308,25 @@ const [showModal, setShowModal] = useState(false);
       </div>
 
       {showModal && (
-  <div className="contact-modal-overlay">
-    <div className="contact-modal-content">
-      <div className="contact-success-icon">✓</div>
-      <h2>Message Sent!</h2>
-      <p>
-        Thank you, <strong>{activeContact === "email" || "Student"}</strong>! 
-r inquiry has been received. Our team at Bright Coders will get back to you 
-        within 24 hours.        You
-      </p>
-      <button onClick={() => setShowModal(false)} className="contact-close-modal-btn">
-        Back to Website
-      </button>
-    </div>
-  </div>
-)}
+        <div className="contact-modal-overlay">
+          <div className="contact-modal-content">
+            <div className="contact-success-icon">✓</div>
+            <h2>Message Sent!</h2>
+            <p>
+              Thank you,{" "}
+              <strong>{activeContact === "email" || "Student"}</strong>! r
+              inquiry has been received. Our team at Bright Coders will get back
+              to you within 24 hours. You
+            </p>
+            <button
+              onClick={() => setShowModal(false)}
+              className="contact-close-modal-btn"
+            >
+              Back to Website
+            </button>
+          </div>
+        </div>
+      )}
     </>
   );
 };
