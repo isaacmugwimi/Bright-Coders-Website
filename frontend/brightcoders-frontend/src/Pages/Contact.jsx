@@ -3,12 +3,16 @@ import { FaPhoneVolume, FaDonate, FaUsers, FaBullhorn, FaPhoneAlt } from "react-
 import { MdLocalPhone, MdMarkEmailUnread } from "react-icons/md";
 import { Helmet } from "react-helmet-async";
 import "../Css/Contact.css";
+import { validateContact } from "../helper/validateContact";
+import axios from "axios";
 
 const Contact = () => {
+  const API_URL = import.meta.env.VITE_API_BASE_URL;
   const [results, setResults] = useState("");
   const [popupText, setPopupText] = useState("");
   const [activeContact, setActiveContact] = useState("");
-
+const [errors, setErrors] = useState({});
+const [showModal, setShowModal] = useState(false);
   const siteUrl = import.meta.env.VITE_SITE_URL; // Use env for canonical & og URLs
 
   // Function for Hovering (Visual Only)
@@ -44,26 +48,47 @@ const Contact = () => {
     window.location.href = "tel:+254740073575";
   };
 
-  // Form submission
+  // --- SUBMISSION LOGIC ---
   const handleOnSubmit = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
+    setErrors({}); // Clear previous errors
+
+    const formElement = event.target
+    const dataToValidate = {
+      fullName: formElement.Name.value,
+      email:formElement.Email.value,
+      message:formElement.Message.value
+    }
+
+// 2. Validate the plain object
+    const {isValid, errors:validationErrors}=validateContact(dataToValidate);
+
+    if(!isValid){
+      setErrors(validationErrors)
+      return
+    }
+
+   
     setResults("Sending...");
-    const formData = new FormData(event.target);
-    formData.append("access_key", "d9cfaaad-1342-424f-8bdf-011516147439");
+
+   
+
+    
+
+
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await response.json();
-      if (data.success) {
-        setResults("Form Submitted Successfully");
-        event.target.reset();
+      const submitPath =`${API_URL.replace(/\/$/, "")}/contact/submit`;
+      const response = await axios.post(submitPath, dataToValidate);
+
+      if (response.status === 200 || response.status === 201) {
+        setShowModal(true)
+        setResults("");
+        formElement.reset();
       } else {
-        setResults(data.message || "Something Went Wrong!");
+        setResults( "Something Went Wrong!");
       }
     } catch (err) {
-      console.error(err);
+      console.error("Submission Error:",err);
       setResults("Something Went Wrong!");
     }
     setTimeout(() => setResults(""), 3000);
@@ -177,6 +202,7 @@ const Contact = () => {
                   name="Name"
                   required
                 />
+                {errors.fullName && <small className="error-text" style={{color: 'red', fontSize: '12px'}}>{errors.fullName}</small>}
               </div>
               <div className="contact-email input-section">
                 <p>Email</p>
@@ -186,6 +212,8 @@ const Contact = () => {
                   name="Email"
                   required
                 />
+                                {errors.email && <small className="error-text" style={{color: 'red', fontSize: '12px'}}>{errors.fullName}</small>}
+
               </div>
               <div className="contact-address">
                 <p>Message</p>
@@ -195,6 +223,8 @@ const Contact = () => {
                   maxLength={240}
                   required
                 ></textarea>
+                                {errors.message && <small className="error-text" style={{color: 'red', fontSize: '12px'}}>{errors.fullName}</small>}
+
               </div>
               <div className="btn-div">
                 <button type="submit">Send Message</button>
@@ -256,6 +286,23 @@ const Contact = () => {
           </div>
         </section>
       </div>
+
+      {showModal && (
+  <div className="contact-modal-overlay">
+    <div className="contact-modal-content">
+      <div className="contact-success-icon">✓</div>
+      <h2>Message Sent!</h2>
+      <p>
+        Thank you, <strong>{activeContact === "email" || "Student"}</strong>! 
+r inquiry has been received. Our team at Bright Coders will get back to you 
+        within 24 hours.        You
+      </p>
+      <button onClick={() => setShowModal(false)} className="contact-close-modal-btn">
+        Back to Website
+      </button>
+    </div>
+  </div>
+)}
     </>
   );
 };

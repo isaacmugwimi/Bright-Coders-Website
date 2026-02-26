@@ -17,7 +17,7 @@ const router = express.Router();
 // Allow potential students to send messages from the website
 // Note: csrfProtection is omitted here if this is a cross-origin API call, 
 // but recommended if the frontend and backend share the same domain.
-router.post("/", validate(contactValidationSchema), handleAddContact);
+router.post("/submit", validate(contactValidationSchema), handleAddContact);
 
 // --- ADMIN ROUTES (Protected) ---
 // Fetch all contact inquiries for the admin dashboard

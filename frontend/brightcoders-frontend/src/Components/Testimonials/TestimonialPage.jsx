@@ -21,6 +21,7 @@ const TestimonialPage = () => {
     message: "",
     rating: 5,
   });
+  
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [errors, setErrors] = useState({});
