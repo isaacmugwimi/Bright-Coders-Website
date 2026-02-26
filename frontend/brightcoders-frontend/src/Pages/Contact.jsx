@@ -14,6 +14,8 @@ import axios from "axios";
 
 const Contact = () => {
   const API_URL = import.meta.env.VITE_API_BASE_URL;
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submittedName, setSubmittedName] = useState("");
   const [results, setResults] = useState("");
   const [popupText, setPopupText] = useState("");
   const [activeContact, setActiveContact] = useState("");
@@ -56,6 +58,7 @@ const Contact = () => {
 
   // --- SUBMISSION LOGIC ---
   const handleOnSubmit = async (event) => {
+   
     event.preventDefault();
     setErrors({}); // Clear previous errors
 
@@ -75,13 +78,15 @@ const Contact = () => {
       return;
     }
 
-    setResults("Sending...");
+    // setResults("Sending...");
+    setIsSubmitting(true);
 
     try {
-      const submitPath = `${API_URL.replace(/\/$/, "")}/contact/submit`;
+      const submitPath = `${(API_URL||"").replace(/\/$/, "")}/contact/submit`;
       const response = await axios.post(submitPath, dataToValidate);
 
       if (response.status === 200 || response.status === 201) {
+        setSubmittedName(dataToValidate.fullName);
         setShowModal(true);
         setResults("");
         formElement.reset();
@@ -91,6 +96,9 @@ const Contact = () => {
     } catch (err) {
       console.error("Submission Error:", err);
       setResults("Something Went Wrong!");
+    }
+    finally{
+      setIsSubmitting(false);
     }
     setTimeout(() => setResults(""), 3000);
   };
@@ -247,7 +255,9 @@ const Contact = () => {
                 )}
               </div>
               <div className="btn-div">
-                <button type="submit">Send Message</button>
+                <button type="submit"  disabled={isSubmitting}>
+                  {isSubmitting ? "Sending..." : "Send Message"}
+                  </button>
               </div>
             </form>
 
@@ -313,8 +323,7 @@ const Contact = () => {
             <div className="contact-success-icon">✓</div>
             <h2>Message Sent!</h2>
             <p>
-              Thank you,{" "}
-              <strong>{activeContact === "email" || "Student"}</strong>! Your
+              Thank you, <strong>{submittedName || "Student"}</strong>! Your
               inquiry has been received. Our team at Bright Coders will get back
               to you within 24 hours.
             </p>
