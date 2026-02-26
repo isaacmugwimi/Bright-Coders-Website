@@ -1,3 +1,5 @@
+import pool from "./config.db";
+
 /* =========================
    CONTACT MESSAGES SCHEMA
 ========================= */

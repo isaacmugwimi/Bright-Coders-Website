@@ -314,13 +314,13 @@ const Contact = () => {
             <h2>Message Sent!</h2>
             <p>
               Thank you,{" "}
-              <strong>{activeContact === "email" || "Student"}</strong>! r
+              <strong>{activeContact === "email" || "Student"}</strong>! Your
               inquiry has been received. Our team at Bright Coders will get back
-              to you within 24 hours. You
+              to you within 24 hours.
             </p>
             <button
               onClick={() => setShowModal(false)}
-              className="contact-close-modal-btn"
+              className="close-modal-btn"
             >
               Back to Website
             </button>
