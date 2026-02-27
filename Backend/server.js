@@ -1,3 +1,4 @@
+import { createServer } from "http";
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";
@@ -15,15 +16,30 @@ import blogRouter from "./Router/blogRouter.js";
 import testimonialRouter from "./Router/testimonialRouter.js";
 import registrationRouter from "./Router/registrationRouter.js";
 import contactRouter from "./Router/contactRouter.js";
-import adminRouter from "./Router/admin.routes.js"
-import stepUpRouter from "./Router/stepUp.routes.js"
-import forgotPasswordRouter from "./Router/authResetRoutes.js"
+import adminRouter from "./Router/admin.routes.js";
+import stepUpRouter from "./Router/stepUp.routes.js";
+import forgotPasswordRouter from "./Router/authResetRoutes.js";
 import { csrfProtection } from "./Middleware/csrfMiddleware.js";
-
-
+import { initSocket } from "./Socket/socket.js";
+// how to create sockets
+//  1️⃣ CREATE EXPRESS APP FIRST (USUALLY BEFORE ANY MIDDLEWARE OR ROUTES)
+//    2️⃣ CREATE HTTP SERVER FROM EXPRESS APP (NOT APP.LISTEN)
+//     3️⃣ ALLOWED ORIGINS FOR SOCKETS (CAN BE SAME OR DIFFERENT FROM API CORS)
+//     4️⃣ INITIALIZE SOCKETS WITH HTTP SERVER AND CORS SETTINGS  
 dotenv.config();
 
+/* ============================
+   1️⃣ CREATE EXPRESS APP FIRST
+============================ */
 const app = express();
+
+/* ============================
+   2️⃣ CREATE HTTP SERVER FROM EXPRESS
+============================ */
+const httpServer = createServer(app);
+
+
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 // ==========================================
@@ -38,11 +54,18 @@ if (process.env.NODE_ENV === "production") {
 // ==========================================
 // 2. STRICT CORS (HARDENED)
 // ==========================================
-
-const allowedOrigins = process.env.ALLOWED_ORIGINS 
-  ? process.env.ALLOWED_ORIGINS.split(",").map(origin => origin.trim()) // .trim() removes accidental spaces
+/* ============================
+   3️⃣ ALLOWED ORIGINS
+============================ */
+const allowedOrigins = process.env.ALLOWED_ORIGINS
+  ? process.env.ALLOWED_ORIGINS.split(",").map((origin) => origin.trim()) // .trim() removes accidental spaces
   : [];
 
+
+/* ============================
+   4️⃣ INITIALIZE SOCKETS
+============================ */
+initSocket(httpServer, allowedOrigins);
 
 app.use(
   cors({
@@ -51,15 +74,20 @@ app.use(
       if (!origin || allowedOrigins.includes(origin)) {
         return callback(null, true);
       }
-      
+
       // LOG IT so you can see it in Render logs, but don't "crash" the middleware
       console.error("🛑 CORS Blocked for:", origin);
       return callback(null, false); // This sends a clean 403/block without an exception
     },
     credentials: true,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"], // Added OPTIONS
-    allowedHeaders: ["Content-Type", "Authorization", "X-CSRF-Token", "X-XSRF-TOKEN"]
-  })
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization",
+      "X-CSRF-Token",
+      "X-XSRF-TOKEN",
+    ],
+  }),
 );
 // ==========================================
 // 3. SECURITY HEADERS (HELMET)
@@ -113,8 +141,6 @@ app.use("/api/", generalLimiter);
 // 6. CSRF PROTECTION (COOKIE-BASED)
 // ==========================================
 
-
-
 // Provide CSRF token to frontend
 app.get("/api/csrf-token", csrfProtection, (req, res) => {
   const token = req.csrfToken();
@@ -130,8 +156,8 @@ app.use("/api/blogs", blogRouter);
 app.use("/api/testimonials", testimonialRouter);
 app.use("/api/registration", registrationRouter);
 app.use("/api/contact", contactRouter);
-app.use("/api/admin/",adminRouter)
-app.use("/api/step-up", stepUpRouter)
+app.use("/api/admin/", adminRouter);
+app.use("/api/step-up", stepUpRouter);
 app.use("/api/auth-reset", forgotPasswordRouter);
 
 // ==========================================
@@ -175,13 +201,13 @@ const PORT = process.env.PORT || 8000;
 // Initialize DB then start server
 initDb()
   .then(() => {
-    app.listen(PORT, () => {
+    httpServer.listen(PORT, () => {
       console.log(`🚀 Server running on port: ${PORT}`);
     });
   })
   .catch((err) => {
     console.error("❌ Failed to initialize DB:", err);
-    process.exit(1); // Exit if DB fails
+    process.exit(1);
   });
 
 //   remember to include this for security purposes

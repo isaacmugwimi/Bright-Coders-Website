@@ -329,7 +329,7 @@ const Contact = () => {
             </p>
             <button
               onClick={() => setShowModal(false)}
-              className="close-modal-btn"
+              className="contact-close-modal-btn"
             >
               Back to Website
             </button>

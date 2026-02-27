@@ -35,7 +35,7 @@ const AboutHomepage = () => {
               alt="Students learning coding at Bright Coders"
               loading="lazy"
               width="500"
-              height="350"
+              height="300"
             />
           </div>
 
