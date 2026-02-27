@@ -1,9 +1,227 @@
-.badge.unread { background: #fee2e2; color: #dc2626; } /* Reddish */
-.badge.read { background: #fef9c3; color: #a16207; }   /* Yellowish */
-.badge.replied { background: #dcfce7; color: #16a34a; } /* Greenish */
+.badge.unread {
+  background: #fee2e2;
+  color: #dc2626;
+} /* Reddish */
+.badge.read {
+  background: #fef9c3;
+  color: #a16207;
+} /* Yellowish */
+.badge.replied {
+  background: #dcfce7;
+  color: #16a34a;
+} /* Greenish */
 
 .message-cell p {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.selected-row {
+  background-color: #f0f7ff !important;
+}
+.bulk-btn {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+}
+.pointer {
+  cursor: pointer;
+}
+.pagination-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-top: 1px solid #eee;
+}
+.pagination-btns {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.pagination-btns button {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  cursor: pointer;
+}
+.pagination-btns button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Contact Modal Styles */
+.contact-modal {
+  max-width: 500px;
+}
+.detail-item {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.detail-item label {
+  font-size: 12px;
+  color: #666;
+  display: block;
+}
+.message-box {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+}
+.message-text {
+  margin-top: 8px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+
+
+:root {
+  --primary-color: #4f46e5;
+  --primary-hover: #4338ca;
+  --bg-subtle: #f8fafc;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --radius: 12px;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.contact-view-card {
+  background: white;
+  width: 100%;
+  max-width: 600px;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  animation: modalSlideUp 0.3s ease-out;
+}
+
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.view-modal-header {
+  padding: 24px;
+  background: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-user-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.user-avatar {
+  width: 48px;
+  height: 48px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.status-pill {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 24px;
+}
+
+.section-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.info-value-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-subtle);
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.message-container {
+  padding: 0 24px 24px 24px;
+}
+
+.message-content-box {
+  background: #f1f5f9;
+  padding: 16px;
+  border-radius: 8px;
+  color: var(--text-main);
+  line-height: 1.6;
+  min-height: 120px;
+  white-space: pre-wrap;
+}
+
+.view-modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  background: var(--bg-subtle);
+}
+
+.primary-reply-btn {
+  background: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.primary-reply-btn:hover {
+  background: var(--primary-hover);
 }

@@ -1,43 +1,29 @@
 import React, { useEffect, useState, useMemo } from "react";
+import { CustomAlerts, Toast } from "../../helpers/CustomAlerts/CustomAlerts.jsx";
 import {
-  CustomAlerts,
-  Toast,
-} from "../../helpers/CustomAlerts/CustomAlerts.jsx";
-import {
-  Trash2,
-  Loader2,
-  Mail,
-  MailOpen,
-  Reply,
-  Search,
-  CheckCircle,
-  Inbox,
+  Trash2, Loader2, Mail, MailOpen, Reply, Search,
+  CheckCircle, Inbox, ChevronLeft, ChevronRight, Eye
 } from "lucide-react";
 import axiosInstance from "../../utils/axiosInstance.js";
 import { API_PATHS } from "../../utils/apiPaths.js";
-import "../AdminBlogManager/AdminBlogManager.css"; // Reuse existing layout styles
-import "./AdminContact.css"; // Specific styles for contact manager
+import ContactViewModal from "./ContactViewModal.jsx";
+import "./AdminContact.css";
 
 const AdminContactManager = () => {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filterMode, setFilterMode] = useState("total"); // 'total', 'unread', 'read', 'replied'
+  const [filterMode, setFilterMode] = useState("total");
   const [isProcessingId, setIsProcessingId] = useState(null);
+  
+  // NEW FEATURES STATE
+  const [viewingContact, setViewingContact] = useState(null);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
-  const [alertConfig, setAlertConfig] = useState({
-    isOpen: false,
-    title: "",
-    message: "",
-    type: "danger",
-    onConfirm: () => {},
-  });
-
-  const [toastConfig, setToastConfig] = useState({
-    show: false,
-    message: "",
-    type: "success",
-  });
+  const [alertConfig, setAlertConfig] = useState({ isOpen: false, title: "", message: "", type: "danger", onConfirm: () => {} });
+  const [toastConfig, setToastConfig] = useState({ show: false, message: "", type: "success" });
 
   const triggerToast = (message, type = "success") => {
     setToastConfig({ show: true, message, type });
@@ -46,6 +32,8 @@ const AdminContactManager = () => {
 
   useEffect(() => {
     fetchContacts();
+    // REAL-TIME: If using Socket.io, you would listen here:
+    // socket.on("newContact", (data) => setContacts(prev => [data, ...prev]));
   }, []);
 
   const fetchContacts = async () => {
@@ -60,199 +48,150 @@ const AdminContactManager = () => {
     }
   };
 
-  // --- STATS ---
-  const stats = useMemo(() => ({
-    unread: contacts.filter((c) => c.status === "unread").length,
-    replied: contacts.filter((c) => c.status === "replied").length,
-    total: contacts.length,
-  }), [contacts]);
-
-  // --- FILTERING ---
-  const filteredData = useMemo(() => {
-    let result = contacts.filter(
-      (c) =>
-        c.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        c.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        c.message.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    if (filterMode !== "total") {
-      result = result.filter((c) => c.status === filterMode);
+  // --- BULK ACTIONS ---
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setSelectedIds(filteredData.map(c => c.id));
+    } else {
+      setSelectedIds([]);
     }
+  };
 
+  const handleSelectOne = (id) => {
+    setSelectedIds(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
+  };
+
+  const handleBulkDelete = () => {
+    setAlertConfig({
+      isOpen: true,
+      title: "Bulk Delete?",
+      message: `Are you sure you want to delete ${selectedIds.length} messages?`,
+      type: "danger",
+      onConfirm: async () => {
+        setAlertConfig(p => ({ ...p, isOpen: false }));
+        try {
+          // Assuming backend supports bulk delete or loop
+          await Promise.all(selectedIds.map(id => axiosInstance.delete(API_PATHS.CONTACTS.DELETE(id))));
+          setContacts(prev => prev.filter(c => !selectedIds.includes(c.id)));
+          setSelectedIds([]);
+          triggerToast("Selected messages deleted");
+        } catch (err) { triggerToast("Bulk delete failed", "error"); }
+      }
+    });
+  };
+
+  // --- LOGIC ---
+  const filteredData = useMemo(() => {
+    let result = contacts.filter(c => 
+      c.full_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      c.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      c.message.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    if (filterMode !== "total") result = result.filter(c => c.status === filterMode);
     return result;
   }, [contacts, searchTerm, filterMode]);
 
-  const handleDelete = (id) => {
-    setAlertConfig({
-      isOpen: true,
-      title: "Delete Message?",
-      message: "This will permanently remove this inquiry. Proceed?",
-      type: "danger",
-      onConfirm: async () => {
-        setAlertConfig((prev) => ({ ...prev, isOpen: false }));
-        try {
-          await axiosInstance.delete(API_PATHS.CONTACTS.DELETE(id));
-          setContacts((prev) => prev.filter((c) => c.id !== id));
-          triggerToast("Message deleted", "success");
-        } catch (err) {
-          triggerToast("Failed to delete", "error");
-        }
-      },
-    });
-  };
+  // PAGINATION CALCULATION
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const paginatedData = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
   const handleUpdateStatus = async (id, newStatus) => {
     try {
       setIsProcessingId(id);
       await axiosInstance.patch(API_PATHS.CONTACTS.UPDATE_STATUS(id), { status: newStatus });
-      setContacts((prev) =>
-        prev.map((c) => (c.id === id ? { ...c, status: newStatus } : c))
-      );
-      triggerToast(`Marked as ${newStatus}`, "success");
-    } catch (error) {
-      triggerToast("Failed to update status", "error");
-    } finally {
-      setIsProcessingId(null);
-    }
+      setContacts(prev => prev.map(c => c.id === id ? { ...c, status: newStatus } : c));
+      triggerToast(`Marked as ${newStatus}`);
+    } catch (error) { triggerToast("Update failed", "error"); }
+    finally { setIsProcessingId(null); }
   };
 
   return (
     <>
       <div className="admin-container">
-        {/* STATS STRIP */}
         <div className="stats-grid">
-          <div className={`stat-card ${filterMode === "total" ? "active-filter" : ""}`} onClick={() => setFilterMode("total")}>
+          <div className={`stat-card ${filterMode === "total" ? "active-filter" : ""}`} onClick={() => {setFilterMode("total"); setCurrentPage(1);}}>
             <div className="stat-icon total"><Inbox size={20} /></div>
-            <div className="stat-info">
-              <span className="stat-label">Total Inquiries</span>
-              <span className="stat-value">{stats.total}</span>
-            </div>
+            <div className="stat-info"><span className="stat-label">Total</span><span className="stat-value">{contacts.length}</span></div>
           </div>
-
-          <div className={`stat-card ${filterMode === "unread" ? "active-filter" : ""}`} onClick={() => setFilterMode("unread")}>
+          <div className={`stat-card ${filterMode === "unread" ? "active-filter" : ""}`} onClick={() => {setFilterMode("unread"); setCurrentPage(1);}}>
             <div className="stat-icon draft"><Mail size={20} /></div>
-            <div className="stat-info">
-              <span className="stat-label">Unread</span>
-              <span className="stat-value">{stats.unread}</span>
-            </div>
-          </div>
-
-          <div className={`stat-card ${filterMode === "replied" ? "active-filter" : ""}`} onClick={() => setFilterMode("replied")}>
-            <div className="stat-icon live"><Reply size={20} /></div>
-            <div className="stat-info">
-              <span className="stat-label">Replied</span>
-              <span className="stat-value">{stats.replied}</span>
-            </div>
+            <div className="stat-info"><span className="stat-label">Unread</span><span className="stat-value">{contacts.filter(c=>c.status==='unread').length}</span></div>
           </div>
         </div>
 
         <div className="admin-header">
           <div>
-            <h1>Contact Inquiries</h1>
+             <h1>Contact Inquiries</h1>
             <p className="subtitle">Manage messages from potential students and partners</p>
+            {selectedIds.length > 0 && (
+              <button className="delete-btn bulk-btn" onClick={handleBulkDelete}>
+                <Trash2 size={16} /> Delete Selected ({selectedIds.length})
+              </button>
+            )}
           </div>
           <div className="header-actions">
             <div className="search-container">
               <Search className="search-icon" size={18} />
-              <input
-                type="text"
-                placeholder="Search name, email or content..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
+              <input type="text" placeholder="Search..." value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             </div>
           </div>
         </div>
 
         {loading ? (
-          <div className="loading-full-state">
-            <Loader2 className="spinner" size={40} />
-            <p>Loading messages...</p>
-          </div>
-        ) : filteredData.length > 0 ? (
+          <div className="loading-full-state"><Loader2 className="spinner" size={40} /><p>Loading...</p></div>
+        ) : (
           <div className="table-wrapper">
             <table className="admin-table">
               <thead>
                 <tr>
+                  <th style={{ width: "5%" }} ><input type="checkbox" onChange={handleSelectAll} checked={selectedIds.length === filteredData.length && filteredData.length > 0} /></th>
                   <th>Sender</th>
-                  <th>Message Content</th>
-                  <th>Date</th>
+                  <th>Message</th>
                   <th>Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {filteredData.map((c) => (
-                  <tr key={c.id}>
+                {paginatedData.map((c) => (
+                  <tr key={c.id} className={selectedIds.includes(c.id) ? "selected-row" : ""}>
+                    <td><input type="checkbox" checked={selectedIds.includes(c.id)} onChange={() => handleSelectOne(c.id)} /></td>
                     <td>
                       <div className="font-bold">{c.full_name}</div>
                       <div className="text-muted small">{c.email}</div>
                     </td>
-                    <td className="message-cell">
-                      <p className="truncate-text" style={{ maxWidth: '300px' }}>{c.message}</p>
+                    <td className="message-cell" onClick={() => setViewingContact(c)}>
+                      <p className="truncate-text pointer">{c.message}</p>
                     </td>
-                    <td>{new Date(c.created_at).toLocaleDateString()}</td>
-                    <td>
-                      <span className={`badge ${c.status}`}>
-                        {c.status.toUpperCase()}
-                      </span>
-                    </td>
+                    <td><span className={`badge ${c.status}`}>{c.status}</span></td>
                     <td>
                       <div className="action-btns">
-                        {c.status === 'unread' && (
-                          <button 
-                            className="push-row-btn" 
-                            title="Mark as Read"
-                            onClick={() => handleUpdateStatus(c.id, 'read')}
-                            disabled={isProcessingId === c.id}
-                          >
-                            <MailOpen size={16} />
-                          </button>
-                        )}
-                        {c.status !== 'replied' && (
-                          <button 
-                            className="edit-btn" 
-                            title="Mark as Replied"
-                            onClick={() => handleUpdateStatus(c.id, 'replied')}
-                            disabled={isProcessingId === c.id}
-                          >
-                            <CheckCircle size={16} />
-                          </button>
-                        )}
-                        <button className="delete-btn" onClick={() => handleDelete(c.id)}>
-                          <Trash2 size={16} />
-                        </button>
+                        <button className="edit-btn" title="View" onClick={() => setViewingContact(c)}><Eye size={16} /></button>
+                        <a href={`mailto:${c.email}`} className="push-row-btn" title="Quick Reply"><Reply size={16} /></a>
+                        <button className="delete-btn" onClick={() => handleUpdateStatus(c.id, 'replied')}><CheckCircle size={16} /></button>
                       </div>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
-        ) : (
-          <div className="empty-state-card">
-            <p>No messages found.</p>
+
+            {/* PAGINATION CONTROLS */}
+            <div className="pagination-footer">
+              <span>Showing {paginatedData.length} of {filteredData.length}</span>
+              <div className="pagination-btns">
+                <button disabled={currentPage === 1} onClick={() => setCurrentPage(prev => prev - 1)}><ChevronLeft size={20} /></button>
+                <span className="page-number">Page {currentPage} of {totalPages}</span>
+                <button disabled={currentPage === totalPages} onClick={() => setCurrentPage(prev => prev + 1)}><ChevronRight size={20} /></button>
+              </div>
+            </div>
           </div>
         )}
       </div>
 
-      <CustomAlerts
-        isOpen={alertConfig.isOpen}
-        title={alertConfig.title}
-        message={alertConfig.message}
-        type={alertConfig.type}
-        onConfirm={alertConfig.onConfirm}
-        onCancel={() => setAlertConfig((prev) => ({ ...prev, isOpen: false }))}
-      />
-
-      {toastConfig.show && (
-        <Toast
-          message={toastConfig.message}
-          type={toastConfig.type}
-          onClose={() => setToastConfig((prev) => ({ ...prev, show: false }))}
-        />
-      )}
+      <ContactViewModal contact={viewingContact} onClose={() => setViewingContact(null)} />
+      
+      <CustomAlerts isOpen={alertConfig.isOpen} title={alertConfig.title} message={alertConfig.message} type={alertConfig.type} onConfirm={alertConfig.onConfirm} onCancel={() => setAlertConfig(p => ({ ...p, isOpen: false }))} />
+      {toastConfig.show && <Toast message={toastConfig.message} type={toastConfig.type} onClose={() => setToastConfig(p => ({ ...p, show: false }))} />}
     </>
   );
 };
