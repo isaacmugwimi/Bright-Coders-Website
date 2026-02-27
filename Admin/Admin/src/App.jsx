@@ -24,6 +24,7 @@ import AccountSettings from "./Components/AccountSettings/AccountSettings";
 import SignupSuccess from "./Pages/SignupSuccess/SignupSuccess";
 import { useEffect } from "react";
 import { fetchCsrfToken } from "./utils/csrf";
+import AdminContactManager from "./Components/AdminContact/AdminContact";
 
 // =====================
 // ROOT COMPONENT
@@ -61,6 +62,7 @@ function AppRoutes() {
       <Route element={<ProtectedRoute />}>
         <Route element={<DashBoardLayout />}>
           <Route path="/home" element={<AdminDashBoard />} />
+          <Route path="/contacts" element={<AdminContactManager />} />
           <Route path="/programs" element={<ProgramManagement />} />
           <Route path="/blogs" element={<AdminBlogManager />} />
           <Route path="/testimonials" element={<AdminTestimonialManager />} />

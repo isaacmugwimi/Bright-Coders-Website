@@ -6,6 +6,7 @@ import {
   MessageSquareQuote,
   Users,
   Settings,
+  Mail, 
 } from "lucide-react";
 
 export const SIDE_MENU_DATA = [
@@ -35,20 +36,24 @@ export const SIDE_MENU_DATA = [
   },
   {
     id: "05",
+    label: "Inquiries", 
+    icon: Mail,
+    path: "/contacts",
+  },
+  {
+    id: "06",
     label: "Students",
     icon: Users,      
     path: "/studentRegistration",
   },
-{
-    id: "06",
-    label: "Account Settings", // Added the new menu item
+  {
+    id: "07",
+    label: "Account Settings",
     icon: Settings,      
     path: "/account-settings",
   },
-
-
   {
-    id: "07",
+    id: "08",
     label: "Logout",
     icon: LogOut,
     path: "/logout",

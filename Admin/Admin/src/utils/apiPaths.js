@@ -66,6 +66,11 @@ ADMIN_ACCOUNT: {
     UPDATE_PROFILE: "/api/admin/profile-update", // PUT request for name/image
     CHANGE_PASSWORD: "/api/admin/change-password",
     DELETE_ACCOUNT: "/api/admin/delete-account",
-  }
+  },
+  CONTACTS: {
+  GET_ALL: "/api/contact",
+  UPDATE_STATUS: (id) => `/api/contact/${id}`,
+  DELETE: (id) => `/api/contact/${id}`,
+}
 
 };
