@@ -361,3 +361,83 @@ export const sendAdminWelcomeEmail = async (adminData) => {
     throw error;
   }
 };
+
+
+
+
+// export const sendNewContactNotification = async (contactData) => {
+//   try {
+//     const { data, error } = await resend.emails.send({
+//       from: EMAIL_SENDERS.ALERTS,
+//       to: process.env.ADMIN_EMAIL,
+//       subject: `📩 New Inquiry: ${contactData.full_name}`,
+//       html: `
+//         <!DOCTYPE html>
+//         <html>
+//         <body style="background-color: #f1f5f9; margin: 0; padding: 0; font-family: sans-serif;">
+//           <table width="100%" border="0" cellpadding="0" cellspacing="0">
+//             <tr>
+//               <td align="center" style="padding: 40px 20px;">
+//                 <table width="100%" style="max-width: 600px; background-color: #ffffff; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);">
+                  
+//                   <tr>
+//                     <td style="background-color: #4f46e5; padding: 30px; text-align: center;">
+//                       <h2 style="color: #ffffff; margin: 0; font-size: 20px; letter-spacing: 0.5px;">New Contact Message</h2>
+//                       <p style="color: #c7d2fe; margin: 10px 0 0 0; font-size: 14px;">A visitor reached out via the website</p>
+//                     </td>
+//                   </tr>
+
+//                   <tr>
+//                     <td style="padding: 40px;">
+//                       <div style="margin-bottom: 30px;">
+//                         <h3 style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px;">Sender Details</h3>
+//                         <table width="100%" style="background-color: #f8fafc; border-radius: 8px; padding: 20px; border: 1px solid #f1f5f9;">
+//                           <tr>
+//                             <td style="padding: 5px 0; color: #475569; font-size: 14px;">Name:</td>
+//                             <td style="padding: 5px 0; font-weight: 600; color: #1e293b; font-size: 14px;">${contactData.full_name}</td>
+//                           </tr>
+//                           <tr>
+//                             <td style="padding: 5px 0; color: #475569; font-size: 14px;">Email:</td>
+//                             <td style="padding: 5px 0; color: #2563eb; font-size: 14px;"><a href="mailto:${contactData.email}" style="color: #2563eb; text-decoration: none;">${contactData.email}</a></td>
+//                           </tr>
+//                         </table>
+//                       </div>
+
+//                       <div style="margin-bottom: 30px;">
+//                         <h3 style="font-size: 12px; color: #64748b; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px;">Message Content</h3>
+//                         <div style="background-color: #ffffff; border-left: 4px solid #4f46e5; padding: 15px 20px; font-style: italic; color: #334155; line-height: 1.6; font-size: 15px;">
+//                           "${contactData.message}"
+//                         </div>
+//                       </div>
+
+//                       <div style="text-align: center; margin-top: 40px;">
+//                         <a href="${process.env.ADMIN_URL}/contacts" 
+//                            style="background-color: #4f46e5; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 8px; font-weight: 700; display: inline-block; font-size: 14px;">
+//                            View in Admin Dashboard
+//                         </a>
+//                       </div>
+//                     </td>
+//                   </tr>
+
+//                   <tr>
+//                     <td align="center" style="background-color: #f8fafc; padding: 20px; border-top: 1px solid #e2e8f0;">
+//                       <p style="margin: 0; font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px;">
+//                         Bright Coders Academy Automated Alert System
+//                       </p>
+//                     </td>
+//                   </tr>
+//                 </table>
+//               </td>
+//             </tr>
+//           </table>
+//         </body>
+//         </html>
+//       `,
+//     });
+//     if (error) throw error;
+//     return data;
+//   } catch (error) {
+//     console.error("New Contact Notification Error:", error);
+//     throw error;
+//   }
+// };

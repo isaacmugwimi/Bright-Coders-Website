@@ -234,3 +234,104 @@
 .selected-row {
   background-color: #e6f0ff;
 }
+
+
+.spin {
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+
+/* --- RESPONSIVE MEDIA QUERIES --- */
+
+/* Tablet & Smaller Screens (under 1024px) */
+@media (max-width: 1024px) {
+  .info-grid {
+    grid-template-columns: 1fr; /* Stack the Email/Date group in modal */
+    gap: 15px;
+  }
+}
+
+/* Mobile Screens (under 768px) */
+@media (max-width: 768px) {
+  .admin-container {
+    padding: 10px;
+  }
+
+  /* Stack the stats cards vertically */
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Adjust Header Layout */
+  .admin-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .header-actions {
+    width: 100%;
+  }
+
+  .search-container {
+    width: 100%;
+  }
+
+  .search-container input {
+    width: 100%;
+  }
+
+  /* Make Table Scrollable or transform to Cards */
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Pagination adjustment */
+  .pagination-footer {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+
+  /* Modal adjustments */
+  .contact-view-card {
+    max-width: 95%;
+    margin: 10px;
+  }
+
+  .view-modal-header {
+    padding: 16px;
+  }
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+/* Very Small Devices (under 480px) */
+@media (max-width: 480px) {
+  .view-modal-footer {
+    flex-direction: column;
+  }
+
+  .view-modal-footer button, 
+  .primary-reply-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Hide non-essential columns if table is too cramped */
+  .admin-table th:nth-child(3), 
+  .admin-table td:nth-child(3) {
+    display: none; /* Hide message snippet on tiny screens */
+  }
+}
