@@ -42,7 +42,7 @@ const Contact = () => {
 
   // Function for Clicking (Triggers Action)
   const handleEmailClick = () => {
-    const recipient = "developerisaac92@gmail.com";
+    const recipient = "info@brightcoderske.co.ke";
     const subject = encodeURIComponent("Inquiry for Bright Coders");
     const body = encodeURIComponent(
       "Hello,\n\nI'm interested in learning more about your programs.",
