@@ -98,12 +98,39 @@ const AdminContactManager = () => {
   const handleUpdateStatus = async (id, newStatus) => {
     try {
       setIsProcessingId(id);
+
       await axiosInstance.patch(API_PATHS.CONTACTS.UPDATE_STATUS(id), { status: newStatus });
       setContacts(prev => prev.map(c => c.id === id ? { ...c, status: newStatus } : c));
       triggerToast(`Marked as ${newStatus}`);
     } catch (error) { triggerToast("Update failed", "error"); }
     finally { setIsProcessingId(null); }
   };
+
+  const handleViewContact = async (contact) => {
+    if (!contact) return;
+  setViewingContact(contact);
+
+  // Only update if currently unread
+  if (contact.status === "unread") {
+    try {
+        console.log(API_PATHS.CONTACTS.UPDATE_STATUS(contact.id));
+      await axiosInstance.patch(
+        API_PATHS.CONTACTS.UPDATE_STATUS(contact.id),
+        { status: "read" }
+      );
+
+      setContacts(prev =>
+        prev.map(c =>
+          c.id === contact.id ? { ...c, status: "read" } : c
+        )
+      );
+    } catch (error) {
+        console.error("Backend Error:", error.response?.data);
+    //   triggerToast("Failed to mark as read", "error");
+    triggerToast("Failed to mark as read: " + (error.response?.data?.message || "Forbidden"), "error");
+    }
+  }
+};
 
   return (
     <>
@@ -153,19 +180,19 @@ const AdminContactManager = () => {
               </thead>
               <tbody>
                 {paginatedData.map((c) => (
-                  <tr key={c.id} className={selectedIds.includes(c.id) ? "selected-row" : ""}>
+                  <tr key={c.id} className={`${selectedIds.includes(c.id) ? "selected-row" : ""} ${c.status === "unread" ? "unread-row" : ""}`}>
                     <td><input type="checkbox" checked={selectedIds.includes(c.id)} onChange={() => handleSelectOne(c.id)} /></td>
                     <td>
                       <div className="font-bold">{c.full_name}</div>
                       <div className="text-muted small">{c.email}</div>
                     </td>
-                    <td className="message-cell" onClick={() => setViewingContact(c)}>
+                    <td className="message-cell" onClick={() => handleViewContact(c)}>
                       <p className="truncate-text pointer">{c.message}</p>
                     </td>
                     <td><span className={`badge ${c.status}`}>{c.status}</span></td>
                     <td>
                       <div className="action-btns">
-                        <button className="edit-btn" title="View" onClick={() => setViewingContact(c)}><Eye size={16} /></button>
+                        <button className="edit-btn" title="View" onClick={() => handleViewContact(c)}><Eye size={16} /></button>
                         <a href={`mailto:${c.email}`} className="push-row-btn" title="Quick Reply"><Reply size={16} /></a>
                         <button className="delete-btn" onClick={() => handleUpdateStatus(c.id, 'replied')}><CheckCircle size={16} /></button>
                       </div>

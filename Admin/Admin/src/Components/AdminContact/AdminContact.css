@@ -225,3 +225,12 @@
 .primary-reply-btn:hover {
   background: var(--primary-hover);
 }
+
+.unread-row {
+  background-color: #f4f8ff;
+  font-weight: 600;
+}
+
+.selected-row {
+  background-color: #e6f0ff;
+}

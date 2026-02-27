@@ -69,7 +69,7 @@ ADMIN_ACCOUNT: {
   },
   CONTACTS: {
   GET_ALL: "/api/contact",
-  UPDATE_STATUS: (id) => `/api/contact/${id}`,
+  UPDATE_STATUS: (id) => `/api/contact/${id}/status`,
   DELETE: (id) => `/api/contact/${id}`,
 }
 
