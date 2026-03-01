@@ -254,14 +254,4 @@
 }
 
 
-/* --- Responsive Adjustments --- */
-@media (max-width: 768px) {
-  .message-cell {
-    display: none; /* Hide messages on small mobile screens to save space */
-  }
 
-  .admin-table th:nth-child(2),
-  .admin-table td:nth-child(2) {
-    display: none;
-  }
-}

@@ -5,6 +5,8 @@ import {
   CheckCircle,
   X,
   Star,
+  UploadCloud,
+  Loader2,
 } from "lucide-react";
 import React, { useState, useRef, useEffect } from "react";
 import "./AddCourseForm.css";
@@ -24,6 +26,9 @@ const AddCourseForm = ({
   const [loading, setLoading] = useState(false);
   const formEndRef = useRef(null);
   const [errors, setErrors] = useState({});
+
+   const fileInputRef = useRef(null);
+     const [uploading, setUploading] = useState(false);
 
   const [formData, setFormData] = useState({
     code: initialData?.code || "",
@@ -126,24 +131,21 @@ const AddCourseForm = ({
   const handleFileUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const uploadData = new FormData();
-    uploadData.append("image", file);
+
+    const data = new FormData();
+    data.append("image", file);
+
     try {
-      setLoading(true);
-      const response = await axiosInstance.post(
-        API_PATHS.IMAGE.UPLOAD_IMAGE,
-        uploadData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-      if (response.data?.imageUrl) {
-        setFormData((prev) => ({ ...prev, imageUrl: response.data.imageUrl }));
-      }
+      setUploading(true);
+      const res = await axiosInstance.post(API_PATHS.IMAGE.UPLOAD_IMAGE, data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setFormData((prev) => ({ ...prev, imageUrl: res.data.imageUrl }));
+      alert("Image uploaded successfully!");
     } catch (error) {
-      alert("Upload failed. Check backend console.");
+      alert("Image upload failed");
     } finally {
-      setLoading(false);
+      setUploading(false);
     }
   };
 
@@ -185,6 +187,7 @@ const AddCourseForm = ({
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="form-wrapper">
@@ -458,22 +461,64 @@ const AddCourseForm = ({
         </div>
 
         {/* Media Section */}
-        <div
-          className={`upload-section ${errors.imageUrl ? "error-border" : ""}`}
-        >
-          <label className="file-label">
-            <ImageIcon size={20} />
-            <span>
-              {formData.imageUrl ? "Change Cover Image" : "Upload Cover Image"}
-            </span>
-            <input type="file" hidden onChange={handleFileUpload} />
-          </label>
-          {formData.imageUrl && (
-            <div className="upload-status">
-              <CheckCircle size={16} /> Image Linked
+        
+
+
+
+
+
+        <div className="form-grid">
+            <div className="form-group">
+              <label>Cover Media</label>
+              <div
+                className={`image-upload-card ${
+                  formData.imageUrl ? "has-image" : ""
+                }`}
+                onClick={() => fileInputRef.current.click()}
+              >
+                {uploading ? (
+                  <div className="upload-loader">
+                    <Loader2 className="spinner" />
+                  </div>
+                ) : formData.imageUrl ? (
+                  <>
+                    <img src={formData.imageUrl} alt="Preview" />
+                    <div className="change-overlay">
+                      <ImageIcon size={16} /> Change Image
+                    </div>
+                  </>
+                ) : (
+                  <div className="upload-prompt">
+                    <UploadCloud size={32} />
+                    <span>Click to upload thumbnail</span>
+                  </div>
+                )}
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  onChange={handleFileUpload}
+                  hidden
+                  accept="image/*"
+                />
+              </div>
             </div>
-          )}
-        </div>
+
+            <div className="form-column">
+              
+              <div className="form-group">
+                <label>Manual Image URL</label>
+                <input
+                  name="imageUrl"
+                  placeholder="https://..."
+                  value={formData.imageUrl}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+          </div>
+
+
+
 
         <div ref={formEndRef} style={{ height: "20px" }} />
 

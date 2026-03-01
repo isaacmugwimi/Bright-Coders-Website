@@ -1,11 +1,11 @@
-export const EMAIL_SENDERS = {
-  DEFAULT: "Bright Coders Academy <noreply@brightcoderske.co.ke>",
-  SECURITY: "Bright Coders Security <security@brightcoderske.co.ke>",
-  BILLING: "Bright Coders Billing <billing@brightcoderske.co.ke>",
-  ALERTS: "Bright Coders Alerts <alerts@brightcoderske.co.ke>",
-  INFO: "Bright Coders Info <info@brightcoderske.co.ke>",
-  ADMIN: "Bright Coders Academy <admin@brightcoderske.co.ke>",
-};
+// export const EMAIL_SENDERS = {
+//   DEFAULT: "Bright Coders Academy <noreply@brightcoderske.co.ke>",
+//   SECURITY: "Bright Coders Security <security@brightcoderske.co.ke>",
+//   BILLING: "Bright Coders Billing <billing@brightcoderske.co.ke>",
+//   ALERTS: "Bright Coders Alerts <alerts@brightcoderske.co.ke>",
+//   INFO: "Bright Coders Info <info@brightcoderske.co.ke>",
+//   ADMIN: "Bright Coders Academy <admin@brightcoderske.co.ke>",
+// };
 
 
 // export const EMAIL_SENDERS = {
@@ -17,11 +17,11 @@ export const EMAIL_SENDERS = {
 // };
 
 
-// export const EMAIL_SENDERS = {
-//   DEFAULT:  "Bright Coders Academy <onboarding@resend.dev>",
-//   SECURITY:  "Bright Coders Security <onboarding@resend.dev>",
-//   BILLING:  "Bright Coders Billing <onboarding@resend.dev>", 
-//   ALERTS:  "Academy Alerts <onboarding@resend.dev>",
-//   INFO: "Bright Coders Info <onboarding@resend.dev>",
-//   ADMIN:  "Bright Coders Academy <onboarding@resend.dev>",
-// };
+export const EMAIL_SENDERS = {
+  DEFAULT:  "Bright Coders Academy <onboarding@resend.dev>",
+  SECURITY:  "Bright Coders Security <onboarding@resend.dev>",
+  BILLING:  "Bright Coders Billing <onboarding@resend.dev>", 
+  ALERTS:  "Academy Alerts <onboarding@resend.dev>",
+  INFO: "Bright Coders Info <onboarding@resend.dev>",
+  ADMIN:  "Bright Coders Academy <onboarding@resend.dev>",
+};

@@ -30,13 +30,15 @@
 }
 
 .admin-container {
-  padding: 40px;
+  padding: 20px;
   background-color: var(--bg-color);
   background-image: radial-gradient(#cbd5e1 0.5px, transparent 0.5px);
   background-size: 30px 30px;
   min-height: 100vh;
   font-family: "Inter", sans-serif;
   color: var(--text-main);
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* 2. Header Components */

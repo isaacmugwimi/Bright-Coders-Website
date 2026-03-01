@@ -15,7 +15,7 @@ const ContactViewModal = ({ contact, onClose, triggerToast }) => {
   });
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay1" onClick={onClose}>
       <div className="contact-view-card" onClick={(e) => e.stopPropagation()}>
         
         {/* Header */}
@@ -29,9 +29,9 @@ const ContactViewModal = ({ contact, onClose, triggerToast }) => {
               <span className={`status-pill ${contact.status}`}>{contact.status}</span>
             </div>
           </div>
-          <button className="close-circle-btn" onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8' }}>
+          {/* <button className="close-circle-btn" onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#94a3b8' }}>
             <X size={24} />
-          </button>
+          </button> */}
         </div>
 
         <div className="view-modal-body">
@@ -67,7 +67,7 @@ const ContactViewModal = ({ contact, onClose, triggerToast }) => {
 
         {/* Footer */}
         <div className="view-modal-footer">
-          <button className="secondary-btn" onClick={onClose} style={{ background: 'transparent', border: 'none', fontWeight: 600, color: '#64748b', cursor: 'pointer' }}>
+          <button className="close-btn-primary" onClick={onClose} style={{ background: 'transparent', border: 'none', fontWeight: 600, color: '#64748b', cursor: 'pointer' }}>
             Close
           </button>
           <a href={`mailto:${contact.email}?subject=Re: Inquiry`} className="primary-reply-btn">

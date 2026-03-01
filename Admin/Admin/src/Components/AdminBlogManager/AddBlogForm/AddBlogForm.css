@@ -53,7 +53,7 @@
    MODAL CONTAINER
 ================================ */
 .blog-modal {
-  width: min(95%, 920px);
+ max-width: 700px;
   max-height: 92vh;
   background: linear-gradient(180deg, #ffffff, var(--bg-soft));
   border-radius: var(--radius-lg);
@@ -126,9 +126,7 @@
   flex-direction: column;
   gap: 1.4rem;
   font-family: "Inter", sans-serif;
-  /* background-color: red; */
-  /* min-width: 600px; */
-  width: 100%;
+  max-width: 680px;
 
 }
 
@@ -302,7 +300,7 @@
 ================================ */
 .modal-footer {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between !important;
   gap: 1rem;
   padding-top: 1.5rem;
   margin-top: 1rem;

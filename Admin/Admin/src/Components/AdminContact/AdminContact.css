@@ -1,87 +1,6 @@
-.badge.unread {
-  background: #fee2e2;
-  color: #dc2626;
-} /* Reddish */
-.badge.read {
-  background: #fef9c3;
-  color: #a16207;
-} /* Yellowish */
-.badge.replied {
-  background: #dcfce7;
-  color: #16a34a;
-} /* Greenish */
-
-.message-cell p {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.selected-row {
-  background-color: #f0f7ff !important;
-}
-.bulk-btn {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 13px;
-}
-.pointer {
-  cursor: pointer;
-}
-.pagination-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px;
-  border-top: 1px solid #eee;
-}
-.pagination-btns {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-.pagination-btns button {
-  background: none;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 5px;
-  cursor: pointer;
-}
-.pagination-btns button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Contact Modal Styles */
-.contact-modal {
-  max-width: 500px;
-}
-.detail-item {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-.detail-item label {
-  font-size: 12px;
-  color: #666;
-  display: block;
-}
-.message-box {
-  background: #f9f9f9;
-  padding: 15px;
-  border-radius: 8px;
-  border: 1px solid #eee;
-}
-.message-text {
-  margin-top: 8px;
-  line-height: 1.6;
-  white-space: pre-wrap;
-}
-
-
-
+/* ========================================
+   ROOT VARIABLES
+======================================== */
 :root {
   --primary-color: #4f46e5;
   --primary-hover: #4338ca;
@@ -92,7 +11,80 @@
   --radius: 12px;
 }
 
-.modal-overlay {
+/* ========================================
+   BADGES
+======================================== */
+.badge.unread {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.badge.read {
+  background: #fef9c3;
+  color: #a16207;
+}
+
+.badge.replied {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+/* ========================================
+   TABLE STYLING
+======================================== */
+.message-cell p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.unread-row {
+  background-color: #f4f8ff;
+  font-weight: 600;
+}
+
+.selected-row {
+  background-color: #e6f0ff;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+/* ========================================
+   PAGINATION
+======================================== */
+.pagination-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-top: 1px solid #eee;
+}
+
+.pagination-btns {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.pagination-btns button {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.pagination-btns button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========================================
+   MODAL OVERLAY
+======================================== */
+.modal-overlay1 {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
@@ -104,21 +96,38 @@
   padding: 20px;
 }
 
+/* ========================================
+   MODAL CARD
+======================================== */
 .contact-view-card {
   background: white;
   width: 100%;
   max-width: 600px;
   border-radius: var(--radius);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
   overflow: hidden;
   animation: modalSlideUp 0.3s ease-out;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
 }
 
 @keyframes modalSlideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
+/* ========================================
+   MODAL HEADER
+======================================== */
 .view-modal-header {
   padding: 24px;
   background: var(--bg-subtle);
@@ -157,6 +166,14 @@
   color: #166534;
 }
 
+/* ========================================
+   MODAL BODY
+======================================== */
+.view-modal-body {
+  overflow-y: auto;
+}
+
+/* Info Grid */
 .info-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -186,6 +203,15 @@
   border: 1px solid var(--border-color);
 }
 
+.info-value-group span {
+  font-size: 14px;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Message */
 .message-container {
   padding: 0 24px 24px 24px;
 }
@@ -200,13 +226,17 @@
   white-space: pre-wrap;
 }
 
+/* ========================================
+   MODAL FOOTER
+======================================== */
 .view-modal-footer {
   padding: 16px 24px;
   border-top: 1px solid var(--border-color);
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 12px;
   background: var(--bg-subtle);
+  margin: 1rem;
 }
 
 .primary-reply-btn {
@@ -222,116 +252,92 @@
   transition: background 0.2s;
 }
 
+.close-btn-primary {
+  background: #fee2e2 !important;
+  color: #dc2626 !important;
+  padding: 10px 25px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.close-btn-primary:hover {
+  background: #fecaca !important;
+}
+
 .primary-reply-btn:hover {
   background: var(--primary-hover);
 }
 
-.unread-row {
-  background-color: #f4f8ff;
-  font-weight: 600;
-}
-
-.selected-row {
-  background-color: #e6f0ff;
-}
-
-
-.spin {
-  animation: rotate 1s linear infinite;
-}
-
-@keyframes rotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-
-/* --- RESPONSIVE MEDIA QUERIES --- */
-
-/* Tablet & Smaller Screens (under 1024px) */
+/* ========================================
+   TABLET (≤1024px)
+======================================== */
 @media (max-width: 1024px) {
+  .contact-view-card {
+    max-width: 90%;
+  }
+
   .info-grid {
-    grid-template-columns: 1fr; /* Stack the Email/Date group in modal */
-    gap: 15px;
+    gap: 16px;
   }
 }
 
-/* Mobile Screens (under 768px) */
+/* ========================================
+   MOBILE (≤768px)
+======================================== */
 @media (max-width: 768px) {
-  .admin-container {
-    padding: 10px;
+  .modal-overlay1 {
+    padding: 12px;
   }
 
-  /* Stack the stats cards vertically */
-  .stats-grid {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  /* Adjust Header Layout */
-  .admin-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
-
-  .header-actions {
-    width: 100%;
-  }
-
-  .search-container {
-    width: 100%;
-  }
-
-  .search-container input {
-    width: 100%;
-  }
-
-  /* Make Table Scrollable or transform to Cards */
-  .table-wrapper {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* Pagination adjustment */
-  .pagination-footer {
-    flex-direction: column;
-    gap: 15px;
-    text-align: center;
-  }
-
-  /* Modal adjustments */
   .contact-view-card {
-    max-width: 95%;
-    margin: 10px;
+    border-radius: 16px;
+    max-height: 90vh;
   }
 
   .view-modal-header {
-    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
   }
 
-  .user-avatar {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .info-value-group span {
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 }
 
-/* Very Small Devices (under 480px) */
+/* ========================================
+   SMALL PHONES (≤480px)
+======================================== */
 @media (max-width: 480px) {
-  .view-modal-footer {
-    flex-direction: column;
+  .view-modal-header {
+    padding: 18px;
   }
 
-  .view-modal-footer button, 
+  .info-grid {
+    padding: 18px;
+  }
+
+  .message-container {
+    padding: 0 18px 18px 18px;
+  }
+
+  .message-content-box {
+    font-size: 14px;
+  }
+
+  .view-modal-footer {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .view-modal-footer button,
   .primary-reply-btn {
     width: 100%;
     justify-content: center;
-  }
-
-  /* Hide non-essential columns if table is too cramped */
-  .admin-table th:nth-child(3), 
-  .admin-table td:nth-child(3) {
-    display: none; /* Hide message snippet on tiny screens */
   }
 }

@@ -6,21 +6,21 @@
   max-height: 80vh;
   /* padding-right: 10px; */
   overflow-y: auto;
-  padding-right: 40px;
+  /* padding-right: 40px; */
 }
 
 .form-wrapper::-webkit-scrollbar {
-  width: 8px;
+  width: 5px;
 }
 
 .form-wrapper::-webkit-scrollbar-track {
   background: #f1f5f9;
-  border-radius: 10px;
+  border-radius: 7px;
 }
 
 .form-wrapper::-webkit-scrollbar-thumb {
   background: #cbd5e1;
-  border-radius: 10px;
+  border-radius: 7px;
 }
 
 .form-wrapper::-webkit-scrollbar-thumb:hover {
@@ -32,17 +32,9 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  min-width: 600px;
+  /* background-color: red; */
+  min-width: 685px;
 }
-
-/* .form-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #0f172a;
-  margin-bottom: 0.5rem;
-  border-bottom: 2px solid #f1f5f9;
-  padding-bottom: 1rem;
-} */
 
 .form-grid {
   display: grid;
@@ -265,9 +257,90 @@ textarea {
   border-color: #f59e0b;
 }
 
+/* --- RESPONSIVE MEDIA QUERIES --- */
+
+/* Tablet and Small Laptops (under 1024px) */
+@media (max-width: 1024px) {
+  .form-wrapper {
+    max-width: 90%;
+    padding-right: 20px;
+  }
+
+  .form-grid-2,
+  .form-grid-3 {
+    gap: 1.25rem;
+  }
+}
+
+/* Mobile Devices (under 768px) */
 @media (max-width: 768px) {
+  .form-wrapper {
+    max-width: 95%;
+    max-height: 95vh;
+    padding-right: 15px;
+  }
+
+  .premium-form {
+    min-width: 100%;
+    gap: 1.25rem;
+  }
+
   .form-grid,
-  .form-grid-2 {
+  .form-grid-2,
+  .form-grid-3 {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .status-toggles {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .toggle-control {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .upload-section {
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-start;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+    gap: 0.75rem;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .array-item {
+    align-items: center;
+  }
+}
+
+/* Extra Small Devices (under 480px) */
+@media (max-width: 480px) {
+  .form-wrapper {
+    border-radius: 0;
+    max-height: 100vh;
+    width: 100%;
+    margin: 0;
+  }
+
+  label {
+    font-size: 0.75rem;
+  }
+
+  input,
+  textarea,
+  .level-select {
+    font-size: 16px;
   }
 }
