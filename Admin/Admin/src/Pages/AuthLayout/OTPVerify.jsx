@@ -3,6 +3,7 @@ import "./OTPVerify.css";
 import { fetchCsrfToken } from "../../utils/csrf";
 import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
+import { ClipboardPaste } from "lucide-react";
 
 export default function OTPVerify({
   tempToken,
@@ -142,6 +143,29 @@ export default function OTPVerify({
       setCanResend(false);
     }
   };
+  const handleIconPaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      const cleanText = text.replace(/\s/g, ""); // remove spaces
+
+      if (!/^\d+$/.test(cleanText)) {
+        setError("Clipboard does not contain a valid numeric code.");
+        return;
+      }
+
+      const pasteData = cleanText.slice(0, 6).split("");
+      const newOtp = Array(6).fill("");
+      pasteData.forEach((char, index) => {
+        newOtp[index] = char;
+      });
+      setOtp(newOtp);
+
+      // Focus the last input or the verify button
+      inputRefs.current[Math.min(pasteData.length - 1, 5)]?.focus();
+    } catch (err) {
+      setError("Please allow clipboard access or paste manually.");
+    }
+  };
 
   return (
     <div className="otp-container">
@@ -149,24 +173,35 @@ export default function OTPVerify({
         <h2>Verify Account</h2>
         <p>A 6-digit verification code was sent to your email address.</p>
 
-        <div className="otp-inputs-row">
-          {otp.map((digit, index) => (
-            <input
-              key={index}
-              type="text"
-              inputMode="numeric" // Opens number pad on mobile
-              autoComplete="one-time-code" // Suggests code from SMS/Email on mobile
-              pattern="\d*"
-              maxLength="1"
-              ref={(el) => (inputRefs.current[index] = el)}
-              value={digit}
-              onPaste={handlePaste}
-              onChange={(e) => handleChange(e, index)}
-              onKeyDown={(e) => handleKeyDown(e, index)}
-              className="otp-digit-input"
-              disabled={loading}
-            />
-          ))}
+        <div className="otp-input-wrapper">
+          <div className="otp-inputs-row">
+            {otp.map((digit, index) => (
+              <input
+                key={index}
+                type="text"
+                inputMode="numeric" // Opens number pad on mobile
+                autoComplete="one-time-code" // Suggests code from SMS/Email on mobile
+                pattern="\d*"
+                maxLength="1"
+                ref={(el) => (inputRefs.current[index] = el)}
+                value={digit}
+                onPaste={handlePaste}
+                onChange={(e) => handleChange(e, index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                className="otp-digit-input"
+                disabled={loading}
+              />
+            ))}
+          </div>
+          {/* The Paste Icon Button */}
+          <button
+            type="button"
+            className="otp-icon-paste-btn"
+            onClick={handleIconPaste}
+            title="Paste from clipboard"
+          >
+            <ClipboardPaste size={18} />
+          </button>
         </div>
 
         {error && <div className="otp-error-msg">{error}</div>}
