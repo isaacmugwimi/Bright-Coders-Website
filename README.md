@@ -40,17 +40,25 @@ This project was built using:
 ## 📂 Project Structure
 
 ```
-brightcoders-academy/
-│
-├── public/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   ├── assets/
-│   └── App.jsx
-│
-├── package.json
-└── README.md
+Bright-Coders-Website/
+├── Admin/                   # Backend/Admin management
+├── Backend/                 # Server-side logic
+├── frontend/
+│   └── brightcoders-frontend/
+│       ├── public/          # Static files (index.html, sitemaps)
+│       ├── src/
+│       │   ├── assets/      # Images and media
+│       │   ├── components/  # Reusable UI elements
+│       │   ├── Css/         # Global styles
+│       │   ├── Layout/      # Wrappers (Navbar, Footer)
+│       │   ├── pages/       # Route components (Home, About)
+│       │   ├── Utils/       # Helper functions
+│       │   ├── App.jsx      # Main component logic
+│       │   └── main.jsx     # Entry point
+│       ├── package.json     # Dependencies
+│       ├── vercel.json      # Deployment config
+│       └── vite.config.js   # Build tool config
+└── README.md                # Project documentation
 ```
 
 ---
