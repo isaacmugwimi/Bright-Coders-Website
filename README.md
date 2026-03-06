@@ -11,7 +11,7 @@ The website provides information about coding programs, learning paths, and how 
 
 Visit the website here:
 
-🔗 https://www.brightcoders.co.ke
+🔗 https://www.brightcoderske.co.ke
 
 ---
 
@@ -62,13 +62,13 @@ To run this project locally:
 1. Clone the repository
 
 ```
-git clone https://github.com/isaacmugwimi/brightcoders-academy.git
+git clone https://github.com/isaacmugwimi/Bright-Coders-Website.git
 ```
 
 2. Navigate into the project
 
 ```
-cd brightcoders-academy
+cd \Bright Coders Website\
 ```
 
 3. Install dependencies
