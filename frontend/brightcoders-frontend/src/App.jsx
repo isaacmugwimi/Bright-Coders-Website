@@ -24,9 +24,9 @@ import CertificateVerify from "./Components/CertificateVerify/CertificateVerify"
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/home" replace />} />
+      {/* <Route path="/" element={<Navigate to="/home" replace />} /> */}
 
-      <Route path="/home" element={<DashboardLayout />} />
+      <Route path="/" element={<DashboardLayout />} />
       <Route path="/about" element={<About />} />
       <Route path="/programs" element={<Programs />} />
       <Route path="/course-detail" element={<CourseDetail />} />

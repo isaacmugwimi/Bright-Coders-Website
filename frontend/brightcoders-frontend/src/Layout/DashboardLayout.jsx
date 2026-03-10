@@ -23,11 +23,12 @@ const DashboardLayout = () => {
           name="keywords"
           content="coding school Kenya, programming courses Nairobi, Bright Coders, learn javascript kenya"
         />
-        <link rel="canonical" href={`${baseUrl}/home`} />
+        <link rel="canonical" href={baseUrl} />
 
         {/* Open Graph */}
+
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${baseUrl}/home`} />
+        <meta property="og:url" content={baseUrl} />
         <meta
           property="og:title"
           content="Bright Coders | Tech Training Institute"
