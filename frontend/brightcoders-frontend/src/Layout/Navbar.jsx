@@ -74,7 +74,7 @@ const Navbar = () => {
         </div>
         <ul onClick={handleMenuClick}>
           <li>
-            <NavLink to="/home" onClick={closeAllMenus}>
+            <NavLink to="/" onClick={closeAllMenus}>
               <FaHome className="nav-icon" /> <span>Home</span>
             </NavLink>
           </li>
