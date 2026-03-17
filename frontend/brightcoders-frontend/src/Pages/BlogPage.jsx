@@ -48,6 +48,22 @@ const BlogPage = () => {
     };
 
     try {
+      if (blog.image_url) {
+        try {
+          const response = await fetch(blog.image_url);
+          const blob = await response.blob();
+          const file = new File([blob], "blog-image.jpg", { type: blob.type });
+
+          // Check if the browser supports sharing this specific file
+          if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            shareData.files = [file];
+          }
+        } catch (fileErr) {
+          console.error("Could not fetch image for sharing:", fileErr);
+          // We continue without the file if fetching fails
+        }
+      }
+
       if (navigator.share) {
         await navigator.share(shareData);
       } else {
