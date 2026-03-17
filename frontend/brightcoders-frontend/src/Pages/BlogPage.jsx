@@ -1,7 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "../Css/BlogData.css";
 import axios from "axios";
-import { Loader2, X, Calendar, User, CheckCircle2, Tag } from "lucide-react";
+import {
+  Loader2,
+  X,
+  Calendar,
+  User,
+  CheckCircle2,
+  Tag,
+  Share2,
+} from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
 const BlogPage = () => {
@@ -32,6 +40,26 @@ const BlogPage = () => {
     fetchPublicBlogs();
   }, [API_URL]);
 
+  const handleShare = async (blog) => {
+    const shareData = {
+      title: blog.title,
+      text: blog.summary || "Check out this blog from Bright Coders!",
+      url: `${siteUrl}/blog/${blog.id}`,
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        // Fallback: Copy to clipboard if Share API isn't supported
+        await navigator.clipboard.writeText(shareData.url);
+        alert("Link copied to clipboard!");
+      }
+    } catch (err) {
+      console.error("Error sharing:", err);
+    }
+  };
+
   // ================= Structured Data for Blogs =================
   const generateJSONLD = () => ({
     "@context": "https://schema.org",
@@ -58,28 +86,55 @@ const BlogPage = () => {
     <>
       {/* ================= SEO ================= */}
       <Helmet>
-        <title>Bright Coders Blog | Coding for Kids & Teens in Kenya</title>
+        <title>
+          {selectedBlog
+            ? `${selectedBlog.title} | Bright Coders Blog`
+            : "Bright Coders Blog | Coding for Kids & Teens in Kenya"}
+        </title>
         <meta
           name="description"
-          content="Explore Bright Coders’ blog for tips, insights, and stories about coding and technology for children and teens."
+          content={
+            selectedBlog?.summary ||
+            "Explore Bright Coders’ blog for tips, insights, and stories about coding for children."
+          }
         />
-        <meta
-          name="keywords"
-          content="Bright Coders blog, coding for kids, programming for children, kids tech insights, coding tips Kenya"
+        <link
+          rel="canonical"
+          href={
+            selectedBlog
+              ? `${siteUrl}/blog/${selectedBlog.id}`
+              : `${siteUrl}/blog`
+          }
         />
-        <link rel="canonical" href={`${siteUrl}/blog`} />
 
-        {/* Open Graph */}
-        <meta property="og:title" content="Bright Coders Blog" />
+        {/* --- Open Graph / Social Sharing --- */}
+        {/* If a blog is selected, use its data. Otherwise, use the general blog page data. */}
+        <meta
+          property="og:title"
+          content={selectedBlog?.title || "Bright Coders Blog"}
+        />
         <meta
           property="og:description"
-          content="Tips, insights, and stories about coding and tech for kids & teens."
+          content={
+            selectedBlog?.summary ||
+            "Tips, insights, and stories about coding and tech for kids & teens."
+          }
         />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content={`${siteUrl}/blog`} />
-        <meta property="og:image" content={`${siteUrl}/og-blog.jpg`} />
+        <meta
+          property="og:image"
+          content={selectedBlog?.image_url || `${siteUrl}/og-blog.jpg`}
+        />
+        <meta property="og:type" content="article" />
+        <meta
+          property="og:url"
+          content={
+            selectedBlog
+              ? `${siteUrl}/blog/${selectedBlog.id}`
+              : `${siteUrl}/blog`
+          }
+        />
 
-        {/* Structured Data */}
+        {/* --- Structured Data --- */}
         {blogs.length > 0 && (
           <script type="application/ld+json">
             {JSON.stringify(generateJSONLD())}
@@ -97,10 +152,10 @@ const BlogPage = () => {
         </div>
 
         {loading ? (
-           <div className="loading-container" id="programs-grid">
-              <div className="simple-spinner"></div>
-              <p>Loading stories...</p>
-            </div>
+          <div className="loading-container" id="programs-grid">
+            <div className="simple-spinner"></div>
+            <p>Loading stories...</p>
+          </div>
         ) : (
           <div className="blog-grid">
             {blogs.length > 0 ? (
@@ -173,9 +228,24 @@ const BlogPage = () => {
 
               <div className="modal-body">
                 <div className="modal-header-info">
-                  <span className="modal-category">
-                    <Tag size={14} /> {selectedBlog.category}
-                  </span>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                    }}
+                  >
+                    <span className="modal-category">
+                      <Tag size={14} /> {selectedBlog.category}
+                    </span>
+                    <button
+                      onClick={() => handleShare(selectedBlog)}
+                      className="share-btn"
+                      title="Share Blog"
+                    >
+                      <Share2 size={20} />
+                    </button>
+                  </div>
                   <h2>{selectedBlog.title}</h2>
                   <div className="modal-meta">
                     <span>
