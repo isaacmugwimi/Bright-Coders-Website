@@ -42,37 +42,35 @@ const BlogPage = () => {
     fetchPublicBlogs();
   }, [API_URL]);
 
-
-
-useEffect(() => {
-  if (id && blogs.length > 0) {
-    const sharedBlog = blogs.find(b => b.id.toString() === id);
-    if (sharedBlog) setSelectedBlog(sharedBlog);
-  }
-}, [id, blogs]);
-
-const handleShare = async (blog) => {
-  const shareUrl = `${siteUrl}/blog/${blog.id}`;
-  
-  const shareData = {
-    title: blog.title,
-    text: blog.summary, // This acts as the description in the share sheet
-    url: shareUrl,      // This triggers the preview card
-  };
-
-  try {
-    if (navigator.share) {
-      // By NOT sending 'files', WhatsApp will use your OG tags 
-      // from the Helmet to build a single, beautiful preview card.
-      await navigator.share(shareData);
-    } else {
-      await navigator.clipboard.writeText(shareUrl);
-      alert("Link copied!");
+  useEffect(() => {
+    if (id && blogs.length > 0) {
+      const sharedBlog = blogs.find((b) => b.id.toString() === id);
+      if (sharedBlog) setSelectedBlog(sharedBlog);
     }
-  } catch (err) {
-    if (err.name !== 'AbortError') console.error(err);
-  }
-};
+  }, [id, blogs]);
+
+  const handleShare = async (blog) => {
+    const shareUrl = `${siteUrl}/blog/${blog.id}`;
+
+    const shareData = {
+      title: blog.title,
+      text: blog.summary, // This acts as the description in the share sheet
+      url: shareUrl, // This triggers the preview card
+    };
+
+    try {
+      if (navigator.share) {
+        // By NOT sending 'files', WhatsApp will use your OG tags
+        // from the Helmet to build a single, beautiful preview card.
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(shareUrl);
+        alert("Link copied!");
+      }
+    } catch (err) {
+      if (err.name !== "AbortError") console.error(err);
+    }
+  };
 
   // ================= Structured Data for Blogs =================
   const generateJSONLD = () => ({
@@ -146,6 +144,17 @@ const handleShare = async (blog) => {
               ? `${siteUrl}/blog/${selectedBlog.id}`
               : `${siteUrl}/blog`
           }
+        />
+
+        {/* Twitter - This helps with preview reliability */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content={selectedBlog?.title || "Bright Coders Blog"}
+        />
+        <meta
+          name="twitter:image"
+          content={selectedBlog?.image_url || `${siteUrl}/og-blog.jpg`}
         />
 
         {/* --- Structured Data --- */}
