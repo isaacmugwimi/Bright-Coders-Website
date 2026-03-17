@@ -25,7 +25,7 @@ import { initSocket } from "./Socket/socket.js";
 //  1️⃣ CREATE EXPRESS APP FIRST (USUALLY BEFORE ANY MIDDLEWARE OR ROUTES)
 //    2️⃣ CREATE HTTP SERVER FROM EXPRESS APP (NOT APP.LISTEN)
 //     3️⃣ ALLOWED ORIGINS FOR SOCKETS (CAN BE SAME OR DIFFERENT FROM API CORS)
-//     4️⃣ INITIALIZE SOCKETS WITH HTTP SERVER AND CORS SETTINGS  
+//     4️⃣ INITIALIZE SOCKETS WITH HTTP SERVER AND CORS SETTINGS
 dotenv.config();
 
 /* ============================
@@ -37,8 +37,6 @@ const app = express();
    2️⃣ CREATE HTTP SERVER FROM EXPRESS
 ============================ */
 const httpServer = createServer(app);
-
-
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -60,7 +58,6 @@ if (process.env.NODE_ENV === "production") {
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",").map((origin) => origin.trim()) // .trim() removes accidental spaces
   : [];
-
 
 /* ============================
    4️⃣ INITIALIZE SOCKETS
@@ -118,10 +115,7 @@ app.use(
 app.use(express.json({ limit: "10kb" })); // prevent payload abuse
 app.use(cookieParser());
 
-
-
-
-app.get("/blog/:id/meta", async (req, res) => {
+app.get("/blog/:id", async (req, res) => {
   try {
     const blogId = req.params.id;
 
@@ -137,8 +131,7 @@ app.get("/blog/:id/meta", async (req, res) => {
     const title = blog.title || "Bright Coders Blog";
     const description =
       blog.summary || "Tips, insights, and stories about coding.";
-    const image =
-      blog.image_url || `${process.env.SITE_URL}/og-blog.jpg`;
+    const image = blog.image_url || `${process.env.SITE_URL}/og-blog.jpg`;
 
     const realUrl = `${process.env.SITE_URL}/blog/${blog.id}`;
 
@@ -174,8 +167,6 @@ app.get("/blog/:id/meta", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-
-
 
 // ==========================================
 // 5. RATE LIMITING (ANTI-ABUSE)

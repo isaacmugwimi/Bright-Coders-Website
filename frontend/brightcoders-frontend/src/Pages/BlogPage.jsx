@@ -50,7 +50,7 @@ const BlogPage = () => {
   }, [id, blogs]);
 
   const handleShare = async (blog) => {
-    const shareUrl = `${siteUrl}/blog/${blog.id}/meta`;
+    const shareUrl = `${siteUrl}/blog/${blog.id}`;
 
     const shareData = {
       title: blog.title,
