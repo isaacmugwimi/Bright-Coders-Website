@@ -34,6 +34,7 @@ function AppRoutes() {
       <Route path="/contact" element={<Contact />} />
       <Route path="/faqs" element={<FAQs />} />
       <Route path="/blogs" element={<Blog />} />
+      <Route path="/blog/:id" element={<Blog />} />
       <Route path="/founder" element={<Founder />} />
       <Route path="/testimonials" element={<TestimonialPage />} />
       {/* 1. This handles clicking "Verify" from the Navbar (Search Mode) */}

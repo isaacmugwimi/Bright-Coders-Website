@@ -11,12 +11,14 @@ import {
   Share2,
 } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+import { useParams } from "react-router-dom";
 
 const BlogPage = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedBlog, setSelectedBlog] = useState(null);
 
+  const { id } = useParams();
   const siteUrl = import.meta.env.VITE_SITE_URL;
   const API_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -40,44 +42,35 @@ const BlogPage = () => {
     fetchPublicBlogs();
   }, [API_URL]);
 
+
+
+useEffect(() => {
+  if (id && blogs.length > 0) {
+    const sharedBlog = blogs.find(b => b.id.toString() === id);
+    if (sharedBlog) setSelectedBlog(sharedBlog);
+  }
+}, [id, blogs]);
+
 const handleShare = async (blog) => {
   const shareUrl = `${siteUrl}/blog/${blog.id}`;
-  const shareText = `${blog.title}\n\n${blog.summary || "Check out this blog from Bright Coders!"}\n\nRead more at: ${shareUrl}`;
-
+  
   const shareData = {
     title: blog.title,
-    text: shareText, 
-    url: shareUrl,
+    text: blog.summary, // This acts as the description in the share sheet
+    url: shareUrl,      // This triggers the preview card
   };
 
   try {
-    if (blog.image_url) {
-      try {
-        const response = await fetch(blog.image_url);
-        const blob = await response.blob();
-        
-        // Ensure the filename is clear and extension matches the type
-        const file = new File([blob], "blog-preview.jpg", { type: blob.type });
-
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          shareData.files = [file];
-        }
-      } catch (fileErr) {
-        console.error("Image fetch failed, sharing text only:", fileErr);
-      }
-    }
-
     if (navigator.share) {
+      // By NOT sending 'files', WhatsApp will use your OG tags 
+      // from the Helmet to build a single, beautiful preview card.
       await navigator.share(shareData);
     } else {
       await navigator.clipboard.writeText(shareUrl);
-      alert("Link copied to clipboard!");
+      alert("Link copied!");
     }
   } catch (err) {
-    // Only log if it's not a user cancellation
-    if (err.name !== 'AbortError') {
-      console.error("Sharing failed:", err);
-    }
+    if (err.name !== 'AbortError') console.error(err);
   }
 };
 
