@@ -21,11 +21,12 @@ import stepUpRouter from "./Router/stepUp.routes.js";
 import forgotPasswordRouter from "./Router/authResetRoutes.js";
 import { csrfProtection } from "./Middleware/csrfMiddleware.js";
 import { initSocket } from "./Socket/socket.js";
+import { getBlogMetadata } from "./Database/Helper/blogMeta.js";
 // how to create sockets
 //  1️⃣ CREATE EXPRESS APP FIRST (USUALLY BEFORE ANY MIDDLEWARE OR ROUTES)
 //    2️⃣ CREATE HTTP SERVER FROM EXPRESS APP (NOT APP.LISTEN)
 //     3️⃣ ALLOWED ORIGINS FOR SOCKETS (CAN BE SAME OR DIFFERENT FROM API CORS)
-//     4️⃣ INITIALIZE SOCKETS WITH HTTP SERVER AND CORS SETTINGS  
+//     4️⃣ INITIALIZE SOCKETS WITH HTTP SERVER AND CORS SETTINGS
 dotenv.config();
 
 /* ============================
@@ -37,8 +38,6 @@ const app = express();
    2️⃣ CREATE HTTP SERVER FROM EXPRESS
 ============================ */
 const httpServer = createServer(app);
-
-
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -60,7 +59,6 @@ if (process.env.NODE_ENV === "production") {
 const allowedOrigins = process.env.ALLOWED_ORIGINS
   ? process.env.ALLOWED_ORIGINS.split(",").map((origin) => origin.trim()) // .trim() removes accidental spaces
   : [];
-
 
 /* ============================
    4️⃣ INITIALIZE SOCKETS
@@ -117,6 +115,49 @@ app.use(
 
 app.use(express.json({ limit: "10kb" })); // prevent payload abuse
 app.use(cookieParser());
+
+app.get("/blog/:id", async (req, res) => {
+  const userAgent = req.headers["user-agent"] || "";
+  const botList = [
+    "facebookexternalhit",
+    "WhatsApp",
+    "Twitterbot",
+    "LinkedInBot",
+    "TelegramBot",
+  ];
+
+  // Check if the requester is a social media crawler
+  const isBot = botList.some((bot) => userAgent.includes(bot));
+
+  if (isBot) {
+    try {
+      const blog = await getBlogMetadata(req.params.id);
+      if (blog) {
+        // Send a "Static" HTML page with only the Meta Tags for the bot
+        return res.send(`
+          <!DOCTYPE html>
+          <html>
+            <head>
+              <meta property="og:title" content="${blog.title}" />
+              <meta property="og:description" content="${blog.summary}" />
+              <meta property="og:image" content="${blog.image_url}" />
+              <meta property="og:url" content="https://www.brightcoderske.co.ke/blog/${req.params.id}" />
+              <meta property="og:type" content="article" />
+              <meta name="twitter:card" content="summary_large_image">
+            </head>
+            <body></body>
+          </html>
+        `);
+      }
+    } catch (err) {
+      console.error("Bot injection error:", err);
+    }
+  }
+
+  // 2. IMPORTANT: If it's a human, redirect them to your Frontend URL
+  // so they see the actual React app.
+  res.redirect(`https://www.brightcoderske.co.ke/blog/${req.params.id}`);
+});
 
 // ==========================================
 // 5. RATE LIMITING (ANTI-ABUSE)

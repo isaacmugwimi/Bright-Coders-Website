@@ -1,5 +1,14 @@
 {
   "rewrites": [
+
+    {
+      "source": "/blog/:id",
+      "destination": "https://bright-coders-website.onrender.com/blog/:id"
+    },
+
+    
+
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
+
