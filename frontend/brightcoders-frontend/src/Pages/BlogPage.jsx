@@ -53,10 +53,10 @@ const BlogPage = () => {
       } else {
         // Fallback: Copy to clipboard if Share API isn't supported
         await navigator.clipboard.writeText(shareData.url);
-        alert("Link copied to clipboard!");
+        alert("Link copied to clipboard! You can now paste it anywhere.");
       }
     } catch (err) {
-      console.error("Error sharing:", err);
+      console.error("Sharing failed or was cancelled");
     }
   };
 
