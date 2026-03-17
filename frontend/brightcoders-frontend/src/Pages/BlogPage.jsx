@@ -40,41 +40,46 @@ const BlogPage = () => {
     fetchPublicBlogs();
   }, [API_URL]);
 
-  const handleShare = async (blog) => {
-    const shareData = {
-      title: blog.title,
-      text: blog.summary || "Check out this blog from Bright Coders!",
-      url: `${siteUrl}/blog/${blog.id}`,
-    };
+const handleShare = async (blog) => {
+  const shareUrl = `${siteUrl}/blog/${blog.id}`;
+  const shareText = `${blog.title}\n\n${blog.summary || "Check out this blog from Bright Coders!"}\n\nRead more at: ${shareUrl}`;
 
-    try {
-      if (blog.image_url) {
-        try {
-          const response = await fetch(blog.image_url);
-          const blob = await response.blob();
-          const file = new File([blob], "blog-image.jpg", { type: blob.type });
-
-          // Check if the browser supports sharing this specific file
-          if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            shareData.files = [file];
-          }
-        } catch (fileErr) {
-          console.error("Could not fetch image for sharing:", fileErr);
-          // We continue without the file if fetching fails
-        }
-      }
-
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        // Fallback: Copy to clipboard if Share API isn't supported
-        await navigator.clipboard.writeText(shareData.url);
-        alert("Link copied to clipboard! You can now paste it anywhere.");
-      }
-    } catch (err) {
-      console.error("Sharing failed or was cancelled");
-    }
+  const shareData = {
+    title: blog.title,
+    text: shareText, 
+    url: shareUrl,
   };
+
+  try {
+    if (blog.image_url) {
+      try {
+        const response = await fetch(blog.image_url);
+        const blob = await response.blob();
+        
+        // Ensure the filename is clear and extension matches the type
+        const file = new File([blob], "blog-preview.jpg", { type: blob.type });
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          shareData.files = [file];
+        }
+      } catch (fileErr) {
+        console.error("Image fetch failed, sharing text only:", fileErr);
+      }
+    }
+
+    if (navigator.share) {
+      await navigator.share(shareData);
+    } else {
+      await navigator.clipboard.writeText(shareUrl);
+      alert("Link copied to clipboard!");
+    }
+  } catch (err) {
+    // Only log if it's not a user cancellation
+    if (err.name !== 'AbortError') {
+      console.error("Sharing failed:", err);
+    }
+  }
+};
 
   // ================= Structured Data for Blogs =================
   const generateJSONLD = () => ({
