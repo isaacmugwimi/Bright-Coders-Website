@@ -5,7 +5,6 @@ import {
   FaCheckCircle,
   FaTimes,
   FaClipboardCheck,
-  FaShareAlt,
 } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -290,26 +289,7 @@ const Programs = () => {
         </div>
 
         <div className="program-cta">
-          <button onClick={handleEnrollBtn} className="enroll-btn">
-            Enroll Now
-          </button>
-          <button
-            className="share-btn"
-            onClick={handleShare}
-            title="Share this course"
-            style={{
-              padding: "12px 20px",
-              borderRadius: "8px",
-              border: "1px solid #ddd",
-              background: "#fff",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <FaShareAlt />
-          </button>
+          <button onClick={handleEnrollBtn}>Enroll Now</button>
         </div>
 
         {/* MODAL */}
@@ -400,9 +380,29 @@ const Programs = () => {
                   </div>
                 )}
 
-                <button className="enroll-btn" onClick={handleEnroll}>
+                <div className="modal-actions" style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                <button className="enroll-btn" onClick={handleEnroll} style={{ flex: 1 }}>
                   Enroll Now
                 </button>
+                
+                <button 
+                  className="share-btn" 
+                  onClick={handleShare}
+                  title="Share this course"
+                  style={{
+                    padding: '12px 20px',
+                    borderRadius: '8px',
+                    border: '1px solid #ddd',
+                    background: '#fff',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  <FaShareAlt />
+                </button>
+              </div>
               </motion.div>
             </motion.div>
           )}
