@@ -5,6 +5,7 @@ import {
   FaCheckCircle,
   FaTimes,
   FaClipboardCheck,
+  FaShareAlt,
 } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
