@@ -478,16 +478,21 @@
 }
 
 .share-btn {
-  background-color: #f8f9fa;
-  color: #333;
-  transition: all 0.3s ease;
-  font-size: 1.2rem;
+    margin-top: 35px;
+  background-color: #10b981;
+  color: #fff;
+  border: none;
+  padding: 14px 25px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .share-btn:hover {
-  background-color: #e2e6ea;
+  background-color: #059669;
   transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
 }
 
 .enroll-btn {

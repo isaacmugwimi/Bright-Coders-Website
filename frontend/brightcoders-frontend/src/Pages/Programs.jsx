@@ -381,29 +381,26 @@ const Programs = () => {
                   </div>
                 )}
 
-                <div className="modal-actions" style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-                <button className="enroll-btn" onClick={handleEnroll} style={{ flex: 1 }}>
-                  Enroll Now
-                </button>
-                
-                <button 
-                  className="share-btn" 
-                  onClick={handleShare}
-                  title="Share this course"
-                  style={{
-                    padding: '12px 20px',
-                    borderRadius: '8px',
-                    border: '1px solid #ddd',
-                    background: '#fff',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}
+                <div
+                  className="modal-actions"
+                  style={{ display: "flex", gap: "10px", marginTop: "20px" }}
                 >
-                  <FaShareAlt />
-                </button>
-              </div>
+                  <button
+                    className="enroll-btn"
+                    onClick={handleEnroll}
+                    style={{ flex: 1 }}
+                  >
+                    Enroll Now
+                  </button>
+
+                  <button
+                    className="share-btn"
+                    onClick={handleShare}
+                    title="Share this course"
+                  >
+                    <FaShareAlt />
+                  </button>
+                </div>
               </motion.div>
             </motion.div>
           )}
