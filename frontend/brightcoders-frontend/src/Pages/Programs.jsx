@@ -5,6 +5,7 @@ import {
   FaCheckCircle,
   FaTimes,
   FaClipboardCheck,
+  FaShareAlt,
 } from "react-icons/fa";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
@@ -58,6 +59,28 @@ const Programs = () => {
           price: selectedCourse.price,
         },
       });
+    }
+  };
+
+  const handleShare = async () => {
+    if (!selectedCourse) return;
+
+    const shareData = {
+      title: `Check out ${selectedCourse.title} at Bright Coders!`,
+      text: `Interested in coding? Look at this ${selectedCourse.title} course for kids.`,
+      url: window.location.href, // Or a specific course link if you have slug-based routing
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        // Fallback: Copy to clipboard if Web Share API isn't supported
+        await navigator.clipboard.writeText(window.location.href);
+        alert("Link copied to clipboard!");
+      }
+    } catch (err) {
+      console.error("Error sharing:", err);
     }
   };
 
@@ -267,7 +290,26 @@ const Programs = () => {
         </div>
 
         <div className="program-cta">
-          <button onClick={handleEnrollBtn}>Enroll Now</button>
+          <button onClick={handleEnrollBtn} className="enroll-btn">
+            Enroll Now
+          </button>
+          <button
+            className="share-btn"
+            onClick={handleShare}
+            title="Share this course"
+            style={{
+              padding: "12px 20px",
+              borderRadius: "8px",
+              border: "1px solid #ddd",
+              background: "#fff",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <FaShareAlt />
+          </button>
         </div>
 
         {/* MODAL */}

@@ -303,11 +303,13 @@
     CALL TO ACTION BUTTON
   -------------------------- */
 .program-cta {
+  display: flex;
+  gap: 10px;
   text-align: center;
   margin-top: 50px;
 }
 
-.program-cta button {
+.program-cta .enroll-btn {
   background: #0a61a8;
   color: white;
   padding: 14px 50px;
@@ -319,9 +321,21 @@
   transition: 0.3s ease-in-out;
 }
 
-.program-cta button:hover {
+.program-cta .enroll-btn:hover {
   background: #084b83;
   transform: translateY(-3px);
+}
+.share-btn {
+  background-color: #f8f9fa;
+  color: #333;
+  transition: all 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.share-btn:hover {
+  background-color: #e2e6ea;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
 
 /* -------------------------
