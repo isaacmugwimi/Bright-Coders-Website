@@ -21,6 +21,7 @@ import stepUpRouter from "./Router/stepUp.routes.js";
 import forgotPasswordRouter from "./Router/authResetRoutes.js";
 import { csrfProtection } from "./Middleware/csrfMiddleware.js";
 import { initSocket } from "./Socket/socket.js";
+import axios from "axios";
 // how to create sockets
 //  1️⃣ CREATE EXPRESS APP FIRST (USUALLY BEFORE ANY MIDDLEWARE OR ROUTES)
 //    2️⃣ CREATE HTTP SERVER FROM EXPRESS APP (NOT APP.LISTEN)
@@ -115,7 +116,7 @@ app.use(
 app.use(express.json({ limit: "10kb" })); // prevent payload abuse
 app.use(cookieParser());
 
-app.get("/blog/:id", async (req, res) => {
+app.get("/blog/:id/meta", async (req, res) => {
   try {
     const blogId = req.params.id;
 
@@ -131,18 +132,24 @@ app.get("/blog/:id", async (req, res) => {
     const title = blog.title || "Bright Coders Blog";
     const description =
       blog.summary || "Tips, insights, and stories about coding.";
-    const image = blog.image_url || `${process.env.SITE_URL}/og-blog.jpg`;
+    const image = blog.image_url?.startsWith("http")
+      ? blog.image_url
+      : `${process.env.SITE_URL}${blog.image_url}`;
 
     const realUrl = `${process.env.SITE_URL}/blog/${blog.id}`;
 
+    res.set("Content-Type", "text/html");
+
     // 🔹 STEP 2.3: Send HTML with OG tags
-    res.send(`
+   res.send(`
       <!DOCTYPE html>
       <html>
       <head>
         <meta property="og:title" content="${title}" />
         <meta property="og:description" content="${description}" />
         <meta property="og:image" content="${image}" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
         <meta property="og:url" content="${realUrl}" />
         <meta property="og:type" content="article" />
 
@@ -150,12 +157,7 @@ app.get("/blog/:id", async (req, res) => {
         <meta name="twitter:title" content="${title}" />
         <meta name="twitter:image" content="${image}" />
 
-        <script>
-          // 🔹 STEP 2.4: Redirect after preview is read
-          setTimeout(() => {
-            window.location.href = "${realUrl}";
-          }, 100);
-        </script>
+        <meta http-equiv="refresh" content="0; url=${realUrl}" />
       </head>
       <body>
         Redirecting...
@@ -260,32 +262,3 @@ initDb()
     process.exit(1);
   });
 
-//   remember to include this for security purposes
-
-// dotenv – Loads environment variables from a .env file into process.env to keep sensitive configuration data secure and separate from source code.
-
-// helmet – Secures Express applications by setting HTTP response headers that protect against common web vulnerabilities.
-
-// cors – Controls which external domains are allowed to access your backend resources, enabling safe communication between frontend and backend.
-
-// bcryptjs – Hashes passwords before storing them in the database to protect user credentials even if the database is compromised.
-
-// jsonwebtoken (JWT) – Creates and verifies secure tokens used for user authentication and authorization without storing sessions on the server.
-
-// express-validator – Validates and sanitizes incoming request data to prevent invalid input, injection attacks, and application errors.
-
-// express-rate-limit – Limits the number of requests a client can make in a given time period to prevent brute-force and denial-of-service attacks.
-
-// hpp (HTTP Parameter Pollution) – Protects the server from attacks that manipulate duplicate query parameters in HTTP requests.
-
-// xss-clean – Sanitizes user input to remove malicious scripts and prevent Cross-Site Scripting (XSS) attacks.
-
-// compression – Compresses HTTP responses to reduce payload size and improve application performance and load speed.
-
-// morgan – Logs HTTP requests and responses for monitoring, debugging, and auditing server activity.
-
-// multer – Handles secure file uploads such as images and documents by processing multipart form data in Express.
-
-// uuid – Generates universally unique identifiers to safely identify resources like users, files, or records without collisions.
-
-// }
