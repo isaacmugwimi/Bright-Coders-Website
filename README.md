@@ -37,6 +37,16 @@ This project was built using:
 
 ---
 
+## 🔧 Technical Challenges & Solutions
+
+### 1. Secure Asset Delivery
+**Challenge:** Delivering private receipts without making them public on the web.  
+**Solution:** Implemented **Signed URLs via Cloudinary**, ensuring that links expire after a set time and are only accessible to authorized users.
+
+### 2. Database Scaling
+**Challenge:** Moving from local development to a production-grade serverless DB.  
+**Solution:** Successfully migrated to **Neon PostgreSQL**, implementing connection pooling to handle concurrent user requests efficiently.
+
 ## 📂 Project Structure
 
 ```
