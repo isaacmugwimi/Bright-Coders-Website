@@ -315,6 +315,28 @@
     background: none;
     border: 1px solid #eee;
   }
+
+   body * {
+    visibility: hidden;
+  }
+
+  .modal-overlay,
+  .modal-overlay * {
+    visibility: visible;
+  }
+
+  .modal-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .modal-footer,
+  .close-x,
+  .doc-actions {
+    display: none !important;
+  }
 }
 
 /* --- Responsive Breakpoints --- */

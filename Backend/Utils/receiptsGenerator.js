@@ -61,8 +61,8 @@ export const generateAndSaveReceipt = async (studentData) => {
     const logoPath = path.join(__dirname, "../assets/logo2.png");
     if (fs.existsSync(logoPath)) {
       const optimizedLogoBuffer = await sharp(logoPath)
-        .resize(300)
-        .jpeg({ quality: 70 }) // JPEG is much smaller than PNG for PDFs
+        .resize(200)
+        .png({ quality: 60, compressionLevel: 9 }) // JPEG is much smaller than PNG for PDFs
         .toBuffer();
 
       doc.addImage(

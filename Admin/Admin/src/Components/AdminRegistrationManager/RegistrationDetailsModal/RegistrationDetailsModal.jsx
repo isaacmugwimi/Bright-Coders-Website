@@ -63,7 +63,7 @@ const handleDownloadReceipt = async (id) => {
 
   return (
     <div className="modal-overlay">
-      <div className="modal-content detail-modal">
+      <div className="modal-content detail-modal print-area">
         {/* MODAL HEADER */}
         <div className="modal-header">
           <div>

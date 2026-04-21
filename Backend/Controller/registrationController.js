@@ -5,10 +5,9 @@ import {
   sendPaymentConfirmation,
 } from "../Utils/mailer.js";
 import { generateAndSaveReceipt } from "../Utils/receiptsGenerator.js";
-import {  generateAdminEmailHtml } from "../Utils/mailhelper.js";
+import { generateAdminEmailHtml } from "../Utils/mailhelper.js";
 import cloudinary from "../Utils/cloudinary.js";
 import fs from "fs";
-
 
 const processReceiptUpload = async (registration) => {
   let fileInfo = null; // 1. Declare outside try so catch can see it
@@ -16,15 +15,15 @@ const processReceiptUpload = async (registration) => {
   try {
     // 2. Generate the local PDF
     fileInfo = await generateAndSaveReceipt(registration);
-    
+
     // 3. Upload to Cloudinary
     const uploadResponse = await cloudinary.uploader.upload(fileInfo.filePath, {
       folder: "receipts",
       public_id: `Receipt_${registration.registration_number}`,
       resource_type: "raw",
-      type: "upload",        // Explicitly set to 'upload' (public)
-  access_mode: "public",
-      flags: "attachment"
+      type: "private", // Explicitly set to 'upload' (public)
+      // access_mode: "public",
+      flags: "attachment",
     });
 
     // 4. Update DB FIRST (This stops the "forever loader" on the frontend)
@@ -32,9 +31,9 @@ const processReceiptUpload = async (registration) => {
 
     // 5. Attempt to send email
     try {
-      await sendPaymentConfirmation(registration, { 
-        ...fileInfo, 
-        downloadUrl: uploadResponse.public_id 
+      await sendPaymentConfirmation(registration, {
+        ...fileInfo,
+        downloadUrl: uploadResponse.public_id,
       });
     } catch (mailErr) {
       // If email fails (like the Resend 403 error), we log it but DON'T stop the process
@@ -42,7 +41,6 @@ const processReceiptUpload = async (registration) => {
     }
 
     return uploadResponse.public_id;
-
   } catch (err) {
     console.error("❌ Receipt Processing Error:", err);
   } finally {
@@ -58,13 +56,10 @@ const processReceiptUpload = async (registration) => {
   }
 };
 
-
 // ==========================
 // 1. ADD NEW REGISTRATION
 // =========================
 // registrationController.js
-
-
 
 export const handleAddRegistration = async (req, res) => {
   try {
@@ -105,10 +100,13 @@ export const handleAddRegistration = async (req, res) => {
     // ==========================================
     // 🔔 TRIGGER ADMIN NOTIFICATION HERE
     // ==========================================
-// 1. Generate the HTML by passing the new record
+    // 1. Generate the HTML by passing the new record
     const emailHtml = generateAdminEmailHtml(newRegistration);
-    sendAdminNotification("🎓 New Student Alert: " + newRegistration.child_name, emailHtml);
-    
+    sendAdminNotification(
+      "🎓 New Student Alert: " + newRegistration.child_name,
+      emailHtml,
+    );
+
     if (paymentStatus === "paid") {
       try {
         // Pull the fresh DB row with snake_case fields
@@ -157,12 +155,14 @@ export const handleUpdatePayment = async (req, res) => {
     const coursePrice = parseFloat(student.total_course_price);
     const previousPaid = parseFloat(student.amount_paid) || 0;
     const amountSent = Number(confirmedAmount);
-    
+
     if (!Number.isFinite(amountSent) || amountSent <= 0) {
       return res.status(400).json({ message: "Invalid amount" });
     }
 
-    let newTotalPaid = isVerifyingExisting ? amountSent : previousPaid + amountSent;
+    let newTotalPaid = isVerifyingExisting
+      ? amountSent
+      : previousPaid + amountSent;
     const newBalance = Math.max(0, coursePrice - newTotalPaid);
     const newStatus = newBalance <= 0 ? "paid" : "partial";
     const safeMpesa = mpesaCode?.toUpperCase() || "PAY_LATER";
@@ -178,8 +178,8 @@ export const handleUpdatePayment = async (req, res) => {
 
     // 2. 🔥 Trigger the Cloudinary Upload process
 
-    processReceiptUpload(updatedRegistration).catch(err => 
-       console.error("Background Receipt Error:", err)
+    processReceiptUpload(updatedRegistration).catch((err) =>
+      console.error("Background Receipt Error:", err),
     );
 
     // 3. Return the updated info
@@ -262,8 +262,8 @@ export const handleVerifyCertificate = async (req, res) => {
     return res.status(200).json({
       success: true,
       data: {
-        studentName: registration.child_name, 
-        courseName: registration.course_name, 
+        studentName: registration.child_name,
+        courseName: registration.course_name,
         issuedAt: registration.certificate_issued_at || registration.created_at,
       },
     });
@@ -285,13 +285,22 @@ export const downloadReceipt = async (req, res) => {
       return res.status(404).json({ message: "Receipt not found" });
     }
 
-    // Since files are 'upload' type, use the standard url generator with signing
-    const signedUrl = cloudinary.url(registration.receipt_url, {
-      resource_type: "raw", // Must match the upload resource_type
-      sign_url: true,      // Required because your 'Strict Transformations' might be on
-      flags: "attachment", // This forces the browser to download the file
-      secure: true         // Use HTTPS
-    });
+    // // Since files are 'upload' type, use the standard url generator with signing
+    // const signedUrl = cloudinary.url(registration.receipt_url, {
+    //   resource_type: "raw", // Must match the upload resource_type
+    //   sign_url: true,      // Required because your 'Strict Transformations' might be on
+    //   flags: "attachment", // This forces the browser to download the file
+    //   secure: true         // Use HTTPS
+    // });
+
+    const signedUrl = cloudinary.utils.private_download_url(
+      registration.receipt_url,
+      "pdf",
+      {
+        resource_type: "raw",
+        expires_at: Math.floor(Date.now() / 100) + 60 * 5,
+      },
+    );
 
     return res.json({ url: signedUrl });
   } catch (err) {

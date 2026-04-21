@@ -65,7 +65,7 @@ export default function Register() {
     const fetchAndInitialize = async () => {
       try {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_BASE_URL}/courses/live`
+          `${import.meta.env.VITE_API_BASE_URL}/courses/live`,
         );
         const courses = response.data;
         setDbCourses(courses);
@@ -82,7 +82,7 @@ export default function Register() {
           } else {
             // Find price in fetched data if not in location state
             const matched = courses.find(
-              (c) => c.title === location.state.selectedCourse
+              (c) => c.title === location.state.selectedCourse,
             );
             if (matched) setCoursePrice(matched.price);
           }
@@ -176,21 +176,20 @@ export default function Register() {
     };
 
     console.group("📦 FINAL REGISTRATION PAYLOAD");
-Object.entries(submissionData).forEach(([key, value]) => {
-  console.log(`${key}:`, value, typeof value);
-});
-console.groupEnd();
-
+    Object.entries(submissionData).forEach(([key, value]) => {
+      console.log(`${key}:`, value, typeof value);
+    });
+    console.groupEnd();
 
     console.log(
-  "🚀 Sending to backend:",
-  JSON.stringify(submissionData, null, 2)
-);
+      "🚀 Sending to backend:",
+      JSON.stringify(submissionData, null, 2),
+    );
 
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_API_BASE_URL}/registration`,
-        submissionData
+        submissionData,
       );
 
       if (response.status === 201 || response.status === 200) {
@@ -207,13 +206,13 @@ console.groupEnd();
       setIsLoading(false);
       alert(
         error.response?.data?.message ||
-          "Submission failed. Please check your connection."
+          "Submission failed. Please check your connection.",
       );
     }
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText("6185495");
+    navigator.clipboard.writeText("5385002");
     alert("Number copied!");
   };
 
@@ -652,7 +651,7 @@ console.groupEnd();
                             {Number(
                               (coursePrice || "0")
                                 .toString()
-                                .replace(/[^0-9.-]+/g, "")
+                                .replace(/[^0-9.-]+/g, ""),
                             ).toLocaleString()}
                           </span>
                         </div>
@@ -713,7 +712,7 @@ console.groupEnd();
                       </p>
                       <div className="copy-box">
                         <span>Till Number</span>
-                        <span>Account: 6185495</span>
+                        <span>Account: 5385002</span>
                         <button type="button" onClick={handleCopy}>
                           <FaCopy /> Copy
                         </button>
@@ -748,7 +747,7 @@ console.groupEnd();
                                 Number(
                                   coursePrice
                                     .toString()
-                                    .replace(/[^0-9.-]+/g, "")
+                                    .replace(/[^0-9.-]+/g, ""),
                                 ) - (Number(depositPaid) || 0)
                               ).toLocaleString()}
                             </span>
@@ -765,7 +764,7 @@ console.groupEnd();
                             max={Number(
                               (coursePrice || "0")
                                 .toString()
-                                .replace(/[^0-9.-]+/g, "")
+                                .replace(/[^0-9.-]+/g, ""),
                             )}
                             value={depositPaid}
                             onKeyDown={(e) =>
@@ -776,7 +775,7 @@ console.groupEnd();
                               const maxLimit = Number(
                                 (coursePrice || "0")
                                   .toString()
-                                  .replace(/[^0-9.-]+/g, "")
+                                  .replace(/[^0-9.-]+/g, ""),
                               );
                               const val = e.target.value;
 
@@ -815,7 +814,7 @@ console.groupEnd();
                             {Number(
                               (coursePrice || "0")
                                 .toString()
-                                .replace(/[^0-9.-]+/g, "")
+                                .replace(/[^0-9.-]+/g, ""),
                             ).toLocaleString()}
                           </p>
                         </div>
